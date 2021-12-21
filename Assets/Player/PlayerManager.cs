@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class PlayerManager : MonoBehaviour
     bool isAtkDelay = false;
     float atkDelaytimer = 0;
 
+    public Button LeftArrow;
+    public Button RightArrow;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -30,14 +34,20 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
             moveLeft = true;
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKeyUp(KeyCode.LeftArrow))
+            moveLeft = false;
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
             moveRight = true;
-        if (Input.GetKey(KeyCode.UpArrow))
+        else if (Input.GetKeyUp(KeyCode.RightArrow))
+            moveRight = false;
+        if (Input.GetKeyDown(KeyCode.UpArrow))
             moveUp = true;
+        else if (Input.GetKeyUp(KeyCode.UpArrow))
+            moveUp = false;
 
-        if(isAtkDelay)
+        if (isAtkDelay)
         {
             atkDelaytimer += Time.deltaTime;
             if (atkDelaytimer > atkDelay)
@@ -52,24 +62,15 @@ public class PlayerManager : MonoBehaviour
     {
         Vector2 myVelocity = new Vector2(0, rigid2d.velocity.y);
         if (moveLeft)
-        {
             myVelocity += new Vector2(-speed * Time.deltaTime, 0);
-            moveLeft = false;
-        }
         else if (moveRight)
-        {
             myVelocity += new Vector2(speed * Time.deltaTime, 0);
-            moveRight = false;
-        }
         rigid2d.velocity = myVelocity;
 
         if (moveUp)
         {
             if (rigid2d.velocity.y < maxFlySpeed)
-            {
                 rigid2d.AddForce(new Vector2(0, boosterPower * Time.deltaTime), ForceMode2D.Impulse);
-            }
-            moveUp = false;
         }
     }
 
@@ -98,4 +99,29 @@ public class PlayerManager : MonoBehaviour
         }
     }
     */
+
+    public void LeftBtnDown()
+    {
+        moveLeft = true;
+    }
+    public void LeftBtnUp()
+    {
+        moveLeft = false;
+    }
+    public void RightBtnDown()
+    {
+        moveRight = true;
+    }
+    public void RightBtnUp()
+    {
+        moveRight = false;
+    }
+    public void UpBtnDown()
+    {
+        moveUp = true;
+    }
+    public void UpBtnUp()
+    {
+        moveUp = false;
+    }
 }
