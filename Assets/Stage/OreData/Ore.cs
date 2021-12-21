@@ -16,4 +16,10 @@ public class Ore : MonoBehaviour
     {
         
     }
+
+    public void SetData(OreData _data)
+    {
+        data = _data;
+        gameObject.GetComponent<SpriteRenderer>().sprite = data.artwork;
+    }
 }

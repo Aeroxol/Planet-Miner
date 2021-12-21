@@ -19,3 +19,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 95dcda0c614d83a4aa3a92f8d8626d84, type: 2}
   - {fileID: 11400000, guid: 067023df8f182c1468e435426065e548, type: 2}
   depth: 3c00000078000000c8000000
+  ores:
+  - {fileID: 11400000, guid: 16bcd52e5f7b79a428ebd8ddd5628846, type: 2}
+  - {fileID: 11400000, guid: 00c9098a050b5904d982b4e73af70149, type: 2}
+  - {fileID: 11400000, guid: dd3166af7d6028c45985aafc4dd7df12, type: 2}
+  - {fileID: 11400000, guid: 6d390c39f669be64f8b8b591015f20b0, type: 2}
+  - {fileID: 11400000, guid: 8afb306bb9c59274aa3be2026e48fa51, type: 2}
+  oreDepth: 000000000a000000280000005000000078000000
+  oreProb:
+  - 0.02
+  - 0.02
+  - 0.01
+  - 0.01
+  - 0.005
