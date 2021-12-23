@@ -7,7 +7,6 @@ public class Stage : MonoBehaviour
     public StageData data;
     public Block block;
     public Ore ore;
-    public int count;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,8 +29,7 @@ public class Stage : MonoBehaviour
             {
                 stage[i, j] = 0;
                 float prob = Random.Range(0f, 1f);
-                Debug.Log(prob);
-                for(int p = 0; p < _data.ores.Count; ++p)
+                for(int p = _data.ores.Count - 1; p >= 0; --p)
                 {
                     if (prob < _data.oreProb[p] && j > _data.oreDepth[p])
                     {
@@ -46,16 +44,79 @@ public class Stage : MonoBehaviour
             }
         }
         // Mix
-        for(int c = 0; c < count; ++c)
+        for(int c = 0; c < _data.mixCount; ++c)
         {
             int[,] temp = new int[_data.width, _data.height];
             for (int i = 0; i < _data.width; ++i)
             {
-                for(int j = 0; j < _data.height; ++j)
+                for (int j = 0; j < _data.height; ++j)
                 {
-
+                    int rand = Random.Range(0, 8);
+                    switch (rand)
+                    {
+                        case 0:
+                            if (i == 0 || j == 0) {
+                                goto default;
+                            }
+                            temp[i, j] = stage[i - 1, j - 1];
+                            break;
+                        case 2:
+                            if (i == _data.width - 1 || j == 0)
+                            {
+                                goto default;
+                            }
+                            temp[i, j] = stage[i + 1, j - 1];
+                            break;
+                        case 7:
+                            if (i == _data.width - 1 || j == _data.height - 1)
+                            {
+                                goto default;
+                            }
+                            temp[i, j] = stage[i + 1, j + 1];
+                            break;
+                        case 5:
+                            if (i == 0 || j == _data.height - 1)
+                            {
+                                goto default;
+                            }
+                            temp[i, j] = stage[i - 1, j + 1];
+                            break;
+                        case 1:
+                            if (j == 0)
+                            {
+                                goto default;
+                            }
+                            temp[i, j] = stage[i, j - 1];
+                            break;
+                        case 3:
+                            if (i == 0)
+                            {
+                                goto default;
+                            }
+                            temp[i, j] = stage[i - 1, j];
+                            break;
+                        case 4:
+                            if (i == _data.width - 1)
+                            {
+                                goto default;
+                            }
+                            temp[i, j] = stage[i + 1, j];
+                            break;
+                        case 6:
+                            if (j == _data.height - 1)
+                            {
+                                goto default;
+                            }
+                            temp[i, j] = stage[i, j + 1];
+                            break;
+                        default:
+                            temp[i, j] = 0;
+                            break;
+                    }
                 }
             }
+            stage = temp;
+            Debug.Log(c);
         }
 
         // Set
