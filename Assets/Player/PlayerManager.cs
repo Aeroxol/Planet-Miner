@@ -8,27 +8,32 @@ public class PlayerManager : MonoBehaviour
     public float speed;
     public float boosterPower;
     public float maxFlySpeed;
-    public int attackPower;
+    public int digPower;
+    public int hp;
+    public int defense;
+    public int heatResist;
+    public int coldResist;
+    float digDelay = 0.5f;
 
     Rigidbody2D rigid2d;
     BoxCollider2D boxCol2d;
+    Vector2 colliderSize;
 
-    bool moveLeft;
-    bool moveRight;
-    bool moveUp;
+    bool moveLeft = false;
+    bool moveRight = false;
+    bool moveUp = false;
+    bool digging = false;
+    bool flying = true;
 
-    float atkDelay = 0.5f;
-    bool isAtkDelay = false;
-    float atkDelaytimer = 0;
+    bool isDigDelay = false;
+    float digDelaytimer = 0;
 
-    public Button LeftArrow;
-    public Button RightArrow;
-    
     // Start is called before the first frame update
     void Start()
     {
         rigid2d = GetComponent<Rigidbody2D>();
         boxCol2d = GetComponent<BoxCollider2D>();
+        colliderSize = boxCol2d.bounds.size;
     }
 
     // Update is called once per frame
@@ -46,14 +51,18 @@ public class PlayerManager : MonoBehaviour
             moveUp = true;
         else if (Input.GetKeyUp(KeyCode.UpArrow))
             moveUp = false;
+        if (Input.GetKeyDown(KeyCode.Space))
+            digging = true;
+        else if (Input.GetKeyUp(KeyCode.Space))
+            digging = false;
 
-        if (isAtkDelay)
+        if (isDigDelay)
         {
-            atkDelaytimer += Time.deltaTime;
-            if (atkDelaytimer > atkDelay)
+            digDelaytimer += Time.deltaTime;
+            if (digDelaytimer > digDelay)
             {
-                atkDelaytimer = 0;
-                isAtkDelay = false;
+                digDelaytimer = 0;
+                isDigDelay = false;
             }
         }
     }
@@ -74,31 +83,84 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    /*
+
     private void OnCollisionStay2D(Collision2D col)
     {
-        if (rigid2d.velocity.y != 0) return;
+        if (flying) return;
 
-        if (col.gameObject.CompareTag(" "))
+        if (col.collider.CompareTag("Block"))
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (!isDigDelay && digging)
             {
-                if(Input.GetKey(KeyCode.LeftArrow))
+                if (moveLeft)
                 {
-
+                    if (col.transform.position.x < transform.position.x)
+                    {
+                        if (Mathf.Abs(col.transform.position.y - transform.position.y) < colliderSize.y / 2)
+                        {
+                            isDigDelay = true;
+                            col.gameObject.GetComponent<Block>().DecreaseHp(digPower);
+                        }
+                    }
                 }
-                if (Input.GetKey(KeyCode.RightArrow))
+                else if (moveRight)
                 {
-
+                    if (col.transform.position.x > transform.position.x)
+                    {
+                        if (Mathf.Abs(col.transform.position.y - transform.position.y) < colliderSize.y / 2)
+                        {
+                            isDigDelay = true;
+                            col.gameObject.GetComponent<Block>().DecreaseHp(digPower);
+                        }
+                    }
                 }
                 else
                 {
-
+                    if (col.transform.position.y < transform.position.y)
+                    {
+                        if (Mathf.Abs(col.transform.position.x - transform.position.x) < colliderSize.x / 2)
+                        {
+                            rigid2d.MovePosition(new Vector2(col.transform.position.x, rigid2d.position.y));
+                            isDigDelay = true;
+                            col.gameObject.GetComponent<Block>().DecreaseHp(digPower);
+                        }
+                    }
                 }
             }
         }
     }
-    */
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.collider.CompareTag("Block"))
+        {   //공중에 떠있는지 감지
+            if (col.transform.position.y < transform.position.y)
+            {
+                if (Mathf.Abs(col.transform.position.x - transform.position.x) < col.collider.bounds.size.x / 2)
+                {
+                    flying = false;
+                }
+            }
+        }
+        else if (col.collider.CompareTag("Ore"))
+        {   //광석 획득
+            col.gameObject.SetActive(false);
+        }
+    }
+    private void OnCollisionExit2D(Collision2D col)
+    {   
+        if (col.collider.CompareTag("Block"))
+        {   //공중에 떠있는지 감지
+            if (col.transform.position.y < transform.position.y)
+            {
+                if (Mathf.Abs(col.transform.position.x - transform.position.x) < col.collider.bounds.size.x / 2)
+                {
+                    flying = true;
+                }
+            }
+
+        }
+    }
 
     public void LeftBtnDown()
     {
@@ -123,5 +185,13 @@ public class PlayerManager : MonoBehaviour
     public void UpBtnUp()
     {
         moveUp = false;
+    }
+    public void DigBtnDown()
+    {
+        digging = true;
+    }
+    public void DigBtnUp()
+    {
+        digging = false;
     }
 }

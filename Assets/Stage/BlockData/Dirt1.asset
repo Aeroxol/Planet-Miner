@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4695f29967561954bbc7780c1550b6cb, type: 3}
   m_Name: Dirt1
   m_EditorClassIdentifier: 
-  name: dirt1
-  description: 
   health: 5
-  artwork: {fileID: 21300000, guid: 07f3db563937ce14cb3d2d97b358b1d7, type: 3}
+  artwork:
+  - {fileID: 21300000, guid: 07f3db563937ce14cb3d2d97b358b1d7, type: 3}
+  - {fileID: 21300000, guid: d6cb5e8732e2adb4a9e0c647bc3b7e9f, type: 3}
+  - {fileID: 21300000, guid: f49f7fc6675baed469740f69a8f422a9, type: 3}
+  - {fileID: 21300000, guid: 5ca600d8b2f90e8468c2d7a285453cbe, type: 3}
+  - {fileID: 21300000, guid: 9f4463dbd9a08bd468d854cb6734df89, type: 3}
