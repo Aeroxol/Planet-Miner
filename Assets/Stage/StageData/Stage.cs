@@ -6,6 +6,7 @@ public class Stage : MonoBehaviour
 {
     public StageData data;
     public Block block;
+    public BlockData immortalBlock;
     public Ore ore;
     // Start is called before the first frame update
     void Start()
@@ -116,16 +117,57 @@ public class Stage : MonoBehaviour
                 }
             }
             stage = temp;
-            Debug.Log(c);
         }
 
-        // Set
+        // Immortal Block Set
+        for(int i = 0; i < _data.disNum; ++i)
+        {
+            int _x = Random.Range(1, _data.width - 1);
+            int _y = Random.Range(1, _data.height - 1);
+            stage[_x, _y] = -1;
+            for(int j = 0; j < _data.disLength; ++j)
+            {
+                int direction = Random.Range(0, 4);
+                switch (direction)
+                {
+                    case 0:
+                        _y = (_y - 2) % (_data.height - 2) + 1;
+                        stage[_x, _y] = -1;
+                        break;
+                    case 1:
+                        _x = (_x) % (_data.width - 2) + 1;
+                        stage[_x, _y] = -1;
+                        break;
+                    case 2:
+                        _y = (_y) % (_data.height - 2) + 1;
+                        stage[_x, _y] = -1;
+                        break;
+                    case 3:
+                        _x = (_x - 2) % (_data.width - 2) + 1;
+                        stage[_x, _y] = -1;
+                        break;
+                }
+            }
+        }
+        
+
+        // Render
         for(int i = 0; i < _data.width; ++i)
         {
             for(int j = 0; j < _data.height; ++j)
             {
                 Block newBlock = GameObject.Instantiate<Block>(block);
                 newBlock.transform.position = new Vector3(i - _data.width / 2, -j, 0);
+                if (i == 0 || i == _data.width - 1 || j == _data.height - 1)
+                {
+                    newBlock.SetData(immortalBlock);
+                    continue;
+                }
+                if (stage[i, j] == -1)
+                {
+                    newBlock.SetData(immortalBlock);
+                    continue;
+                }
 
                 for (int d = 0; d < _data.depth.Count; ++d)
                 {
@@ -142,8 +184,8 @@ public class Stage : MonoBehaviour
                         Ore newOre = GameObject.Instantiate<Ore>(ore);
                         newOre.transform.position = new Vector3(i - _data.width / 2, -j, 0);
                         newOre.SetData(_data.ores[p]);
+                        break;
                     }
-
                 }
             }
         }
