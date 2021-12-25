@@ -12,4 +12,6 @@ public class StageData : ScriptableObject
     public List<int> oreDepth;
     public List<float> oreProb;
     public int mixCount;
+    public int disNum;
+    public int disLength;
 }

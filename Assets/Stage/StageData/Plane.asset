@@ -33,3 +33,5 @@ MonoBehaviour:
   - 0.01
   - 0.03
   mixCount: 10
+  disNum: 12
+  disLength: 12
