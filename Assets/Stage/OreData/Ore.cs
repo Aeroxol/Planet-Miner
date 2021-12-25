@@ -22,4 +22,10 @@ public class Ore : MonoBehaviour
         data = _data;
         gameObject.GetComponent<SpriteRenderer>().sprite = data.artwork;
     }
+
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Block"))
+            GetComponent<Rigidbody2D>().gravityScale = 1;
+    }
 }

@@ -43,7 +43,7 @@ public class PlayerManager : MonoBehaviour
             moveLeft = true;
         else if (Input.GetKeyUp(KeyCode.LeftArrow))
             moveLeft = false;
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
             moveRight = true;
         else if (Input.GetKeyUp(KeyCode.RightArrow))
             moveRight = false;
