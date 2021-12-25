@@ -35,4 +35,32 @@ public class UpgradeManager : MonoBehaviour
         player.digPower++;
         digLvlText.text = "Current:" + player.digPower;
     }
+    public void HpUpgradeClick()
+    {
+        player.maxHp += 10;
+    }
+    public void SpeedUpgradeClick()
+    {
+        player.speed += 5;
+    }
+    public void BoosterUpgradeClick()
+    {
+        player.boosterPower += 1;
+        player.maxFlySpeed += 0.15f;
+    }
+    public void HeatUpgradeClick()
+    {
+        player.heatResist++;
+    }
+    public void ColdUpgradeClick()
+    {
+        player.coldResist++;
+    }
+    public void DigDelayUpgradeClick()
+    {
+        if (player.digDelay > 0.1f)
+        {
+            player.digDelay -= 0.05f;
+        }
+    }
 }
