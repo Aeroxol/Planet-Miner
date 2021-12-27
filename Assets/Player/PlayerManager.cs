@@ -9,11 +9,11 @@ public class PlayerManager : MonoBehaviour
     public float boosterPower;
     public float maxFlySpeed;
     public int digPower;
+    public int maxHp;
     public int hp;
-    public int defense;
     public int heatResist;
     public int coldResist;
-    float digDelay = 0.5f;
+    public float digDelay = 0.5f;
 
     Rigidbody2D rigid2d;
     BoxCollider2D boxCol2d;
@@ -27,6 +27,11 @@ public class PlayerManager : MonoBehaviour
 
     bool isDigDelay = false;
     float digDelaytimer = 0;
+
+    public Text hpTemp;
+    float heatDelay = 1.0f;
+    bool isHeatDelay = false;
+    float heatDelaytimer = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +70,33 @@ public class PlayerManager : MonoBehaviour
                 isDigDelay = false;
             }
         }
+
+        hpTemp.text = "HP: " + hp.ToString() + " / " + maxHp.ToString();
+        if (isHeatDelay)
+        {
+            heatDelaytimer += Time.deltaTime;
+            if (heatDelaytimer > heatDelay)
+            {
+                heatDelaytimer = 0;
+                isHeatDelay = false;
+            }
+        }
+        else
+        {
+            if (transform.position.y < 0)
+            {
+                if (hp > 0)
+                    hp -= 1;
+            }
+            else
+            {
+                if(hp<maxHp)
+                    hp += hp/5;
+                if (hp > maxHp) hp = maxHp;
+            } 
+            isHeatDelay = true;
+        }
+
     }
 
     private void FixedUpdate()
@@ -134,11 +166,12 @@ public class PlayerManager : MonoBehaviour
     {
         if (col.collider.CompareTag("Block"))
         {   //공중에 떠있는지 감지
-            if (col.transform.position.y < transform.position.y)
+            if ((col.transform.position.y + col.collider.bounds.size.y/2) < (transform.position.y - boxCol2d.bounds.size.y/2))
             {
-                if (Mathf.Abs(col.transform.position.x - transform.position.x) < col.collider.bounds.size.x / 2)
+                if (Mathf.Abs(col.transform.position.x - transform.position.x) < (col.collider.bounds.size.x / 2 + boxCol2d.bounds.size.x / 2))
                 {
                     flying = false;
+                    //Debug.Log("Enter");
                 }
             }
         }
@@ -151,11 +184,12 @@ public class PlayerManager : MonoBehaviour
     {   
         if (col.collider.CompareTag("Block"))
         {   //공중에 떠있는지 감지
-            if (col.transform.position.y < transform.position.y)
+            if ((col.transform.position.y + col.collider.bounds.size.y / 2) < (transform.position.y - boxCol2d.bounds.size.y / 2))
             {
-                if (Mathf.Abs(col.transform.position.x - transform.position.x) < col.collider.bounds.size.x / 2)
+                if (Mathf.Abs(col.transform.position.x - transform.position.x) < (col.collider.bounds.size.x / 2 + boxCol2d.bounds.size.x / 2))
                 {
                     flying = true;
+                    //Debug.Log("Exit");
                 }
             }
 
