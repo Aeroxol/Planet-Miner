@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c77e63f0d698c64eb50cd1a02695b62, type: 3}
   m_Name: Coal
   m_EditorClassIdentifier: 
+  editorName: Coal
   artwork: {fileID: 21300000, guid: 56f78a678116c8f4eaa1214b6b824212, type: 3}

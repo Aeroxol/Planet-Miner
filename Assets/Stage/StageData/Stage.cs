@@ -32,14 +32,14 @@ public class Stage : MonoBehaviour
                 float prob = Random.Range(0f, 1f);
                 for(int p = _data.ores.Count - 1; p >= 0; --p)
                 {
-                    if (prob < _data.oreProb[p] && j > _data.oreDepth[p])
+                    if (prob < _data.oreProbs[p].Evaluate(j))
                     {
                         stage[i, j] = p + 1;
                         break;
                     }
                     else
                     {
-                        prob = prob - _data.oreProb[p];
+                        prob = prob - _data.oreProbs[p].Evaluate(j);
                     }
                 }
             }
@@ -122,29 +122,38 @@ public class Stage : MonoBehaviour
         // Immortal Block Set
         for(int i = 0; i < _data.disNum; ++i)
         {
-            int _x = Random.Range(1, _data.width - 1);
-            int _y = Random.Range(1, _data.height - 1);
-            stage[_x, _y] = -1;
+            int _x = Random.Range(0, _data.width - 2);
+            int _y = Random.Range(0, _data.height - 2);
+            stage[_x + 1, _y + 1] = -1;
             for(int j = 0; j < _data.disLength; ++j)
             {
                 int direction = Random.Range(0, 4);
                 switch (direction)
                 {
                     case 0:
-                        _y = (_y - 2) % (_data.height - 2) + 1;
-                        stage[_x, _y] = -1;
+                        _y = (_y - 1) % (_data.height - 2);
+                        if(_y < 0)
+                        {
+                            _y += _data.height-1;
+                        }
+                        stage[_x + 1, _y + 1] = -1;
                         break;
                     case 1:
-                        _x = (_x) % (_data.width - 2) + 1;
-                        stage[_x, _y] = -1;
+                        _x = (_x + 1) % (_data.width - 2);
+                        stage[_x + 1, _y + 1] = -1;
                         break;
                     case 2:
-                        _y = (_y) % (_data.height - 2) + 1;
-                        stage[_x, _y] = -1;
+                        _y = (_y + 1) % (_data.height - 2);
+                        if (_y > _data.height - 2)
+                        stage[_x + 1, _y + 1] = -1;
                         break;
                     case 3:
-                        _x = (_x - 2) % (_data.width - 2) + 1;
-                        stage[_x, _y] = -1;
+                        _x = (_x - 1) % (_data.width - 2);
+                        if (_x < 0)
+                        {
+                            _x += _data.width-1;
+                        }
+                        stage[_x + 1, _y + 1] = -1;
                         break;
                 }
             }

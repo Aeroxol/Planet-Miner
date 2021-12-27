@@ -6,5 +6,6 @@ using UnityEngine;
 
 public class OreData : ScriptableObject
 {
+    public string editorName;
     public Sprite artwork;
 }
