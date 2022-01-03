@@ -8,4 +8,8 @@ public class OreData : ScriptableObject
 {
     public string editorName;
     public Sprite artwork;
+    public int itemCode;
+    public string itemName;
+    public int maxAmount;
+    public bool isUsable;
 }

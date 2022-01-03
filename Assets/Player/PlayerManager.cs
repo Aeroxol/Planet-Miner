@@ -14,10 +14,11 @@ public class PlayerManager : MonoBehaviour
     public int heatResist;
     public int coldResist;
     public float digDelay = 0.5f;
+    public InventoryManager invenManager;
 
     Rigidbody2D rigid2d;
-    BoxCollider2D boxCol2d;
     Vector2 colliderSize;
+    RaycastHit2D hit;
 
     bool moveLeft = false;
     bool moveRight = false;
@@ -37,8 +38,7 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         rigid2d = GetComponent<Rigidbody2D>();
-        boxCol2d = GetComponent<BoxCollider2D>();
-        colliderSize = boxCol2d.bounds.size;
+        colliderSize = GetComponent<BoxCollider2D>().bounds.size;
     }
 
     // Update is called once per frame
@@ -113,87 +113,67 @@ public class PlayerManager : MonoBehaviour
             if (rigid2d.velocity.y < maxFlySpeed)
                 rigid2d.AddForce(new Vector2(0, boosterPower * Time.deltaTime), ForceMode2D.Impulse);
         }
-    }
 
-
-    private void OnCollisionStay2D(Collision2D col)
-    {
-        if (flying) return;
-
-        if (col.collider.CompareTag("Block"))
+        //Debug.DrawRay(transform.position, new Vector3(0, -1, 0), new Color(0, 1, 0));
+        hit = Physics2D.Raycast(transform.position, Vector2.down, 1.0f, LayerMask.GetMask("Block"));
+        flying = true;
+        if (hit.collider != null) // ¹Ù´Ú¿¡ ´ê¾Ò´ÂÁö °Ë»ç
         {
-            if (!isDigDelay && digging)
+            if (hit.distance - (colliderSize.y / 2) < 0.2f)
             {
-                if (moveLeft)
+                flying = false;
+            }
+            //Debug.Log(hit.distance);
+            //Debug.Log(boxCol2d.bounds.size.y / 2);
+        }
+
+        if (digging && !flying && !isDigDelay)
+        {
+            if (moveLeft) // ¿ÞÂÊ Ã¤±¼
+            {
+                hit = Physics2D.Raycast(transform.position, Vector2.left, 1.0f, LayerMask.GetMask("Block"));
+                if (hit.collider != null)
                 {
-                    if (col.transform.position.x < transform.position.x)
+                    if (hit.distance - (colliderSize.x / 2) < 0.2f)
                     {
-                        if (Mathf.Abs(col.transform.position.y - transform.position.y) < colliderSize.y / 2)
-                        {
-                            isDigDelay = true;
-                            col.gameObject.GetComponent<Block>().DecreaseHp(digPower);
-                        }
-                    }
-                }
-                else if (moveRight)
-                {
-                    if (col.transform.position.x > transform.position.x)
-                    {
-                        if (Mathf.Abs(col.transform.position.y - transform.position.y) < colliderSize.y / 2)
-                        {
-                            isDigDelay = true;
-                            col.gameObject.GetComponent<Block>().DecreaseHp(digPower);
-                        }
-                    }
-                }
-                else
-                {
-                    if (col.transform.position.y < transform.position.y)
-                    {
-                        if (Mathf.Abs(col.transform.position.x - transform.position.x) < colliderSize.x / 2)
-                        {
-                            rigid2d.MovePosition(new Vector2(col.transform.position.x, rigid2d.position.y));
-                            isDigDelay = true;
-                            col.gameObject.GetComponent<Block>().DecreaseHp(digPower);
-                        }
+                        hit.collider.GetComponent<Block>().DecreaseHp(digPower);
                     }
                 }
             }
+            else if (moveRight) // ¿À¸¥ÂÊ Ã¤±¼
+            {
+                hit = Physics2D.Raycast(transform.position, Vector2.right, 1.0f, LayerMask.GetMask("Block"));
+                if (hit.collider != null)
+                {
+                    if (hit.distance - (colliderSize.x / 2) < 0.2f)
+                    {
+                        hit.collider.GetComponent<Block>().DecreaseHp(digPower);
+                    }
+                }
+            }
+            else // ¾Æ·¡ÂÊ Ã¤±¼
+            {
+                rigid2d.MovePosition(new Vector2(hit.transform.position.x, rigid2d.position.y));
+                hit.collider.GetComponent<Block>().DecreaseHp(digPower);
+            }
+            isDigDelay = true;
         }
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.collider.CompareTag("Block"))
-        {   //°øÁß¿¡ ¶°ÀÖ´ÂÁö °¨Áö
-            if ((col.transform.position.y + col.collider.bounds.size.y/2) < (transform.position.y - boxCol2d.bounds.size.y/2))
-            {
-                if (Mathf.Abs(col.transform.position.x - transform.position.x) < (col.collider.bounds.size.x / 2 + boxCol2d.bounds.size.x / 2))
-                {
-                    flying = false;
-                    //Debug.Log("Enter");
-                }
-            }
-        }
-        else if (col.collider.CompareTag("Ore"))
-        {   //±¤¼® È¹µæ
-            col.gameObject.SetActive(false);
+        if (col.collider.CompareTag("Ore"))
+        {
+            //±¤¼® È¹µæ
+            bool gotItem = invenManager.addItem(col.gameObject.GetComponent<Ore>().data.itemCode, 1);
+            if(gotItem) Destroy(col.gameObject);
         }
     }
-    private void OnCollisionExit2D(Collision2D col)
-    {   
-        if (col.collider.CompareTag("Block"))
-        {   //°øÁß¿¡ ¶°ÀÖ´ÂÁö °¨Áö
-            if ((col.transform.position.y + col.collider.bounds.size.y / 2) < (transform.position.y - boxCol2d.bounds.size.y / 2))
-            {
-                if (Mathf.Abs(col.transform.position.x - transform.position.x) < (col.collider.bounds.size.x / 2 + boxCol2d.bounds.size.x / 2))
-                {
-                    flying = true;
-                    //Debug.Log("Exit");
-                }
-            }
-
-        }
+ 
+    public void RestoreHp(int amount)
+    {
+        hp += amount;
+        if (hp > maxHp) hp = maxHp;
     }
 
     public void LeftBtnDown()

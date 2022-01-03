@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   editorName: Coal
   artwork: {fileID: 21300000, guid: 56f78a678116c8f4eaa1214b6b824212, type: 3}
+  itemCode: 0
+  itemName: "\uC11D\uD0C4"
+  maxAmount: 5
+  isUsable: 0
