@@ -44,14 +44,7 @@ public class LobbyScene : MonoBehaviour
 
     private void Update()
     {
-        if (Mathf.Abs(scrollContents.localPosition.x - scrollIndex * -200) < 1)
-        {
-            scrollContents.localPosition = new Vector3(scrollIndex * -200, 0, 0);
-        }
-        else
-        {
-            scrollContents.localPosition = new Vector3(Mathf.Lerp(scrollContents.localPosition.x, scrollIndex * -200, 0.9f), 0, 0);
-        }
+
     }
 
     public void SelectPage()
@@ -82,36 +75,37 @@ public class LobbyScene : MonoBehaviour
 
     public void BtnLeft()
     {
-        scrollIndex = Mathf.Clamp(scrollIndex - 1, 0, 4);
-
-        if (scrollTask == null)
+        if (scrollTask == null || scrollTask.IsCompleted)
         {
+            scrollIndex = Mathf.Clamp(scrollIndex - 1, 0, 4);
             scrollTask = MoveScroll();
+            UpdateDescription();
         }
     }
 
     public void BtnRight()
     {
-        scrollIndex = Mathf.Clamp(scrollIndex + 1, 0, 4);
-
-        if (scrollTask == null)
+        if (scrollTask == null || scrollTask.IsCompleted)
         {
+            scrollIndex = Mathf.Clamp(scrollIndex + 1, 0, 4);
             scrollTask = MoveScroll();
+            UpdateDescription();
         }
     }
 
     //¿©±â
     public async Task MoveScroll()
     {
+        float startTime = Time.time;
         while (true)
         {
-            if(Mathf.Abs(scrollContents.localPosition.x - scrollIndex * -200) < 1)
+            await Task.Yield();
+            if (Mathf.Abs(scrollContents.localPosition.x - scrollIndex * -700) < 1)
             {
-                scrollContents.localPosition = new Vector3(scrollIndex * -200, 0, 0);
+                scrollContents.localPosition = new Vector3(scrollIndex * -700, 0, 0);
                 break;
             }
-            scrollContents.localPosition = new Vector3(Mathf.Lerp(scrollContents.localPosition.x, scrollIndex * -200, 0.01f), 0, 0);
-            await Task.Delay(100);
+            scrollContents.localPosition = new Vector3(Mathf.Lerp(scrollContents.localPosition.x, scrollIndex * -700, 12 *Time.deltaTime), 0, 0);
         }
     }
 

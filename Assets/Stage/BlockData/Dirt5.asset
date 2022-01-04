@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Dirt5
   m_EditorClassIdentifier: 
   health: 0
-  artwork: []
+  artwork:
+  - {fileID: 21300000, guid: 1d292288c47fb6b4cb86c2985126a849, type: 3}
