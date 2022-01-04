@@ -12,4 +12,5 @@ public class OreData : ScriptableObject
     public string itemName;
     public int maxAmount;
     public bool isUsable;
+    public List<AnimationCurve> probabilityGraphs;
 }

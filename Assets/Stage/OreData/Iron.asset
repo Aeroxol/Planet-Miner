@@ -14,7 +14,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   editorName: Iron
   artwork: {fileID: 21300000, guid: c12f24216fa86e6448f7b8f3d6e7bd4d, type: 3}
-  itemCode: 2
+  probabilityGraphs:
+  - serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.06
+      outSlope: 0.06
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6666667
+      value: 0.04
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.01
+      inSlope: -0.09
+      outSlope: -0.09
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+    itemCode: 2
   itemName: "\uCCA0"
   maxAmount: 5
   isUsable: 0

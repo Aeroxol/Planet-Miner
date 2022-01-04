@@ -11,7 +11,7 @@ public class Stage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Generate(data);
+        Generate(GameManager.Instance.curStage);
     }
 
     // Update is called once per frame
@@ -32,14 +32,14 @@ public class Stage : MonoBehaviour
                 float prob = Random.Range(0f, 1f);
                 for(int p = _data.ores.Count - 1; p >= 0; --p)
                 {
-                    if (prob < _data.oreProbs[p].Evaluate(j))
+                    if (prob < _data.oreProbs[p].Evaluate((float)j/_data.height))
                     {
                         stage[i, j] = p + 1;
                         break;
                     }
                     else
                     {
-                        prob = prob - _data.oreProbs[p].Evaluate(j);
+                        prob = prob - _data.oreProbs[p].Evaluate((float)j / _data.height);
                     }
                 }
             }

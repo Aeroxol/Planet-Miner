@@ -331,6 +331,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd60269c4d7a41744bb6f0e01d6b9743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ores:
+  - {fileID: 11400000, guid: 16bcd52e5f7b79a428ebd8ddd5628846, type: 2}
+  - {fileID: 11400000, guid: 00c9098a050b5904d982b4e73af70149, type: 2}
+  - {fileID: 11400000, guid: 8afb306bb9c59274aa3be2026e48fa51, type: 2}
+  - {fileID: 11400000, guid: dd3166af7d6028c45985aafc4dd7df12, type: 2}
+  - {fileID: 11400000, guid: 6d390c39f669be64f8b8b591015f20b0, type: 2}
+  blocks:
+  - {fileID: 11400000, guid: 1262bb6b5b4b89f42a7b31b028541834, type: 2}
+  dirtBlocks:
+  - {fileID: 11400000, guid: 987a30e9b07ea7b40887d1cf7dd0ebe1, type: 2}
+  - {fileID: 11400000, guid: 95dcda0c614d83a4aa3a92f8d8626d84, type: 2}
+  - {fileID: 11400000, guid: 067023df8f182c1468e435426065e548, type: 2}
+  - {fileID: 11400000, guid: 458e295082a4c2b44876f151de3f4de4, type: 2}
+  - {fileID: 11400000, guid: 9605be4800b1caa468ef6d28b3922b68, type: 2}
+  planetImages:
+  - {fileID: 21300000, guid: 26144e4b37a7c7c43a0bd5f36cc886ee, type: 3}
+  - {fileID: 21300000, guid: 7bcbb05259bee604f995ec9adf2c4002, type: 3}
+  - {fileID: 21300000, guid: 844d23b10d536bd4d9a0079ab9b4ed4d, type: 3}
 --- !u!4 &686816027
 Transform:
   m_ObjectHideFlags: 0

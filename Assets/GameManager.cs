@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private GameManager instance = null;
+    private static GameManager instance = null;
+
+    public List<OreData> ores = new List<OreData>();
+    public List<BlockData> blocks = new List<BlockData>();
+    public List<BlockData> dirtBlocks = new List<BlockData>();
+    public List<Sprite> planetImages = new List<Sprite>();
+    public StageData curStage;
     private void Awake()
     {
         if (null == instance)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -33,11 +39,11 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            if(null == Instance)
+            if(null == instance)
             {
                 return null;
             }
-            return Instance;
+            return instance;
         }
     }
 }
