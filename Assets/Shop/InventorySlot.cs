@@ -78,6 +78,7 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 outline.gameObject.SetActive(false);//
                 im.infoBox.gameObject.SetActive(false);//
                 im.useBtn.gameObject.SetActive(false);
+                im.registerBtn.gameObject.SetActive(false);
                 im.clickedSlotIndex = -1;//
             }
             else
@@ -87,8 +88,18 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 outline.gameObject.SetActive(true);
                 im.infoBox.gameObject.SetActive(true);
                 im.itemName.text = im.itemData[im.items[myIndex].itemCode].itemName;
-                if (im.itemData[im.items[myIndex].itemCode].isUsable) im.useBtn.gameObject.SetActive(true);
-                else im.useBtn.gameObject.SetActive(false);
+
+                if (im.itemData[im.items[myIndex].itemCode].isUsable)
+                {
+                    im.useBtn.gameObject.SetActive(true);
+                    im.registerBtn.gameObject.SetActive(true);
+                }
+                else
+                {
+                    im.useBtn.gameObject.SetActive(false);
+                    im.registerBtn.gameObject.SetActive(false);
+                }
+
                 im.clickedSlotIndex = myIndex;
             }
         }
@@ -98,6 +109,7 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             im.clickedSlotIndex = -1;
             im.infoBox.gameObject.SetActive(false);
             im.useBtn.gameObject.SetActive(false);
+            im.registerBtn.gameObject.SetActive(false);
             im.itemName.text = "";
         }
     }

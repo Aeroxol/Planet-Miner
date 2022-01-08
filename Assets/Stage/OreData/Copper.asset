@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   editorName: Copper
   artwork: {fileID: 21300000, guid: dda0c0fcf4f6bc44387756948657e2d8, type: 3}
+  itemCode: 1
+  itemName: "\uB3D9"
+  maxAmount: 5
+  isUsable: 0
   probabilityGraphs:
   - serializedVersion: 2
     m_Curve:
@@ -88,7 +92,3 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-      itemCode: 1
-  itemName: "\uB3D9"
-  maxAmount: 5
-  isUsable: 0

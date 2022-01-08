@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     public List<BlockData> dirtBlocks = new List<BlockData>();
     public List<Sprite> planetImages = new List<Sprite>();
     public StageData curStage;
+
+    public List<ItemInSlot> myItems = new List<ItemInSlot>();//플레이어가 가지고있는 아이템
+
     private void Awake()
     {
         if (null == instance)
