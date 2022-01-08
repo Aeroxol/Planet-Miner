@@ -43,7 +43,8 @@ public class Dynamite : MonoBehaviour
     {
         transform.position = new Vector2(block.gameObject.transform.position.x, transform.position.y);
         yield return new WaitForSeconds(explosionDelay);
-        block.DecreaseHp(10000);
+        if (block != null)
+            block.DecreaseHp(10000);
         Destroy(gameObject);
     }
 }

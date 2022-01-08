@@ -139,7 +139,8 @@ public class InventoryManager : MonoBehaviour
         infoBox.gameObject.SetActive(false);
         useBtn.gameObject.SetActive(false);
         registerBtn.gameObject.SetActive(false);
-        slots[clickedSlotIndex].outline.gameObject.SetActive(false);
+        if ((clickedSlotIndex != -1) && (clickedSlotIndex < slots.Count)) 
+            slots[clickedSlotIndex].outline.gameObject.SetActive(false);
         clickedSlotIndex = -1;
         inventoryCanvas.gameObject.SetActive(false);
     }
@@ -158,6 +159,7 @@ public class InventoryManager : MonoBehaviour
         {
             items.RemoveAt(clickedSlotIndex);
             useBtn.gameObject.SetActive(false);
+            registerBtn.gameObject.SetActive(false);
             infoBox.gameObject.SetActive(false);
             slots[clickedSlotIndex].outline.gameObject.SetActive(false);
         }
