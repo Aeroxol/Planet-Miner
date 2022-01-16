@@ -26,6 +26,7 @@ public class InventoryManager : MonoBehaviour
     public Button useBtn;
     public Button registerBtn;
     public ItemEffectManager itemEffectManager;
+    public ShopManager shopManager;
 
     public Image infoBox;
     public Text itemName;
@@ -37,14 +38,15 @@ public class InventoryManager : MonoBehaviour
     [HideInInspector] public int clickedSlotIndex = -1;
     [HideInInspector] public float middleSlotPos = 0;
     [HideInInspector] public int registeredItemCode = -1;
-    int[] itemTotal;
+    [HideInInspector] public int maxSlot = 20;
+    [HideInInspector] public int[] itemTotal;
 
      // Start is called before the first frame update
     void Start()
     {
         items = GameManager.Instance.myItems;
         inventoryCanvas.gameObject.SetActive(true);
-        for (int i=0; i<20; i++)
+        for (int i=0; i<maxSlot; i++)
         {
             GameObject temp = Instantiate(slotPrefab);
             temp.transform.SetParent(content.transform);
@@ -66,7 +68,7 @@ public class InventoryManager : MonoBehaviour
         
     }
 
-    public bool addItem(int itemCode, int amount)
+    public bool AddItem(int itemCode, int amount)
     {
         bool canGatItem = true;
 
@@ -107,6 +109,32 @@ public class InventoryManager : MonoBehaviour
         return canGatItem;
     }
 
+    public bool DeleteItem(int itemCode, int amount)
+    {
+        for (int i = items.Count - 1; i >= 0; i--)
+        {
+            if (items[i].itemCode == itemCode)
+            {
+                if (items[i].amount > amount)
+                {
+                    items[i].amount -= amount;
+                    amount = 0;
+                    break;
+                }
+                else
+                {
+                    amount -= items[i].amount;
+                    items.RemoveAt(i);
+                    if (amount <= 0) break;
+                }
+            }
+        }
+
+        RefreshSlots();
+        if (amount == 0) return true;
+        else return false;
+    }
+
     void RefreshSlots()
     {
         for (int i = 0; i < itemTotal.Length; i++) itemTotal[i] = 0;
@@ -128,6 +156,8 @@ public class InventoryManager : MonoBehaviour
                 slots[i].amount.gameObject.SetActive(false);
             }
         }
+
+        shopManager.RefreshSellSlots();
     }
 
     public void OpenClick()

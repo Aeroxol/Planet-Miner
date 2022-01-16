@@ -10,11 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c77e63f0d698c64eb50cd1a02695b62, type: 3}
-  m_Name: RepairKit
+  m_Name: Uranium
   m_EditorClassIdentifier: 
-  editorName: RepairKit
-  artwork: {fileID: 21300000, guid: 27974b086f1346b47880ac78166c6797, type: 3}
-  itemCode: 5
-  itemName: "\uC218\uB9AC\uD0A4\uD2B8"
+  editorName: Uranium
+  artwork: {fileID: 0}
+  itemCode: 12
+  itemName: "\uC6B0\uB77C\uB284"
   maxAmount: 5
-  isUsable: 1
+  isUsable: 0
+  probabilityGraphs: []
+  price: 5000
+  description: 

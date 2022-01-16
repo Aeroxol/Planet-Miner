@@ -165,7 +165,7 @@ public class PlayerManager : MonoBehaviour
         if (col.collider.CompareTag("Ore"))
         {
             //±¤¼® È¹µæ
-            bool gotItem = invenManager.addItem(col.gameObject.GetComponent<Ore>().data.itemCode, 1);
+            bool gotItem = invenManager.AddItem(col.gameObject.GetComponent<Ore>().data.itemCode, 1);
             if(gotItem) Destroy(col.gameObject);
         }
     }

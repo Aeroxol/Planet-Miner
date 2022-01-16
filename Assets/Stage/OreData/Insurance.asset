@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c77e63f0d698c64eb50cd1a02695b62, type: 3}
-  m_Name: Warp
+  m_Name: Insurance
   m_EditorClassIdentifier: 
-  editorName: Warp
-  artwork: {fileID: 21300000, guid: e656103f015c9134a818d9f4931dae76, type: 3}
-  itemCode: 20
-  itemName: "\uAE34\uAE09\uC6CC\uD504\uC7A5\uCE58"
-  maxAmount: 5
+  editorName: Insurance
+  artwork: {fileID: 21300000, guid: 672925e04033da441a18b95bbde20c09, type: 3}
+  itemCode: 21
+  itemName: "\uC6B0\uC8FC\uBCF4\uD5D8"
+  maxAmount: 1
   isUsable: 1
   probabilityGraphs: []
-  price: 1000
-  description: "\uC6B0\uC8FC\uC120 \uCC29\uB959\uC9C0\uC810\uC73C\uB85C \uBCF5\uADC0"
+  price: 50000
+  description: "\uAC8C\uC784 \uC624\uBC84\uC2DC \uC778\uBCA4\uD1A0\uB9AC \uC18D \uC544\uC774\uD15C\uB4E4\uC744
+    \uBCF4\uD638\uD55C\uB2E4."

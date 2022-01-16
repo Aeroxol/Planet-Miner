@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c77e63f0d698c64eb50cd1a02695b62, type: 3}
-  m_Name: Gold
+  m_Name: Chromium
   m_EditorClassIdentifier: 
-  editorName: Gold
-  artwork: {fileID: 21300000, guid: b74f93338724c044a8d8b773a65d74c4, type: 3}
-  itemCode: 4
-  itemName: "\uAE08"
+  editorName: Chromium
+  artwork: {fileID: 21300000, guid: b4c3716310cea5f4d8983fccaada73ca, type: 3}
+  itemCode: 9
+  itemName: "\uD06C\uB85C\uBBB4"
   maxAmount: 5
   isUsable: 0
   probabilityGraphs:
@@ -24,36 +24,27 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 0.03150998
+      outSlope: 0.03150998
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.25
-      value: 0.005
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      time: 0.56886935
+      value: 0.017925061
+      inSlope: 0.023485363
+      outSlope: 0.023485363
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.5
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0.05
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      time: 1.0000459
+      value: 0.024591371
+      inSlope: 0.015460744
+      outSlope: 0.015460744
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0

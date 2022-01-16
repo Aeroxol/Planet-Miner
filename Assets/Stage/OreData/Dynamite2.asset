@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c77e63f0d698c64eb50cd1a02695b62, type: 3}
-  m_Name: Warp
+  m_Name: Dynamite2
   m_EditorClassIdentifier: 
-  editorName: Warp
-  artwork: {fileID: 21300000, guid: e656103f015c9134a818d9f4931dae76, type: 3}
-  itemCode: 20
-  itemName: "\uAE34\uAE09\uC6CC\uD504\uC7A5\uCE58"
-  maxAmount: 5
+  editorName: Dynamite2
+  artwork: {fileID: 21300000, guid: 6d9f1acb7986e0c48a6d549935368a71, type: 3}
+  itemCode: 18
+  itemName: "\uAC15\uD654\uB2E4\uC774\uB108\uB9C8\uC774\uD2B8"
+  maxAmount: 1
   isUsable: 1
   probabilityGraphs: []
-  price: 1000
-  description: "\uC6B0\uC8FC\uC120 \uCC29\uB959\uC9C0\uC810\uC73C\uB85C \uBCF5\uADC0"
+  price: 20000
+  description: "\uC8FC\uBCC0 \uB545\uC744 \uBD80\uC21C\uB2E4. \uB2E8\uB2E8\uD55C
+    \uBC14\uC704\uB3C4 \uBD80\uC220 \uC218 \uC788\uB2E4."

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c77e63f0d698c64eb50cd1a02695b62, type: 3}
-  m_Name: Gold
+  m_Name: Lithium
   m_EditorClassIdentifier: 
-  editorName: Gold
-  artwork: {fileID: 21300000, guid: b74f93338724c044a8d8b773a65d74c4, type: 3}
-  itemCode: 4
-  itemName: "\uAE08"
+  editorName: Lithium
+  artwork: {fileID: 21300000, guid: 9fa283ec1181e2a4cbaffbf767c351cf, type: 3}
+  itemCode: 7
+  itemName: "\uB9AC\uD2AC"
   maxAmount: 5
   isUsable: 0
   probabilityGraphs:
@@ -24,41 +24,23 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 0.08722995
+      outSlope: 0.08722995
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.25
-      value: 0.005
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.5
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
       time: 1
-      value: 0.05
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      value: 0.08722995
+      inSlope: 0.08722995
+      outSlope: 0.08722995
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  price: 500
+  price: 200
   description: 
