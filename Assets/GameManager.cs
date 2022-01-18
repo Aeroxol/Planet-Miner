@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     public List<ItemInSlot> myItems = new List<ItemInSlot>();//플레이어가 가지고있는 아이템
 
+    public SaveData curSaveData;
     private void Awake()
     {
         if (null == instance)
@@ -48,5 +49,10 @@ public class GameManager : MonoBehaviour
             }
             return instance;
         }
+    }
+
+    public void BtnSave()
+    {
+
     }
 }
