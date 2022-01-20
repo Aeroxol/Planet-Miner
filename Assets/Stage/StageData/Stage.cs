@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Stage : MonoBehaviour
 {
-    public StageData data;
     public Block block;
     public BlockData immortalBlock;
     public Ore ore;
@@ -120,6 +119,11 @@ public class Stage : MonoBehaviour
         }
 
         // Immortal Block Set
+        for(int i = 0; i < 5; ++i)
+        {
+            stage[_data.width/2 + i, 0] = -1;
+            stage[_data.width/2 - i, 0] = -1;
+        }
         for(int i = 0; i < _data.disNum; ++i)
         {
             int _x = Random.Range(0, _data.width - 2);
