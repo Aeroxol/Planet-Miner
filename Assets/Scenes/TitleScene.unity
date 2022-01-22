@@ -485,6 +485,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7bcbb05259bee604f995ec9adf2c4002, type: 3}
   - {fileID: 21300000, guid: 844d23b10d536bd4d9a0079ab9b4ed4d, type: 3}
   curStage: {fileID: 0}
+  stageLevelData:
+  - {fileID: 11400000, guid: 5dfa1c183f6e5424c94f5f8f7647b723, type: 2}
+  - {fileID: 11400000, guid: 46efd991d40ac2d479a305be1c1fdf3a, type: 2}
+  - {fileID: 11400000, guid: de9b3bc92f9f3514a8104d1fe682a92b, type: 2}
+  - {fileID: 11400000, guid: a7827c2cd35f6924094edabbf8749342, type: 2}
+  - {fileID: 11400000, guid: 99e05c649b9e9254585d44f90b059fe6, type: 2}
   myItems: []
 --- !u!4 &686816027
 Transform:

@@ -6,10 +6,11 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance = null;
 
-    public List<OreData> ores = new List<OreData>();
+    // Stage Generator Property
     public List<BlockData> blocks = new List<BlockData>();
-    public List<BlockData> dirtBlocks = new List<BlockData>();
     public List<Sprite> planetImages = new List<Sprite>();
+    public List<StageData> stageLevelData = new List<StageData>();
+
     public StageData curStage;
 
     public List<ItemInSlot> myItems = new List<ItemInSlot>();//플레이어가 가지고있는 아이템

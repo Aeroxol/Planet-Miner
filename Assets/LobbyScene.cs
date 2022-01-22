@@ -22,7 +22,7 @@ public class LobbyScene : MonoBehaviour
     public RectTransform scrollContents;
     private Task scrollTask;
 
-    public Text descName;
+    public Text descLevel;
     public Text descOres;
 
     private void Awake()
@@ -36,15 +36,6 @@ public class LobbyScene : MonoBehaviour
                 UpdateDescription();
             }
         }
-    }
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
     }
 
     public void SelectPage()
@@ -63,7 +54,7 @@ public class LobbyScene : MonoBehaviour
 
     public void UpdateDescription()
     {
-        descName.text = stages[scrollIndex].name;
+        descLevel.text = (stages[scrollIndex].level + 1).ToString();
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < stages[scrollIndex].ores.Count; ++i)
         {

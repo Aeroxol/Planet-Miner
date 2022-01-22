@@ -745,7 +745,7 @@ GameObject:
   - component: {fileID: 311527211}
   - component: {fileID: 311527210}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TxtLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -803,7 +803,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Name
+  m_Text: Level
 --- !u!222 &311527211
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3011,7 +3011,7 @@ MonoBehaviour:
   - {fileID: 1812664132}
   - {fileID: 517393729}
   scrollContents: {fileID: 1805113797}
-  descName: {fileID: 311527210}
+  descLevel: {fileID: 311527210}
   descOres: {fileID: 1673376908}
 --- !u!1 &1441536942
 GameObject:
@@ -3863,7 +3863,7 @@ GameObject:
   - component: {fileID: 1673376909}
   - component: {fileID: 1673376908}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: TxtOres
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4830,7 +4830,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2061960116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4934,7 +4934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2083456404
 MonoBehaviour:
   m_ObjectHideFlags: 0
