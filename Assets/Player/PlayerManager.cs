@@ -11,10 +11,13 @@ public class PlayerManager : MonoBehaviour
     public int digPower;
     public int maxHp;
     public int hp;
+    int displayHp;
     public int heatResist;
     public int coldResist;
     public float digDelay = 0.5f;
     public InventoryManager invenManager;
+    public Image hpBar;
+    public Image tempBar;
 
     Rigidbody2D rigid2d;
     Vector2 colliderSize;
@@ -24,7 +27,7 @@ public class PlayerManager : MonoBehaviour
     bool moveRight = false;
     bool moveUp = false;
     bool digging = false;
-    bool flying = true;
+    [HideInInspector] public bool flying = true;
 
     bool isDigDelay = false;
     float digDelaytimer = 0;
@@ -33,6 +36,10 @@ public class PlayerManager : MonoBehaviour
     float heatDelay = 1.0f;
     bool isHeatDelay = false;
     float heatDelaytimer = 0;
+    float temperature = 0;
+    float tempIncreaseRate = 3.0f; // 3 2.75 2.5 2.25 2
+
+    WaitForSeconds decreaseDelay = new WaitForSeconds(0.1f);
 
     // Start is called before the first frame update
     void Start()
@@ -71,7 +78,6 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-        hpTemp.text = "HP: " + hp.ToString() + " / " + maxHp.ToString();
         if (isHeatDelay)
         {
             heatDelaytimer += Time.deltaTime;
@@ -83,20 +89,33 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
-            if (transform.position.y < 0)
+            if (temperature > 0)
             {
                 if (hp > 0)
-                    hp -= 1;
+                {
+                    //hp -= (int)(temperature/2) + 1;
+                    StartCoroutine(DecreaseHp((int)(temperature / 2) + 1));
+                    if (hp < 0)
+                    {
+                        hp = 0;
+                    }
+                }
+                    
             }
-            else
-            {
-                if(hp<maxHp)
-                    hp += hp/5;
-                if (hp > maxHp) hp = maxHp;
-            } 
             isHeatDelay = true;
         }
 
+        if (transform.position.y < 0) temperature = Mathf.Abs(rigid2d.position.y)/tempIncreaseRate;
+        else temperature = 0;
+        tempBar.fillAmount = temperature/100;
+
+        hpTemp.text = "HP: " + hp.ToString() + " / " + maxHp.ToString();
+        hpBar.fillAmount = (float)hp / maxHp;
+
+        if (hp <= 0)
+        {
+            GameOver();
+        }
     }
 
     private void FixedUpdate()
@@ -119,7 +138,7 @@ public class PlayerManager : MonoBehaviour
         flying = true;
         if (hit.collider != null) // ¹Ù´Ú¿¡ ´ê¾Ò´ÂÁö °Ë»ç
         {
-            if (hit.distance - (colliderSize.y / 2) < 0.2f)
+            if (hit.distance - (colliderSize.y / 2) < 0.05f)
             {
                 flying = false;
             }
@@ -159,14 +178,13 @@ public class PlayerManager : MonoBehaviour
             isDigDelay = true;
         }
     }
-
-    private void OnCollisionEnter2D(Collision2D col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.collider.CompareTag("Ore"))
+        if (col.CompareTag("Ore"))
         {
             //±¤¼® È¹µæ
-            bool gotItem = invenManager.AddItem(col.gameObject.GetComponent<Ore>().data.itemCode, 1);
-            if(gotItem) Destroy(col.gameObject);
+            bool gotItem = invenManager.AddItem(col.transform.parent.gameObject.GetComponent<Ore>().data.itemCode, 1);
+            if (gotItem) Destroy(col.transform.parent.gameObject);
         }
     }
  
@@ -174,6 +192,34 @@ public class PlayerManager : MonoBehaviour
     {
         hp += amount;
         if (hp > maxHp) hp = maxHp;
+    }
+
+    void GameOver()
+    {
+
+    }
+
+    public IEnumerator RestoreHpItem(int amount)
+    {
+        for (int i = 0; i < amount/50; i++)
+        {
+            hp+=50;
+            if (hp >= maxHp)
+            {
+                hp = maxHp;
+                break;
+            }
+            yield return null;
+        }
+        yield return null;
+    }
+    IEnumerator DecreaseHp(int amount)
+    {
+        for(int i=0; i<amount; i++)
+        {
+            hp--;
+            yield return decreaseDelay;
+        }
     }
 
     public void LeftBtnDown()

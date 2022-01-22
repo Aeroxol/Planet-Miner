@@ -5,31 +5,17 @@ using UnityEngine;
 public class Dynamite : MonoBehaviour
 {
     float explosionDelay = 3.0f;
+    RaycastHit2D hitLeft;
+    RaycastHit2D hitRight;
+    RaycastHit2D hit;
+    GameObject block;
+
+    public Rigidbody2D rigid2d;
 
     // Start is called before the first frame update
     void Start()
     {
-        //RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1.0f, LayerMask.GetMask("Block"));
-        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, new Vector2(-1,-1), 0.9f, LayerMask.GetMask("Block"));
-        RaycastHit2D hitRight = Physics2D.Raycast(transform.position, new Vector2(1, -1), 0.9f, LayerMask.GetMask("Block"));
-
-        if (hitLeft.collider != null)
-        {
-            if (hitRight.collider != null)
-            {
-                if (Vector2.Distance(transform.position, hitLeft.transform.position) <= Vector2.Distance(transform.position, hitRight.transform.position))
-                    StartCoroutine(Explosion(hitLeft.collider.GetComponent<Block>()));
-                else
-                    StartCoroutine(Explosion(hitRight.collider.GetComponent<Block>()));
-            }
-            else
-                StartCoroutine(Explosion(hitLeft.collider.GetComponent<Block>()));
-        }
-        else
-        {
-            if (hitRight.collider != null)
-                StartCoroutine(Explosion(hitRight.collider.GetComponent<Block>()));
-        }
+        StartCoroutine(Explosion());
     }
 
     // Update is called once per frame
@@ -39,12 +25,23 @@ public class Dynamite : MonoBehaviour
         //Debug.DrawRay(transform.position, new Vector3(0.9f, -0.9f, 0), new Color(0, 1, 0));
     }
 
-    IEnumerator Explosion(Block block)
+    private void FixedUpdate()
     {
-        transform.position = new Vector2(block.gameObject.transform.position.x, transform.position.y);
+        hit = Physics2D.Raycast(transform.position, Vector2.down, 0.5f, LayerMask.GetMask("Block"));
+        if (hit.collider != null)
+            block = hit.collider.gameObject;
+        else block = null;
+
+        if (block != null) rigid2d.MovePosition(new Vector2(block.transform.position.x, rigid2d.position.y));
+    }
+
+    IEnumerator Explosion()
+    {
         yield return new WaitForSeconds(explosionDelay);
         if (block != null)
-            block.DecreaseHp(10000);
+        {
+            block.GetComponent<Block>().DecreaseHp(10000);
+        }
         Destroy(gameObject);
     }
 }

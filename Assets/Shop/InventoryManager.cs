@@ -71,21 +71,35 @@ public class InventoryManager : MonoBehaviour
     public bool AddItem(int itemCode, int amount)
     {
         bool canGatItem = true;
+        int myMaxAmount = itemData[itemCode].maxAmount;
 
-        if (items.Count == 0) items.Add(new ItemInSlot(itemCode, amount));
-        else
+        if (items.Count == 0)
+        {
+            if (amount <= myMaxAmount)
+            {
+                items.Add(new ItemInSlot(itemCode, amount));
+                amount = 0;
+            }
+            else
+            {
+                items.Add(new ItemInSlot(itemCode, myMaxAmount));
+                amount -= myMaxAmount;
+            }
+        }
+
+        if (amount > 0)
         {
             for (int i = 0; i < items.Count; i++)
             {
                 if (items[i].itemCode == itemCode)
                 {
-                    if (items[i].amount < itemData[itemCode].maxAmount)
+                    if (items[i].amount < myMaxAmount)
                     {
                         items[i].amount += amount;
-                        if (items[i].amount > itemData[itemCode].maxAmount)
+                        if (items[i].amount > myMaxAmount)
                         {
-                            amount = items[i].amount - itemData[itemCode].maxAmount;
-                            items[i].amount = itemData[itemCode].maxAmount;
+                            amount = items[i].amount - myMaxAmount;
+                            items[i].amount = myMaxAmount;
 
                         }
                         else break;
@@ -93,8 +107,16 @@ public class InventoryManager : MonoBehaviour
                 }
                 if (i + 1 == items.Count)
                 {
-                    items.Add(new ItemInSlot(itemCode, amount));
-                    break;
+                    if (amount <= myMaxAmount)
+                    {
+                        items.Add(new ItemInSlot(itemCode, amount));
+                        break;
+                    }
+                    else
+                    {
+                        items.Add(new ItemInSlot(itemCode, myMaxAmount));
+                        amount -= myMaxAmount;
+                    }
                 }
             }
         }

@@ -26,12 +26,10 @@ public class BuyPanel : MonoBehaviour
     int price;
     int totalPrice;
 
-    [HideInInspector] public List<ItemInSlot> items;
-
     // Start is called before the first frame update
     void Start()
     {
-        items = GameManager.Instance.myItems;
+
     }
 
     // Update is called once per frame
@@ -121,13 +119,13 @@ public class BuyPanel : MonoBehaviour
     {
         int availableAmount;
 
-        availableAmount = (inventoryManager.maxSlot - items.Count) * shopManager.shopItemData[index].maxAmount;
+        availableAmount = (inventoryManager.maxSlot - GameManager.Instance.myItems.Count) * shopManager.shopItemData[index].maxAmount;
 
-        for(int i=0; i<items.Count; i++)
+        for(int i=0; i< GameManager.Instance.myItems.Count; i++)
         {
-            if (items[i].itemCode == itemCode)
+            if (GameManager.Instance.myItems[i].itemCode == itemCode)
             {
-                availableAmount += shopManager.shopItemData[index].maxAmount - items[i].amount;
+                availableAmount += shopManager.shopItemData[index].maxAmount - GameManager.Instance.myItems[i].amount;
             }
         }
 
@@ -137,6 +135,7 @@ public class BuyPanel : MonoBehaviour
     public void BuyClick()
     {
         if (totalPrice > shopManager.test_money) return;
+        if (amount > maxAvailable) return;
 
         shopManager.ChangeMoney(-totalPrice);
         inventoryManager.AddItem(itemCode, amount);

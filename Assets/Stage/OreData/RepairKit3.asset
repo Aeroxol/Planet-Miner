@@ -19,5 +19,5 @@ MonoBehaviour:
   maxAmount: 1
   isUsable: 1
   probabilityGraphs: []
-  price: 0
+  price: 2000
   description: "\uCCB4\uB825\uC744 \uB300\uB7C9 \uD68C\uBCF5\uD55C\uB2E4."

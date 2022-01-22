@@ -7,6 +7,7 @@ public class Block : MonoBehaviour
     private BlockData data;
     private int hp;
     private SpriteRenderer spriteRenderer;
+    [HideInInspector] public Rigidbody2D myOre;
 
     private void Awake()
     {
@@ -18,13 +19,13 @@ public class Block : MonoBehaviour
     {
         
     }
-
+    /*
     // Update is called once per frame
     void Update()
     {
         
     }
-
+    */
     public void SetData(BlockData _data)
     {
         data = _data;
@@ -55,6 +56,7 @@ public class Block : MonoBehaviour
         }
         if (hp <= 0)
         {
+            if (myOre != null) myOre.simulated = true;
             Destroy(gameObject);
         }
     }

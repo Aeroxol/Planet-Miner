@@ -193,6 +193,7 @@ public class Stage : MonoBehaviour
                         Ore newOre = GameObject.Instantiate<Ore>(ore);
                         newOre.transform.position = new Vector3(i - _data.width / 2, -j, 0);
                         newOre.SetData(_data.ores[p]);
+                        newBlock.GetComponent<Block>().myOre = newOre.GetComponent<Rigidbody2D>();//1월20일 추가
                         break;
                     }
                 }
