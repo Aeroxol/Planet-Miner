@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public StageData curStage;
 
     public List<ItemInSlot> myItems = new List<ItemInSlot>();//플레이어가 가지고있는 아이템
+    public int myMoney; //돈
 
     public SaveData curSaveData;
     private void Awake()

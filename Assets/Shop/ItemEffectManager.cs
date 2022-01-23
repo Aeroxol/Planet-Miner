@@ -7,6 +7,7 @@ public class ItemEffectManager : MonoBehaviour
     public GameObject player;
     public PlayerManager playerManager;
     public GameObject dynamitePrefab;
+    public GameObject dynamiteB_Prefab;
     public GameObject rocketBombPrefab;
     public Rigidbody2D playerRigid;
 
@@ -22,8 +23,10 @@ public class ItemEffectManager : MonoBehaviour
         
     }
 
-    public void ItemEffect(int itemCode)
+    public bool ItemEffect(int itemCode)
     {
+        bool success = true;
+
         switch (itemCode)
         {
             case 14:
@@ -39,7 +42,7 @@ public class ItemEffectManager : MonoBehaviour
                 CreateDynamite();
                 break;
             case 18:
-                CreateDynamite();
+                CreateDynamiteB();
                 break;
             case 19:
                 CreateRocketBomb();
@@ -48,13 +51,22 @@ public class ItemEffectManager : MonoBehaviour
                 EscapeWarp();
                 break;
             case 21:
+                if (playerManager.itemProtected)
+                    success = false;
+                else playerManager.itemProtected = true;
                 break;
         }
+        return success;
     }
 
     void CreateDynamite()
     {
         GameObject temp = Instantiate(dynamitePrefab);
+        temp.transform.position = player.transform.position;
+    }
+    void CreateDynamiteB()
+    {
+        GameObject temp = Instantiate(dynamiteB_Prefab);
         temp.transform.position = player.transform.position;
     }
     void CreateRocketBomb()

@@ -5,8 +5,6 @@ using UnityEngine;
 public class Dynamite : MonoBehaviour
 {
     float explosionDelay = 3.0f;
-    RaycastHit2D hitLeft;
-    RaycastHit2D hitRight;
     RaycastHit2D hit;
     GameObject block;
 
@@ -40,7 +38,7 @@ public class Dynamite : MonoBehaviour
         yield return new WaitForSeconds(explosionDelay);
         if (block != null)
         {
-            block.GetComponent<Block>().DecreaseHp(10000);
+            block.GetComponent<Block>().DecreaseHp(100000000);
         }
         Destroy(gameObject);
     }

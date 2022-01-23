@@ -55,7 +55,7 @@ public class BuyPanel : MonoBehaviour
 
     public void PlusOneClick()
     {
-        if (((totalPrice + price) <= shopManager.test_money) && ((amount + 1) <= maxAvailable))
+        if (((totalPrice + price) <= GameManager.Instance.myMoney) && ((amount + 1) <= maxAvailable))
         {
             amount++;
             totalPrice += price;
@@ -70,16 +70,16 @@ public class BuyPanel : MonoBehaviour
         if (maxAvailable - amount < 10) available = (maxAvailable - amount);
         if (available < 1) return;
 
-        if ((totalPrice + (price * available)) <= shopManager.test_money)
+        if ((totalPrice + (price * available)) <= GameManager.Instance.myMoney)
         {
             amount += available;
             totalPrice += (price * available);
             amountTxt.text = amount.ToString();
             priceTxt.text = totalPrice.ToString();
         }
-        else if ((shopManager.test_money / price) > amount)
+        else if ((GameManager.Instance.myMoney / price) > amount)
         {
-            amount = shopManager.test_money / price;
+            amount = GameManager.Instance.myMoney / price;
             totalPrice = amount * price;
             amountTxt.text = amount.ToString();
             priceTxt.text = totalPrice.ToString();
@@ -134,7 +134,7 @@ public class BuyPanel : MonoBehaviour
 
     public void BuyClick()
     {
-        if (totalPrice > shopManager.test_money) return;
+        if (totalPrice > GameManager.Instance.myMoney) return;
         if (amount > maxAvailable) return;
 
         shopManager.ChangeMoney(-totalPrice);

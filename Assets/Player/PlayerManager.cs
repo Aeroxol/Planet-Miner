@@ -8,16 +8,18 @@ public class PlayerManager : MonoBehaviour
     public float speed;
     public float boosterPower;
     public float maxFlySpeed;
-    public int digPower;
+    public int digPower = 50;
     public int maxHp;
     public int hp;
-    int displayHp;
+    //int displayHp;
     public int heatResist;
     public int coldResist;
     public float digDelay = 0.5f;
     public InventoryManager invenManager;
     public Image hpBar;
     public Image tempBar;
+    public LeaveStage leaveStage;
+    [HideInInspector] public bool itemProtected = false;
 
     Rigidbody2D rigid2d;
     Vector2 colliderSize;
@@ -196,7 +198,7 @@ public class PlayerManager : MonoBehaviour
 
     void GameOver()
     {
-
+        leaveStage.GameOver(itemProtected);
     }
 
     public IEnumerator RestoreHpItem(int amount)

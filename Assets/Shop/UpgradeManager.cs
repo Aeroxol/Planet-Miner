@@ -32,7 +32,7 @@ public class UpgradeManager : MonoBehaviour
     }
     public void DigUpgradeClick()
     {
-        player.digPower++;
+        player.digPower+=50;
         digLvlText.text = "Current:" + player.digPower;
     }
     public void HpUpgradeClick()

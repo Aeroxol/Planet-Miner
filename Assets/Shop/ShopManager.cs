@@ -17,8 +17,6 @@ public class ShopManager : MonoBehaviour
     public List<OreData> shopItemData; 
     public List<BuySlot> buySlots;
     List<SellSlot> sellSlots = new List<SellSlot>();
-    
-    public int test_money;
 
     // Start is called before the first frame update
     void Start()    
@@ -27,7 +25,7 @@ public class ShopManager : MonoBehaviour
         {
             buySlots[i].thumbnail.sprite = shopItemData[i].artwork;
         }
-        moneyTxt.text = test_money.ToString();
+        moneyTxt.text = GameManager.Instance.myMoney.ToString();
         CreateSellSlots();
         buyTab.SetActive(true);
     }
@@ -45,8 +43,8 @@ public class ShopManager : MonoBehaviour
     }
     public void ChangeMoney(int price)
     {
-        test_money += price;
-        moneyTxt.text = test_money.ToString();
+        GameManager.Instance.myMoney += price;
+        moneyTxt.text = GameManager.Instance.myMoney.ToString();
     }
     void CreateSellSlots()
     {

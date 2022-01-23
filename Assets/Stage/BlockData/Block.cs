@@ -38,20 +38,21 @@ public class Block : MonoBehaviour
         hp -= playerPower;
         if (data.artwork.Length > 1)
         {
-            switch (hp)
+            if ((hp>300)&&(hp <= 400))
             {
-                case 4:
-                    spriteRenderer.sprite = data.artwork[1];
-                    break;
-                case 3:
-                    spriteRenderer.sprite = data.artwork[2];
-                    break;
-                case 2:
-                    spriteRenderer.sprite = data.artwork[3];
-                    break;
-                case 1:
-                    spriteRenderer.sprite = data.artwork[4];
-                    break;
+                spriteRenderer.sprite = data.artwork[1];
+            }
+            if ((hp > 200)&&(hp <= 300))
+            {
+                spriteRenderer.sprite = data.artwork[2];
+            }
+            if ((hp > 100)&&(hp <= 200))
+            {
+                spriteRenderer.sprite = data.artwork[3];
+            }
+            if ((hp <= 100))
+            {
+                spriteRenderer.sprite = data.artwork[4];
             }
         }
         if (hp <= 0)

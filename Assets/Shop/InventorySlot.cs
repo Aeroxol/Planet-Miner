@@ -93,11 +93,17 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 {
                     im.useBtn.gameObject.SetActive(true);
                     im.registerBtn.gameObject.SetActive(true);
+
+                    im.itemDescription.gameObject.SetActive(true);
+                    im.itemDescription.text = im.itemData[im.items[myIndex].itemCode].description;
+                    LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)im.infoBoxCsf.transform);//
                 }
                 else
                 {
                     im.useBtn.gameObject.SetActive(false);
                     im.registerBtn.gameObject.SetActive(false);
+
+                    im.itemDescription.gameObject.SetActive(false);
                 }
 
                 im.clickedSlotIndex = myIndex;

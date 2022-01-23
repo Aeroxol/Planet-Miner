@@ -23,6 +23,7 @@ public class InventoryManager : MonoBehaviour
     public Canvas inventoryCanvas;
     public GameObject content;
     public GameObject slotPrefab;
+    public Text moneyTxt;
     public Button useBtn;
     public Button registerBtn;
     public ItemEffectManager itemEffectManager;
@@ -31,6 +32,7 @@ public class InventoryManager : MonoBehaviour
     public Image infoBox;
     public Text itemName;
     public Text itemDescription;
+    public ContentSizeFitter infoBoxCsf;
     public Image hotkeyImg;
 
     //List<GameObject> slots = new List<GameObject>();
@@ -185,6 +187,7 @@ public class InventoryManager : MonoBehaviour
     public void OpenClick()
     {
         inventoryCanvas.gameObject.SetActive(true);
+        moneyTxt.text = GameManager.Instance.myMoney.ToString();
     }
     public void CloseClick()
     {
@@ -199,7 +202,8 @@ public class InventoryManager : MonoBehaviour
 
     public void UseClick()
     {
-        itemEffectManager.ItemEffect(items[clickedSlotIndex].itemCode);
+        bool success = itemEffectManager.ItemEffect(items[clickedSlotIndex].itemCode);
+        if (!success) return;
         items[clickedSlotIndex].amount -= 1;
         itemTotal[items[clickedSlotIndex].itemCode] -= 1;
         if (itemTotal[items[clickedSlotIndex].itemCode] <= 0)
@@ -235,7 +239,9 @@ public class InventoryManager : MonoBehaviour
             {
                 if (items[i].itemCode == registeredItemCode)
                 {
-                    itemEffectManager.ItemEffect(registeredItemCode);
+                    bool success = itemEffectManager.ItemEffect(registeredItemCode);
+                    if (!success) return;
+
                     items[i].amount -= 1;
                     itemTotal[registeredItemCode] -= 1;
                     if (items[i].amount <= 0)
