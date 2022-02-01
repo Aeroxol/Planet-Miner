@@ -7,7 +7,6 @@ public class Stage : MonoBehaviour
     public Block block;
     public BlockData immortalBlock;
     public Ore ore;
-    public int[,] stageMap;
     // Start is called before the first frame update
     void Start()
     {
@@ -123,11 +122,13 @@ public class Stage : MonoBehaviour
             stage = temp;
         }
         // Immortal Block Set
+        // base
         for(int i = 0; i < 5; ++i)
         {
             stage[_data.width/2 + i, 0] = -1;
             stage[_data.width/2 - i, 0] = -1;
         }
+        // random
         for(int i = 0; i < _data.disNum; ++i)
         {
             int _x = Random.Range(0, _data.width - 2);
@@ -179,6 +180,10 @@ public class Stage : MonoBehaviour
         {
             for (int j = 0; j < _data.height; ++j)
             {
+                if(stage[i,j] == -9)
+                {
+                    continue;
+                }
                 Block newBlock = GameObject.Instantiate<Block>(block);
                 newBlock.transform.position = new Vector3(i - _data.width / 2, -j, 0);
                 newBlock.stage = this;

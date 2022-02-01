@@ -18,12 +18,7 @@ public class Block : MonoBehaviour
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-  
+
     public void SetData(BlockData _data)
     {
         data = _data;
