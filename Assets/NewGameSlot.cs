@@ -18,6 +18,7 @@ public class NewGameSlot : MonoBehaviour, IPointerClickHandler
             return;
         }
         GameManager.Instance.curSaveData = new SaveData(inputField.text);
+        SaveData.Save(GameManager.Instance.curSaveData);
         SceneManager.LoadScene(1);
     }
 

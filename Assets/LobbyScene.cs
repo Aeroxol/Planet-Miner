@@ -31,8 +31,8 @@ public class LobbyScene : MonoBehaviour
         {
             for(int i = 0; i < 5; ++i)
             {
-                stages.Add(StageData.NewStage(i));
-                scrollImages[i].sprite = stages[i].image;
+                stages.Add(new StageData(i));
+                scrollImages[i].sprite = GameManager.Instance.planetImages[stages[i].imageNum];
                 UpdateDescription();
             }
         }
@@ -56,9 +56,10 @@ public class LobbyScene : MonoBehaviour
     {
         descLevel.text = (stages[scrollIndex].level + 1).ToString();
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < stages[scrollIndex].ores.Count; ++i)
+        for(int i = 0; i < stages[scrollIndex].oreIndex.Count; ++i)
         {
-            sb.Append(stages[scrollIndex].ores[i].itemName);
+            //ToDo
+            sb.Append(GameManager.Instance.oreLevelData[stages[scrollIndex].level].ores[stages[scrollIndex].oreIndex[i]].itemName);
             sb.Append(" ");
         }
         descOres.text = sb.ToString();
@@ -102,7 +103,12 @@ public class LobbyScene : MonoBehaviour
 
     public void BtnStart()
     {
-        GameManager.Instance.curStage = stages[scrollIndex];
+        GameManager.Instance.curSaveData.curStageData = stages[scrollIndex];
         SceneManager.LoadScene(2);
+    }
+
+    public void BtnSave()
+    {
+        SaveData.Save(GameManager.Instance.curSaveData);
     }
 }

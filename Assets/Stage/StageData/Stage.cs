@@ -7,19 +7,24 @@ public class Stage : MonoBehaviour
     public Block block;
     public BlockData immortalBlock;
     public Ore ore;
+    public int[,] stageMap;
     // Start is called before the first frame update
     void Start()
     {
-        Generate(GameManager.Instance.curStage);
+        if(GameManager.Instance.curSaveData.curStageMap == null)
+        {
+            //new
+            Generate(GameManager.Instance.curSaveData.curStageData);
+            }
+        else
+        {
+            //load
+            RenderStage(GameManager.Instance.curSaveData.curStageData, GameManager.Instance.curSaveData.curStageMap);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
-    void Generate(StageData _data)
+    public void Generate(StageData _data)
     {
         // Init
         int[,] stage = new int[_data.width, _data.height];
@@ -29,7 +34,7 @@ public class Stage : MonoBehaviour
             {
                 stage[i, j] = 0;
                 float prob = Random.Range(0f, 1f);
-                for(int p = _data.ores.Count - 1; p >= 0; --p)
+                for(int p = _data.oreIndex.Count - 1; p >= 0; --p)
                 {
                     if (prob < _data.oreProbs[p].Evaluate((float)j/_data.height))
                     {
@@ -117,7 +122,6 @@ public class Stage : MonoBehaviour
             }
             stage = temp;
         }
-
         // Immortal Block Set
         for(int i = 0; i < 5; ++i)
         {
@@ -162,15 +166,24 @@ public class Stage : MonoBehaviour
                 }
             }
         }
-        
+
+        GameManager.Instance.curSaveData.curStageMap = stage;
 
         // Render
-        for(int i = 0; i < _data.width; ++i)
+        RenderStage(_data, stage);
+    }
+
+    private void RenderStage(StageData _data, int[,] stage)
+    {
+        for (int i = 0; i < _data.width; ++i)
         {
-            for(int j = 0; j < _data.height; ++j)
+            for (int j = 0; j < _data.height; ++j)
             {
                 Block newBlock = GameObject.Instantiate<Block>(block);
                 newBlock.transform.position = new Vector3(i - _data.width / 2, -j, 0);
+                newBlock.stage = this;
+                newBlock.x = i;
+                newBlock.y = j;
                 if (i == 0 || i == _data.width - 1 || j == _data.height - 1)
                 {
                     newBlock.SetData(immortalBlock);
@@ -184,19 +197,19 @@ public class Stage : MonoBehaviour
 
                 for (int d = 0; d < _data.depth.Count; ++d)
                 {
-                    if(j < _data.depth[d])
+                    if (j < _data.depth[d])
                     {
-                        newBlock.SetData(_data.blocks[d]);
+                        newBlock.SetData(GameManager.Instance.dirtBlocks[_data.level + d]);
                         break;
                     }
                 }
-                for (int p = 0; p < _data.ores.Count; ++p)
+                for (int p = 0; p < _data.oreIndex.Count; ++p)
                 {
                     if (stage[i, j] == p + 1)
                     {
                         Ore newOre = GameObject.Instantiate<Ore>(ore);
                         newOre.transform.position = new Vector3(i - _data.width / 2, -j, 0);
-                        newOre.SetData(_data.ores[p]);
+                        newOre.SetData(GameManager.Instance.oreLevelData[_data.level].ores[p]);
                         newBlock.GetComponent<Block>().myOre = newOre.GetComponent<Rigidbody2D>();//1월20일 추가
                         break;
                     }

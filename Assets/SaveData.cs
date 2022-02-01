@@ -2,39 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using Newtonsoft.Json;
 
 public class SaveData
 {
     // Save Data Property
-
     // =====저장하고 싶은 정보는 여기에 다 적으면 됩니다.=====
     public string saveName;
+    public int[,] curStageMap;
+
+    public StageData curStageData;
 
     // ====================여기까지====================
-
-    // Save & Load Function
     public SaveData(string name)
     {
-        if(File.Exists(Application.dataPath + "/save/" + name + ".json"))
-        {
-            Load(name);
-        }
-        else
-        {
-            saveName = name;
-            Save();
-        }
+        saveName = name;
     }
-
-    public void Save()
+    public static void Save(SaveData data)
     {
-        string data = JsonUtility.ToJson(this);
-        File.WriteAllText(Application.dataPath + "/save/" + saveName + ".json", data);
+        string data2 = JsonConvert.SerializeObject(data, Formatting.Indented);
+        File.WriteAllText(Application.dataPath + "/save/" + data.saveName + ".json", data2);
     }
 
-    public void Load(string name)
+    public static SaveData Load(string name)
     {
         string data = File.ReadAllText(Application.dataPath + "/save/" + name + ".json");
-        JsonUtility.FromJsonOverwrite(data, this);
+        return JsonConvert.DeserializeObject<SaveData>(data);
     }
 }

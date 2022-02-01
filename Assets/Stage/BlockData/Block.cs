@@ -8,6 +8,10 @@ public class Block : MonoBehaviour
     private int hp;
     private SpriteRenderer spriteRenderer;
     [HideInInspector] public Rigidbody2D myOre;
+    [HideInInspector]
+    public Stage stage;
+    [HideInInspector]
+    public int x, y;
 
     private void Awake()
     {
@@ -19,13 +23,7 @@ public class Block : MonoBehaviour
     {
         
     }
-    /*
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    */
+  
     public void SetData(BlockData _data)
     {
         data = _data;
@@ -58,6 +56,7 @@ public class Block : MonoBehaviour
         if (hp <= 0)
         {
             if (myOre != null) myOre.simulated = true;
+            GameManager.Instance.curSaveData.curStageMap[x, y] = -9;
             Destroy(gameObject);
         }
     }

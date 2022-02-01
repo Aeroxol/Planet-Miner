@@ -14,17 +14,7 @@ public class LeaveStage : MonoBehaviour
     public GameObject itemLostTxt;
     public GameObject itemProtectedTxt;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+ 
 
     public void GameOver(bool itemProtected)
     {
@@ -47,6 +37,7 @@ public class LeaveStage : MonoBehaviour
     }
     public void LeaveYesClick()
     {
+        GameManager.Instance.curSaveData.curStageMap = null;
         SceneManager.LoadScene("LobbyScene");
     }
     public void LeaveNoClick()

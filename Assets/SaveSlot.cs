@@ -14,7 +14,14 @@ public class SaveSlot : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        GameManager.Instance.curSaveData = new SaveData(nameText.text);
-        SceneManager.LoadScene(1);
+        SaveData newSaveData = SaveData.Load(nameText.text);
+        GameManager.Instance.curSaveData = newSaveData;
+        if (newSaveData.curStageMap == null)
+        {
+            SceneManager.LoadScene(1);
+        }else
+        {
+            SceneManager.LoadScene(2);
+        }
     }
 }
