@@ -3904,14 +3904,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd60269c4d7a41744bb6f0e01d6b9743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curScene: 0
+  loadingManager: {fileID: 0}
   blocks:
   - {fileID: 11400000, guid: 1262bb6b5b4b89f42a7b31b028541834, type: 2}
+  dirtBlocks: []
   planetImages:
   - {fileID: 21300000, guid: 26144e4b37a7c7c43a0bd5f36cc886ee, type: 3}
   - {fileID: 21300000, guid: 7bcbb05259bee604f995ec9adf2c4002, type: 3}
   - {fileID: 21300000, guid: 844d23b10d536bd4d9a0079ab9b4ed4d, type: 3}
-  stageLevelData: []
+  oreLevelData: []
   myItems: []
   myMoney: 1000000
 --- !u!4 &494545658
@@ -11849,6 +11850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51920427cf61fdc4c903bd573261bced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stage: {fileID: 1091025906}
 --- !u!4 &1357243799
 Transform:
   m_ObjectHideFlags: 0

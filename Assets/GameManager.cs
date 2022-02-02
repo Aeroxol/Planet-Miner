@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.UI;
 
 public class GameManager : MonoBehaviour
 {
+    // Manager Instances
     private static GameManager instance = null;
+    public LoadingManager loadingManager;
+
     // Stage Generator Property
     public List<BlockData> blocks = new List<BlockData>();
     public List<BlockData> dirtBlocks = new List<BlockData>();

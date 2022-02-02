@@ -7,22 +7,6 @@ public class Stage : MonoBehaviour
     public Block block;
     public BlockData immortalBlock;
     public Ore ore;
-    // Start is called before the first frame update
-    void Start()
-    {
-        if(GameManager.Instance.curSaveData.curStageMap == null)
-        {
-            //new
-            Generate(GameManager.Instance.curSaveData.curStageData);
-            }
-        else
-        {
-            //load
-            RenderStage(GameManager.Instance.curSaveData.curStageData, GameManager.Instance.curSaveData.curStageMap);
-        }
-    }
-
-
     public void Generate(StageData _data)
     {
         // Init
@@ -174,7 +158,7 @@ public class Stage : MonoBehaviour
         RenderStage(_data, stage);
     }
 
-    private void RenderStage(StageData _data, int[,] stage)
+    public void RenderStage(StageData _data, int[,] stage)
     {
         for (int i = 0; i < _data.width; ++i)
         {

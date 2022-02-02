@@ -21,7 +21,10 @@ public class SaveSlot : MonoBehaviour, IPointerClickHandler
             SceneManager.LoadScene(1);
         }else
         {
-            SceneManager.LoadScene(2);
+            GameManager.Instance.loadingManager.LoadScene(2);
+            //AsyncOperation ao =  SceneManager.LoadSceneAsync(2);
+            //ao.allowSceneActivation = false;
+            //SceneManager.LoadScene(2);
         }
     }
 }

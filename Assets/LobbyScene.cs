@@ -104,7 +104,7 @@ public class LobbyScene : MonoBehaviour
     public void BtnStart()
     {
         GameManager.Instance.curSaveData.curStageData = stages[scrollIndex];
-        SceneManager.LoadScene(2);
+        GameManager.Instance.loadingManager.LoadScene(2);
     }
 
     public void BtnSave()
