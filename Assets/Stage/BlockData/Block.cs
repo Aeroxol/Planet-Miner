@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
+    public bool isInvincible = false;
     private BlockData data;
     private int hp;
     private SpriteRenderer spriteRenderer;
@@ -28,6 +29,7 @@ public class Block : MonoBehaviour
 
     public void DecreaseHp(int playerPower)
     {
+        if (isInvincible) return;
         hp -= playerPower;
         if (data.artwork.Length > 1)
         {
