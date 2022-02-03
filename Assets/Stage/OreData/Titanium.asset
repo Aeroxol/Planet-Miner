@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titanium
   m_EditorClassIdentifier: 
   editorName: Titanium
-  artwork: {fileID: 21300000, guid: 02d3f49a6bae8164c876c48cb7a77455, type: 3}
+  artwork: {fileID: 21300000, guid: 3b69357003198ba48be26c08c7511095, type: 3}
   itemCode: 10
   itemName: "\uD2F0\uD0C0\uB284"
   maxAmount: 5

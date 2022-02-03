@@ -7,7 +7,10 @@ public class DynamiteB : MonoBehaviour
     float explosionDelay = 3.0f;
     RaycastHit2D hit;
     RaycastHit2D[] hits;
+    GameObject block;
+    List<GameObject> blocksUnderMe = new List<GameObject>();
     GameObject[] blocks = new GameObject[8];
+    Vector3 positionSetOrigin;
 
     public Rigidbody2D rigid2d;
 
@@ -26,12 +29,29 @@ public class DynamiteB : MonoBehaviour
 
     private void FixedUpdate()
     {
-        hit = Physics2D.Raycast(transform.position, Vector2.down, 0.5f, LayerMask.GetMask("Block"));
-        if (hit.collider != null)
-            rigid2d.MovePosition(new Vector2(hit.transform.position.x, rigid2d.position.y)); ;
+        positionSetOrigin.Set(transform.position.x, transform.position.y - 0.25f, transform.position.z);
+        hits = Physics2D.BoxCastAll(positionSetOrigin, new Vector2(0.7f, 0.2f), 0, Vector2.zero, 0, LayerMask.GetMask("Block"));
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].transform.position.y + 0.5f < transform.position.y)
+            {
+                blocksUnderMe.Add(hits[i].transform.gameObject);
+            }
+        }
+        if (hits.Length == 1) block = hits[0].transform.gameObject;
+        else if (hits.Length == 2)
+        {
+            if (Mathf.Abs(transform.position.x - hits[0].transform.position.x) < Mathf.Abs(transform.position.x - hits[1].transform.position.x))
+                block = hits[0].transform.gameObject;
+            else block = hits[1].transform.gameObject;
+        }
+        else block = null;
+
+        if (block != null) rigid2d.MovePosition(new Vector2(block.transform.position.x, rigid2d.position.y));
+        blocksUnderMe.Clear();
 
         hits = Physics2D.BoxCastAll(transform.position, Vector2.one, 0, Vector2.zero, 0, LayerMask.GetMask("Block"));
-        Debug.Log(hits.Length);
+        //Debug.Log(hits.Length);
         for (int i = 0; i < 8; i++)
         {
             if (i < hits.Length)

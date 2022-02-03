@@ -28,7 +28,7 @@ public class SellPanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -45,9 +45,9 @@ public class SellPanel : MonoBehaviour
         thumbnailAmountTxt.text = maxAmount.ToString();
         itemNameTxt.text = invenManager.itemData[itemCode].itemName;
         sellingPrice = invenManager.itemData[itemCode].price;
-        if(invenManager.itemData[itemCode].isUsable) sellingPrice = (int)(sellingPrice * 0.7);
+        if (invenManager.itemData[itemCode].isUsable) sellingPrice = (int)(sellingPrice * 0.7);
         totalPrice = sellingPrice;
-        priceTxt.text = sellingPrice.ToString();
+        priceTxt.text = string.Format("{0:#,0}", sellingPrice);
         amount = 1;
         amountTxt.text = "1";
     }
@@ -59,7 +59,7 @@ public class SellPanel : MonoBehaviour
             amount++;
             totalPrice += sellingPrice;
             amountTxt.text = amount.ToString();
-            priceTxt.text = totalPrice.ToString();
+            priceTxt.text = string.Format("{0:#,0}", totalPrice);
         }
     }
     public void PlusTenClick()
@@ -69,14 +69,14 @@ public class SellPanel : MonoBehaviour
             amount += 10;
             totalPrice += (sellingPrice * 10);
             amountTxt.text = amount.ToString();
-            priceTxt.text = totalPrice.ToString();
+            priceTxt.text = string.Format("{0:#,0}", totalPrice);
         }
         else
         {
             amount = maxAmount;
             totalPrice = sellingPrice * amount;
             amountTxt.text = amount.ToString();
-            priceTxt.text = totalPrice.ToString();
+            priceTxt.text = string.Format("{0:#,0}", totalPrice);
         }
     }
     public void MinusOneClick()
@@ -86,24 +86,24 @@ public class SellPanel : MonoBehaviour
             amount--;
             totalPrice -= sellingPrice;
             amountTxt.text = amount.ToString();
-            priceTxt.text = totalPrice.ToString();
+            priceTxt.text = string.Format("{0:#,0}", totalPrice);
         }
     }
     public void MinusTenClick()
     {
         if (amount > 10)
         {
-            amount-=10;
+            amount -= 10;
             totalPrice -= (sellingPrice * 10);
             amountTxt.text = amount.ToString();
-            priceTxt.text = totalPrice.ToString();
+            priceTxt.text = string.Format("{0:#,0}", totalPrice);
         }
         else if (amount > 1)
         {
             amount = 1;
             totalPrice = sellingPrice;
             amountTxt.text = amount.ToString();
-            priceTxt.text = totalPrice.ToString();
+            priceTxt.text = string.Format("{0:#,0}", totalPrice);
         }
     }
 
@@ -111,6 +111,7 @@ public class SellPanel : MonoBehaviour
     {
         invenManager.DeleteItem(itemCode, amount);
         shopManager.ChangeMoney(totalPrice);
+        shopManager.StartCoroutine(shopManager.ShowMoneyChangeInformation(true, totalPrice));
         gameObject.SetActive(false);
     }
     public void CancelClick()

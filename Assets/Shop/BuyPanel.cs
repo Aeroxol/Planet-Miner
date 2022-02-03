@@ -55,7 +55,7 @@ public class BuyPanel : MonoBehaviour
 
     public void PlusOneClick()
     {
-        if (((totalPrice + price) <= GameManager.Instance.myMoney) && ((amount + 1) <= maxAvailable))
+        if (((totalPrice + price) <= GameManager.Instance.curSaveData.myMoney) && ((amount + 1) <= maxAvailable))
         {
             amount++;
             totalPrice += price;
@@ -70,16 +70,16 @@ public class BuyPanel : MonoBehaviour
         if (maxAvailable - amount < 10) available = (maxAvailable - amount);
         if (available < 1) return;
 
-        if ((totalPrice + (price * available)) <= GameManager.Instance.myMoney)
+        if ((totalPrice + (price * available)) <= GameManager.Instance.curSaveData.myMoney)
         {
             amount += available;
             totalPrice += (price * available);
             amountTxt.text = amount.ToString();
             priceTxt.text = totalPrice.ToString();
         }
-        else if ((GameManager.Instance.myMoney / price) > amount)
+        else if ((GameManager.Instance.curSaveData.myMoney / price) > amount)
         {
-            amount = GameManager.Instance.myMoney / price;
+            amount = GameManager.Instance.curSaveData.myMoney / price;
             totalPrice = amount * price;
             amountTxt.text = amount.ToString();
             priceTxt.text = totalPrice.ToString();
@@ -119,13 +119,13 @@ public class BuyPanel : MonoBehaviour
     {
         int availableAmount;
 
-        availableAmount = (inventoryManager.maxSlot - GameManager.Instance.myItems.Count) * shopManager.shopItemData[index].maxAmount;
+        availableAmount = (inventoryManager.maxSlot - GameManager.Instance.curSaveData.myItems.Count) * shopManager.shopItemData[index].maxAmount;
 
-        for(int i=0; i< GameManager.Instance.myItems.Count; i++)
+        for(int i=0; i< GameManager.Instance.curSaveData.myItems.Count; i++)
         {
-            if (GameManager.Instance.myItems[i].itemCode == itemCode)
+            if (GameManager.Instance.curSaveData.myItems[i].itemCode == itemCode)
             {
-                availableAmount += shopManager.shopItemData[index].maxAmount - GameManager.Instance.myItems[i].amount;
+                availableAmount += shopManager.shopItemData[index].maxAmount - GameManager.Instance.curSaveData.myItems[i].amount;
             }
         }
 
@@ -134,9 +134,10 @@ public class BuyPanel : MonoBehaviour
 
     public void BuyClick()
     {
-        if (totalPrice > GameManager.Instance.myMoney) return;
+        if (totalPrice > GameManager.Instance.curSaveData.myMoney) return;
         if (amount > maxAvailable) return;
 
+        shopManager.StartCoroutine(shopManager.ShowMoneyChangeInformation(false, totalPrice));
         shopManager.ChangeMoney(-totalPrice);
         inventoryManager.AddItem(itemCode, amount);
         gameObject.SetActive(false);

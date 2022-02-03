@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tungsten
   m_EditorClassIdentifier: 
   editorName: Tungsten
-  artwork: {fileID: 21300000, guid: 9dffcfaa358fd0c48a29af35671c551f, type: 3}
+  artwork: {fileID: 21300000, guid: 7ec67f55c97679c4d92ee619b6b28199, type: 3}
   itemCode: 6
   itemName: "\uD145\uC2A4\uD150"
   maxAmount: 5

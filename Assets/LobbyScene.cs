@@ -92,12 +92,12 @@ public class LobbyScene : MonoBehaviour
         while (true)
         {
             await Task.Yield();
-            if (Mathf.Abs(scrollContents.localPosition.x - scrollIndex * -700) < 1)
+            if (Mathf.Abs(scrollContents.localPosition.x - scrollIndex * -800) < 1)
             {
-                scrollContents.localPosition = new Vector3(scrollIndex * -700, 0, 0);
+                scrollContents.localPosition = new Vector3(scrollIndex * -800, 0, 0);
                 break;
             }
-            scrollContents.localPosition = new Vector3(Mathf.Lerp(scrollContents.localPosition.x, scrollIndex * -700, 12 *Time.deltaTime), 0, 0);
+            scrollContents.localPosition = new Vector3(Mathf.Lerp(scrollContents.localPosition.x, scrollIndex * -800, 12 *Time.deltaTime), 0, 0);
         }
     }
 

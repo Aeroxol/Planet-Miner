@@ -13,6 +13,12 @@ public class SaveData
 
     public StageData curStageData;
 
+    public int myMoney = 0; //돈
+    public List<ItemInSlot> myItems = new List<ItemInSlot>();//플레이어가 가지고있는 아이템
+    public int[] myUpgradeLvs = { 1, 1, 1, 1, 1 }; //현재 업그레이드 레벨 Dig-Booster-Hp-Inven-Resist
+    public int myShipLv = 1; //우주선 레벨
+    public int[] myShipMaterials = { 0, 0, 0, 0 }; //플레이어가 넣은 우주선 강화재료 개수
+    public bool itemProtected = false; //보험 적용 중 여부
     // ====================여기까지====================
     public SaveData(string name)
     {

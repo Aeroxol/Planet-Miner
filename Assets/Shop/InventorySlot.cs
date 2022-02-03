@@ -17,8 +17,8 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     InventoryManager im;
 
-    Vector3 infoBoxPaddingDownRight = new Vector3(80,-80);
-    Vector3 infoBoxPaddingUpRight = new Vector3(80,80);
+    Vector3 infoBoxPaddingDownRight = new Vector3(80, -80);
+    Vector3 infoBoxPaddingUpRight = new Vector3(80, 80);
     Vector3 infoBoxPaddingDownLeft = new Vector3(-80, -80);
     Vector3 infoBoxPaddingUpLeft = new Vector3(-80, 80);
 
@@ -37,10 +37,11 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (im.clickedSlotIndex == myIndex)
         {
-           //Debug.Log(rectTransform.position.y);
+            //Debug.Log(rectTransform.position.y);
+
             if (myIndex % 4 <= 1)
             {
-                if (rectTransform.position.y > 745)
+                if (rectTransform.position.y > Screen.height * 0.6f)//745
                 {
                     im.infoBox.rectTransform.pivot = Vector2.up;
                     im.infoBox.rectTransform.position = rectTransform.position + infoBoxPaddingDownRight;
@@ -53,7 +54,7 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             }
             else
             {
-                if (rectTransform.position.y > 745)
+                if (rectTransform.position.y > Screen.height * 0.6f)//745
                 {
                     im.infoBox.rectTransform.pivot = Vector2.one;
                     im.infoBox.rectTransform.position = rectTransform.position + infoBoxPaddingDownLeft;
@@ -64,6 +65,11 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                     im.infoBox.rectTransform.position = rectTransform.position + infoBoxPaddingUpLeft;
                 }
             }
+
+            if (im.infoBox.rectTransform.anchoredPosition.y <= -360)
+                im.infoBox.rectTransform.anchoredPosition = new Vector2(im.infoBox.rectTransform.anchoredPosition.x, -360);
+            else if (im.infoBox.rectTransform.anchoredPosition.y >= 380)
+                im.infoBox.rectTransform.anchoredPosition = new Vector2(im.infoBox.rectTransform.anchoredPosition.x, 380);
         }
     }
 
@@ -84,15 +90,14 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             else
             {
                 if (im.clickedSlotIndex != -1) im.slots[im.clickedSlotIndex].outline.gameObject.SetActive(false);
-                
+
                 outline.gameObject.SetActive(true);
                 im.infoBox.gameObject.SetActive(true);
                 im.itemName.text = im.itemData[im.items[myIndex].itemCode].itemName;
 
                 if (im.itemData[im.items[myIndex].itemCode].isUsable)
                 {
-                    im.useBtn.gameObject.SetActive(true);
-                    im.registerBtn.gameObject.SetActive(true);
+                    ActivateUseAndRegBtn();
 
                     im.itemDescription.gameObject.SetActive(true);
                     im.itemDescription.text = im.itemData[im.items[myIndex].itemCode].description;
@@ -120,9 +125,19 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
+    void ActivateUseAndRegBtn()
+    {
+        if (im.isLobby) return;
+        else
+        {
+            im.useBtn.gameObject.SetActive(true);
+            im.registerBtn.gameObject.SetActive(true);
+        }
+    }
+
     public void OnBeginDrag(PointerEventData e)
     {
-       isDragging = true;
+        isDragging = true;
         parentSR.OnBeginDrag(e);
     }
     public void OnDrag(PointerEventData e)

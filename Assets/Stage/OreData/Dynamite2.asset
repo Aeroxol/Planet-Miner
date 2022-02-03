@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dynamite2
   m_EditorClassIdentifier: 
   editorName: Dynamite2
-  artwork: {fileID: 21300000, guid: 6d9f1acb7986e0c48a6d549935368a71, type: 3}
+  artwork: {fileID: 21300000, guid: 81edf7144ffc06f42b777aea4e0835a1, type: 3}
   itemCode: 18
   itemName: "\uAC15\uD654\uB2E4\uC774\uB108\uB9C8\uC774\uD2B8"
   maxAmount: 1

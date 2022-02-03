@@ -7,5 +7,6 @@ using UnityEngine.EventSystems;
 public class BlockData : ScriptableObject
 {
     public int health;
+    public int level;
     public Sprite[] artwork;
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gold
   m_EditorClassIdentifier: 
   editorName: Gold
-  artwork: {fileID: 21300000, guid: b74f93338724c044a8d8b773a65d74c4, type: 3}
+  artwork: {fileID: 21300000, guid: 58fe3b3d7ce03d744a4ffe29ae7495d6, type: 3}
   itemCode: 4
   itemName: "\uAE08"
   maxAmount: 5

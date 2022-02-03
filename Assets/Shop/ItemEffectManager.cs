@@ -10,6 +10,9 @@ public class ItemEffectManager : MonoBehaviour
     public GameObject dynamiteB_Prefab;
     public GameObject rocketBombPrefab;
     public Rigidbody2D playerRigid;
+    public Animator warpAnimator;
+    public MessageBoxManager messageBoxManager;
+    public GameObject insuranceEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +23,7 @@ public class ItemEffectManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public bool ItemEffect(int itemCode)
@@ -30,13 +33,31 @@ public class ItemEffectManager : MonoBehaviour
         switch (itemCode)
         {
             case 14:
-                playerManager.StartCoroutine(playerManager.RestoreHpItem(500));
+                if (playerManager.hp == playerManager.maxHp)
+                {
+                    success = false;
+                    messageBoxManager.ShowMessageBox("최대 체력입니다.");
+                }
+                else
+                    playerManager.StartCoroutine(playerManager.RestoreHpItem(500));
                 break;
             case 15:
-                playerManager.StartCoroutine(playerManager.RestoreHpItem(1000));
+                if (playerManager.hp == playerManager.maxHp)
+                {
+                    success = false;
+                    messageBoxManager.ShowMessageBox("최대 체력입니다.");
+                }
+                else
+                    playerManager.StartCoroutine(playerManager.RestoreHpItem(1000));
                 break;
             case 16:
-                playerManager.StartCoroutine(playerManager.RestoreHpItem(2000));
+                if (playerManager.hp == playerManager.maxHp)
+                {
+                    success = false;
+                    messageBoxManager.ShowMessageBox("최대 체력입니다.");
+                }
+                else
+                    playerManager.StartCoroutine(playerManager.RestoreHpItem(2000));
                 break;
             case 17:
                 CreateDynamite();
@@ -48,12 +69,26 @@ public class ItemEffectManager : MonoBehaviour
                 CreateRocketBomb();
                 break;
             case 20:
-                EscapeWarp();
+                if (playerManager.canUseItem)
+                    StartCoroutine(EscapeWarp());
+                else
+                {
+                    success = false;
+                    messageBoxManager.ShowMessageBox("지금은 사용할 수 없습니다.");
+                }
                 break;
             case 21:
-                if (playerManager.itemProtected)
+                if (GameManager.Instance.curSaveData.itemProtected)
+                {
                     success = false;
-                else playerManager.itemProtected = true;
+                    messageBoxManager.ShowMessageBox("이미 효과가 적용 중입니다.");
+                }
+                else
+                {
+                    GameManager.Instance.curSaveData.itemProtected = true;
+                    messageBoxManager.ShowMessageBox("보험이 적용되었습니다.");
+                    insuranceEffect.SetActive(true);
+                }
                 break;
         }
         return success;
@@ -73,10 +108,46 @@ public class ItemEffectManager : MonoBehaviour
     {
         GameObject temp = Instantiate(rocketBombPrefab);
         temp.transform.position = player.transform.position;
-        temp.transform.Translate(0,0.2f,0);
+        temp.transform.Translate(0, 0.2f, 0);
     }
-    void EscapeWarp()
+
+    IEnumerator EscapeWarp()
     {
-        playerRigid.position = new Vector2(0, 1);
+        playerManager.canUseItem = false;
+        playerManager.PausePlayer(true);
+        warpAnimator.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 7.0f, warpAnimator.transform.position.z);
+        warpAnimator.gameObject.SetActive(true);
+        warpAnimator.Play("WarpEffect");
+        //warpAnimator.SetTrigger("Warp");
+        while (true)
+        {
+            if (warpAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            {
+                warpAnimator.gameObject.SetActive(false);
+                break;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+
+
+        player.transform.position = new Vector2(0.0f, 1.0f);
+
+        warpAnimator.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 7.0f, warpAnimator.transform.position.z);
+        warpAnimator.gameObject.SetActive(true);
+        warpAnimator.Play("WarpEffectReverse");
+        playerManager.PausePlayer(false);
+        //warpAnimator.SetTrigger("Warp");
+        while (true)
+        {
+            if (warpAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            {
+                warpAnimator.gameObject.SetActive(false);
+                break;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+        playerManager.canUseItem = true;
+
+        //playerManager.PausePlayer(false);
     }
 }

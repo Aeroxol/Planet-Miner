@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Dirt3
   m_EditorClassIdentifier: 
   health: 1620
+  level: 3
   artwork:
-  - {fileID: 21300000, guid: fe0c9e7e26c4f7749971082f18d594c6, type: 3}
+  - {fileID: 21300000, guid: cfbf4e512b15ec34e8e9934fc977a570, type: 3}
