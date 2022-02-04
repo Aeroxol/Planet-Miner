@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    public bool isInvincible = false;
     private BlockData data;
+    private int maxHp;
     private int hp;
     private SpriteRenderer spriteRenderer;
     [HideInInspector] public Rigidbody2D myOre;
@@ -24,12 +24,13 @@ public class Block : MonoBehaviour
     {
         data = _data;
         spriteRenderer.sprite = data.artwork[0];
-        hp = data.health;
+        maxHp = data.health;
+        hp = maxHp;
     }
 
     public void DecreaseHp(int playerPower)
     {
-        if (isInvincible) return;
+        if (data.invincible) return;
         hp -= playerPower;
         if (data.artwork.Length > 1)
         {
