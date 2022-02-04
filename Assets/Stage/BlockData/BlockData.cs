@@ -8,5 +8,6 @@ public class BlockData : ScriptableObject
 {
     public bool invincible;
     public int health;
+    public int level;
     public Sprite[] artwork;
 }

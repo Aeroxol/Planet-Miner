@@ -14,26 +14,30 @@ public class ShopManager : MonoBehaviour
     public SellPanel sellPanel;
     public Text moneyTxt;
     public GameObject sellSlotPrefab;
-    public List<OreData> shopItemData; 
+    public List<OreData> shopItemData;
     public List<BuySlot> buySlots;
     List<SellSlot> sellSlots = new List<SellSlot>();
+    public Image moneyChangeImg;
+    public Text moneyChangeText;
+    int moneyChangeCount = 0;
 
     // Start is called before the first frame update
-    void Start()    
+    void Start()
     {
-        for(int i=0; i<buySlots.Count; i++)
+        for (int i = 0; i < buySlots.Count; i++)
         {
             buySlots[i].thumbnail.sprite = shopItemData[i].artwork;
         }
-        moneyTxt.text = GameManager.Instance.myMoney.ToString();
-        CreateSellSlots();
+        moneyTxt.text = string.Format("{0:#,0}", GameManager.Instance.curSaveData.myMoney);
+        //CreateSellSlots();
+        Invoke("CreateSellSlots", 0.5f);
         buyTab.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void BuySlotClicked(int index)
@@ -43,14 +47,14 @@ public class ShopManager : MonoBehaviour
     }
     public void ChangeMoney(int price)
     {
-        GameManager.Instance.myMoney += price;
-        moneyTxt.text = GameManager.Instance.myMoney.ToString();
+        GameManager.Instance.curSaveData.myMoney += price;
+        moneyTxt.text = string.Format("{0:#,0}", GameManager.Instance.curSaveData.myMoney);
     }
     void CreateSellSlots()
     {
         shopCanvas.SetActive(true);
         buyTab.SetActive(true);
-        for(int i=0; i<invenManager.itemData.Count; i++)
+        for (int i = 0; i < invenManager.itemData.Count; i++)
         {
             GameObject temp = Instantiate(sellSlotPrefab);
             temp.transform.SetParent(sellTabContent.transform);
@@ -60,12 +64,12 @@ public class ShopManager : MonoBehaviour
             sellSlots[i].Initialize(i);
         }
         RefreshSellSlots();
-        buyTab.SetActive(false);
+        //buyTab.SetActive(false);
         shopCanvas.SetActive(false);
     }
     public void RefreshSellSlots()
     {
-        for(int i=0; i < sellSlots.Count; i++)
+        for (int i = 0; i < sellSlots.Count; i++)
         {
             if (invenManager.itemTotal[i] > 0)
             {
@@ -101,5 +105,52 @@ public class ShopManager : MonoBehaviour
         buyTab.SetActive(false);
         buyPanel.gameObject.SetActive(false);
         sellTab.SetActive(true);
+    }
+
+    public IEnumerator ShowMoneyChangeInformation(bool isPlus, int amount)
+    {
+        string sign;
+        if (isPlus) sign = "+";
+        else sign = "-";
+
+        moneyChangeCount++;
+        moneyChangeImg.gameObject.SetActive(true);
+        moneyChangeText.text = sign + string.Format("{0:#,0}", amount);
+        moneyChangeImg.color = new Color(moneyChangeImg.color.r, moneyChangeImg.color.g, moneyChangeImg.color.b, 0);
+        moneyChangeText.color = new Color(moneyChangeText.color.r, moneyChangeText.color.g, moneyChangeText.color.b, 0);
+
+        moneyChangeImg.rectTransform.position = new Vector3(moneyChangeImg.rectTransform.position.x, moneyTxt.rectTransform.position.y, moneyChangeImg.rectTransform.position.z);
+        while (true)
+        {
+            moneyChangeImg.rectTransform.position = new Vector3(moneyChangeImg.rectTransform.position.x, moneyChangeImg.rectTransform.position.y + (300 * Time.deltaTime), moneyChangeImg.rectTransform.position.z);
+            moneyChangeImg.color = new Color(moneyChangeImg.color.r, moneyChangeImg.color.g, moneyChangeImg.color.b, moneyChangeImg.color.a + Time.deltaTime * 2.0f);
+            moneyChangeText.color = new Color(moneyChangeText.color.r, moneyChangeText.color.g, moneyChangeText.color.b, moneyChangeText.color.a + Time.deltaTime * 2.0f);
+
+            if (moneyChangeImg.rectTransform.position.y >= moneyTxt.rectTransform.position.y + 103)
+                break;
+            yield return null;
+        }
+
+        float changeRate = 0.01f;
+        while (true)
+        {
+            moneyChangeImg.color = new Color(moneyChangeImg.color.r, moneyChangeImg.color.g, moneyChangeImg.color.b, moneyChangeImg.color.a - changeRate * Time.deltaTime);
+            moneyChangeText.color = new Color(moneyChangeText.color.r, moneyChangeText.color.g, moneyChangeText.color.b, moneyChangeText.color.a - changeRate * Time.deltaTime);
+            changeRate *= 1.15f;
+
+
+            if (moneyChangeImg.color.a <= 0.01f)
+                moneyChangeImg.color = new Color(moneyChangeImg.color.r, moneyChangeImg.color.g, moneyChangeImg.color.b, 0);
+            if (moneyChangeText.color.a <= 0.01f)
+            {
+                moneyChangeText.color = new Color(moneyChangeText.color.r, moneyChangeText.color.g, moneyChangeText.color.b, 0);
+                break;
+            }
+            yield return null;
+        }
+
+        moneyChangeCount--;
+        if (moneyChangeCount == 0)
+            moneyChangeImg.gameObject.SetActive(false);
     }
 }

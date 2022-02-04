@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Uranium
   m_EditorClassIdentifier: 
   editorName: Uranium
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: 095fe5ff2c0b11f46b23da4b22963755, type: 3}
   itemCode: 12
   itemName: "\uC6B0\uB77C\uB284"
   maxAmount: 5

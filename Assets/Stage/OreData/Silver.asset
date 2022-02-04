@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Silver
   m_EditorClassIdentifier: 
   editorName: Silver
-  artwork: {fileID: 21300000, guid: 384f1721d6de3d747ab1e49298280928, type: 3}
+  artwork: {fileID: 21300000, guid: 1296d946d117be84b970ce15f9642f03, type: 3}
   itemCode: 3
   itemName: "\uC740"
   maxAmount: 5

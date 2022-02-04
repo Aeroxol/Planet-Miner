@@ -26,7 +26,7 @@ public class LeaveStage : MonoBehaviour
         else
         {
             itemLostTxt.SetActive(true);
-            GameManager.Instance.myItems.Clear();
+            GameManager.Instance.curSaveData.myItems.Clear();
         }
 
     }
@@ -38,6 +38,7 @@ public class LeaveStage : MonoBehaviour
     public void LeaveYesClick()
     {
         GameManager.Instance.curSaveData.curStageMap = null;
+        GameManager.Instance.curSaveData.itemProtected = false;
         SceneManager.LoadScene("LobbyScene");
     }
     public void LeaveNoClick()

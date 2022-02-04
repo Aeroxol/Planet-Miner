@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   invincible: 1
   health: 99999999
+  level: 0
   artwork:
-  - {fileID: 21300000, guid: 326feddfd0386fc4787b0b96009f0132, type: 3}
+  - {fileID: 21300000, guid: 393294b6867238f49914795b8d1b5228, type: 3}

@@ -11,19 +11,24 @@ public class PlayerManager : MonoBehaviour
     public int digPower = 50;
     public int maxHp;
     public int hp;
+    int radationResist = 0;
     //int displayHp;
-    public int heatResist;
-    public int coldResist;
-    public float digDelay = 0.5f;
+    //public int heatResist;
+    //public int coldResist;
+    UpgradeInfo upgradeInfo;
+    public float digDelay = 0.1f;
     public InventoryManager invenManager;
     public Image hpBar;
     public Image tempBar;
     public LeaveStage leaveStage;
-    [HideInInspector] public bool itemProtected = false;
+    //[HideInInspector] public bool itemProtected = false;
 
     Rigidbody2D rigid2d;
-    Vector2 colliderSize;
+    [HideInInspector] public Vector2 colliderSize;
     RaycastHit2D hit;
+
+    float leftRightBound;
+    float maxHeight;
 
     bool moveLeft = false;
     bool moveRight = false;
@@ -40,6 +45,8 @@ public class PlayerManager : MonoBehaviour
     float heatDelaytimer = 0;
     float temperature = 0;
     float tempIncreaseRate = 3.0f; // 3 2.75 2.5 2.25 2
+    bool playerPaused = false;
+    [HideInInspector] public bool canUseItem = true;
 
     WaitForSeconds decreaseDelay = new WaitForSeconds(0.1f);
 
@@ -48,6 +55,10 @@ public class PlayerManager : MonoBehaviour
     {
         rigid2d = GetComponent<Rigidbody2D>();
         colliderSize = GetComponent<BoxCollider2D>().bounds.size;
+        upgradeInfo = GameManager.Instance.upgradeInfo;
+        leftRightBound = (GameManager.Instance.curSaveData.curStageData.width - colliderSize.x) / 2;
+        maxHeight = 40 - colliderSize.y / 2;
+        SetStats();
     }
 
     // Update is called once per frame
@@ -80,31 +91,34 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-        if (isHeatDelay)
+        if (!playerPaused)
         {
-            heatDelaytimer += Time.deltaTime;
-            if (heatDelaytimer > heatDelay)
+            if (isHeatDelay)
             {
-                heatDelaytimer = 0;
-                isHeatDelay = false;
-            }
-        }
-        else
-        {
-            if (temperature > 0)
-            {
-                if (hp > 0)
+                heatDelaytimer += Time.deltaTime;
+                if (heatDelaytimer > heatDelay)
                 {
-                    //hp -= (int)(temperature/2) + 1;
-                    StartCoroutine(DecreaseHp((int)(temperature / 2) + 1));
-                    if (hp < 0)
-                    {
-                        hp = 0;
-                    }
+                    heatDelaytimer = 0;
+                    isHeatDelay = false;
                 }
-                    
             }
-            isHeatDelay = true;
+            else
+            {
+                if (temperature > 0)
+                {
+                    if (hp > 0)
+                    {
+                        //hp -= (int)(temperature/2) + 1;
+                        StartCoroutine(DecreaseHp((int)(temperature / 2) + 1));
+                        if (hp < 0)
+                        {
+                            hp = 0;
+                        }
+                    }
+
+                }
+                isHeatDelay = true;
+            }
         }
 
         if (transform.position.y < 0) temperature = Mathf.Abs(rigid2d.position.y)/tempIncreaseRate;
@@ -123,9 +137,9 @@ public class PlayerManager : MonoBehaviour
     private void FixedUpdate()
     {
         Vector2 myVelocity = new Vector2(0, rigid2d.velocity.y);
-        if (moveLeft)
+        if (moveLeft && (rigid2d.position.x > -leftRightBound - 0.5f))
             myVelocity += new Vector2(-speed * Time.deltaTime, 0);
-        else if (moveRight)
+        else if (moveRight && (rigid2d.position.x < leftRightBound - 0.5f))
             myVelocity += new Vector2(speed * Time.deltaTime, 0);
         rigid2d.velocity = myVelocity;
 
@@ -133,6 +147,11 @@ public class PlayerManager : MonoBehaviour
         {
             if (rigid2d.velocity.y < maxFlySpeed)
                 rigid2d.AddForce(new Vector2(0, boosterPower * Time.deltaTime), ForceMode2D.Impulse);
+        }
+        if (rigid2d.position.y >= maxHeight)
+        {
+            rigid2d.velocity = new Vector2(rigid2d.velocity.x, 0);
+            rigid2d.MovePosition(new Vector2(rigid2d.position.x, maxHeight));
         }
 
         //Debug.DrawRay(transform.position, new Vector3(0, -1, 0), new Color(0, 1, 0));
@@ -198,7 +217,17 @@ public class PlayerManager : MonoBehaviour
 
     void GameOver()
     {
-        leaveStage.GameOver(itemProtected);
+        leaveStage.GameOver(GameManager.Instance.curSaveData.itemProtected);
+    }
+
+    void SetStats()
+    {
+        digPower = upgradeInfo.digPowerList[GameManager.Instance.curSaveData.myUpgradeLvs[0] - 1];
+        boosterPower = upgradeInfo.boosterPowerList[GameManager.Instance.curSaveData.myUpgradeLvs[1] - 1];
+        maxFlySpeed = upgradeInfo.maxFlyList[GameManager.Instance.curSaveData.myUpgradeLvs[1] - 1];
+        maxHp = upgradeInfo.hpAmountList[GameManager.Instance.curSaveData.myUpgradeLvs[2] - 1];
+        hp = maxHp;
+        radationResist = upgradeInfo.resistAmountList[GameManager.Instance.curSaveData.myUpgradeLvs[4] - 1];
     }
 
     public IEnumerator RestoreHpItem(int amount)
@@ -221,6 +250,20 @@ public class PlayerManager : MonoBehaviour
         {
             hp--;
             yield return decreaseDelay;
+        }
+    }
+
+    public void PausePlayer(bool stop)
+    {
+        if (stop)
+        {
+            rigid2d.simulated = false;
+            playerPaused = true;
+        }
+        else
+        {
+            rigid2d.simulated = true;
+            playerPaused = false;
         }
     }
 

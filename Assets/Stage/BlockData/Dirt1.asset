@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Dirt1
   m_EditorClassIdentifier: 
   health: 500
+  level: 1
   artwork:
-  - {fileID: 21300000, guid: 07f3db563937ce14cb3d2d97b358b1d7, type: 3}
+  - {fileID: 21300000, guid: 55b50474232ccf14f9bcb60f0775c410, type: 3}
   - {fileID: 21300000, guid: d6cb5e8732e2adb4a9e0c647bc3b7e9f, type: 3}
   - {fileID: 21300000, guid: f49f7fc6675baed469740f69a8f422a9, type: 3}
   - {fileID: 21300000, guid: 5ca600d8b2f90e8468c2d7a285453cbe, type: 3}

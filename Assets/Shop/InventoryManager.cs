@@ -18,6 +18,7 @@ public class ItemInSlot
 
 public class InventoryManager : MonoBehaviour
 {
+    public bool isLobby; //Lobby인지 Stage 인지
     public List<OreData> itemData;
     public List<ItemInSlot> items;// = new List<ItemInSlot>();
     public Canvas inventoryCanvas;
@@ -35,6 +36,8 @@ public class InventoryManager : MonoBehaviour
     public ContentSizeFitter infoBoxCsf;
     public Image hotkeyImg;
 
+    public PlayerManager playerManager;
+
     //List<GameObject> slots = new List<GameObject>();
     [HideInInspector] public List<InventorySlot> slots = new List<InventorySlot>();
     [HideInInspector] public int clickedSlotIndex = -1;
@@ -46,7 +49,9 @@ public class InventoryManager : MonoBehaviour
      // Start is called before the first frame update
     void Start()
     {
-        items = GameManager.Instance.myItems;
+        items = GameManager.Instance.curSaveData.myItems;
+        maxSlot = GameManager.Instance.upgradeInfo.invenAmountList[GameManager.Instance.curSaveData.myUpgradeLvs[3] - 1];
+
         inventoryCanvas.gameObject.SetActive(true);
         for (int i=0; i<maxSlot; i++)
         {
@@ -58,10 +63,10 @@ public class InventoryManager : MonoBehaviour
 
         itemTotal = new int[itemData.Count];
 
-        items.Add(new ItemInSlot(5, 2));//test
-        items.Add(new ItemInSlot(6, 2));//test
-        items.Add(new ItemInSlot(7, 2));//test
-        RefreshSlots();//test
+        //items.Add(new ItemInSlot(5, 2));//test
+        //items.Add(new ItemInSlot(6, 2));//test
+        //items.Add(new ItemInSlot(7, 2));//test
+        RefreshSlots();
     }
 
     // Update is called once per frame
@@ -184,13 +189,33 @@ public class InventoryManager : MonoBehaviour
         shopManager.RefreshSellSlots();
     }
 
+    public void AddSlots(int amount)
+    {
+        if (amount < 0) return;
+
+        //inventoryCanvas.gameObject.SetActive(true);
+        for (int i = 0; i < amount; i++)
+        {
+            GameObject temp = Instantiate(slotPrefab);
+            temp.transform.SetParent(content.transform);
+            slots.Add(temp.GetComponent<InventorySlot>());
+        }
+        //inventoryCanvas.gameObject.SetActive(false);
+        RefreshSlots();
+    }
+
     public void OpenClick()
     {
         inventoryCanvas.gameObject.SetActive(true);
-        moneyTxt.text = GameManager.Instance.myMoney.ToString();
+        moneyTxt.text = string.Format("{0:#,0}", GameManager.Instance.curSaveData.myMoney);
+        if (playerManager != null)
+            playerManager.PausePlayer(true);
     }
     public void CloseClick()
     {
+        if (playerManager != null)
+            playerManager.PausePlayer(true);
+
         infoBox.gameObject.SetActive(false);
         useBtn.gameObject.SetActive(false);
         registerBtn.gameObject.SetActive(false);
@@ -200,10 +225,22 @@ public class InventoryManager : MonoBehaviour
         inventoryCanvas.gameObject.SetActive(false);
     }
 
+    void CloseWithoutResume() // Close without resuming player move
+    {
+        infoBox.gameObject.SetActive(false);
+        useBtn.gameObject.SetActive(false);
+        registerBtn.gameObject.SetActive(false);
+        if ((clickedSlotIndex != -1) && (clickedSlotIndex < slots.Count))
+            slots[clickedSlotIndex].outline.gameObject.SetActive(false);
+        clickedSlotIndex = -1;
+        inventoryCanvas.gameObject.SetActive(false);
+    }
+
     public void UseClick()
     {
         bool success = itemEffectManager.ItemEffect(items[clickedSlotIndex].itemCode);
         if (!success) return;
+        int tempItemCode = items[clickedSlotIndex].itemCode;
         items[clickedSlotIndex].amount -= 1;
         itemTotal[items[clickedSlotIndex].itemCode] -= 1;
         if (itemTotal[items[clickedSlotIndex].itemCode] <= 0)
@@ -220,6 +257,22 @@ public class InventoryManager : MonoBehaviour
             slots[clickedSlotIndex].outline.gameObject.SetActive(false);
         }
         RefreshSlots();
+
+        switch (tempItemCode)
+        {
+            case 17: //Dynamite
+                CloseClick();
+                break;
+            case 18: //DynamiteB
+                CloseClick();
+                break;
+            case 19: //RocketBomb
+                CloseClick();
+                break;
+            case 20: //Warp
+                CloseWithoutResume();
+                break;
+        }
     }
 
     public void RegisterClick()
@@ -258,5 +311,10 @@ public class InventoryManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void moneyCheat()
+    {
+        GameManager.Instance.curSaveData.myMoney += 100000;
     }
 }

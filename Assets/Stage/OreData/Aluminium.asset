@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aluminium
   m_EditorClassIdentifier: 
   editorName: Aluminium
-  artwork: {fileID: 21300000, guid: b508283e4a0c6c5479c6fd838707fb90, type: 3}
+  artwork: {fileID: 21300000, guid: 59824d607c9f66c449b4b58a5357dba9, type: 3}
   itemCode: 8
   itemName: "\uC54C\uB8E8\uBBF8\uB284"
   maxAmount: 5

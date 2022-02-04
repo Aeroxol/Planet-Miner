@@ -25,7 +25,7 @@ public class SellSlot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void Initialize(int index)
@@ -33,11 +33,11 @@ public class SellSlot : MonoBehaviour
         this.index = index;
         sellingPrice = invenManager.itemData[index].price;
         if (invenManager.itemData[index].isUsable) sellingPrice = (int)(sellingPrice * 0.7);
-        amount = invenManager.itemTotal[index];
+        if (invenManager.itemTotal.Length > index) amount = invenManager.itemTotal[index];
 
         thumbnail.sprite = invenManager.itemData[index].artwork;
         nameTxt.text = invenManager.itemData[index].itemName;
-        priceTxt.text = sellingPrice.ToString();
+        priceTxt.text = string.Format("{0:#,0}", sellingPrice);
         amountTxt.text = amount.ToString();
     }
 
@@ -46,6 +46,7 @@ public class SellSlot : MonoBehaviour
         invenManager.DeleteItem(index, amount);
         shopManager.ChangeMoney(sellingPrice * amount);
         shopManager.RefreshSellSlots();
+        shopManager.StartCoroutine(shopManager.ShowMoneyChangeInformation(true, sellingPrice * amount));
     }
     public void SellClick()
     {

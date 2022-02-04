@@ -7,6 +7,9 @@ public class Stage : MonoBehaviour
     public Block block;
     public BlockData immortalBlock;
     public Ore ore;
+
+    public Ore oreWithBody;
+
     public void Generate(StageData _data)
     {
         // Init
@@ -199,7 +202,13 @@ public class Stage : MonoBehaviour
                         Ore newOre = GameObject.Instantiate<Ore>(ore);
                         newOre.transform.position = new Vector3(i - _data.width / 2, -j, 0);
                         newOre.SetData(GameManager.Instance.oreLevelData[_data.level].ores[p]);
-                        newBlock.GetComponent<Block>().myOre = newOre.GetComponent<Rigidbody2D>();//1월20일 추가
+                        
+                        newBlock.GetComponent<Block>().myOre = newOre.gameObject;
+                        Ore newOreWithBody = Instantiate(oreWithBody);
+                        newOreWithBody.transform.position = newOre.transform.position;
+                        newOreWithBody.SetData(GameManager.Instance.oreLevelData[_data.level].ores[p]);
+                        newBlock.GetComponent<Block>().myOreWithBody = newOreWithBody.gameObject;
+                        newOreWithBody.gameObject.SetActive(false);
                         break;
                     }
                 }

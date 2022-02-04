@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Platinum
   m_EditorClassIdentifier: 
   editorName: Platinum
-  artwork: {fileID: 21300000, guid: c117c86b8c48a314b80a9831bbeb1ea1, type: 3}
+  artwork: {fileID: 21300000, guid: 5a08bfbfe0abff84c97ce69a868914e3, type: 3}
   itemCode: 11
   itemName: "\uBC31\uAE08"
   maxAmount: 5

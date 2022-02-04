@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RocketBomb
   m_EditorClassIdentifier: 
   editorName: RocketBomb
-  artwork: {fileID: 21300000, guid: babe08ae56fc72a4a96cfa6ed09b3bed, type: 3}
+  artwork: {fileID: 21300000, guid: 5377d9dc293fcaf48894c32272a0a2e1, type: 3}
   itemCode: 19
   itemName: "\uB85C\uCF13\uD0C4"
   maxAmount: 1

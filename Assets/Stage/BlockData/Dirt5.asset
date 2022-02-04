@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4695f29967561954bbc7780c1550b6cb, type: 3}
   m_Name: Dirt5
   m_EditorClassIdentifier: 
-  health: 5248
+  health: 5230
+  level: 5
   artwork:
-  - {fileID: 21300000, guid: 1d292288c47fb6b4cb86c2985126a849, type: 3}
+  - {fileID: 21300000, guid: d47bf3919fc7d054c90423f427aaab87, type: 3}

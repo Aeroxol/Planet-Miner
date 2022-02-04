@@ -5,8 +5,10 @@ using UnityEngine;
 public class Dynamite : MonoBehaviour
 {
     float explosionDelay = 3.0f;
-    RaycastHit2D hit;
+    RaycastHit2D[] hits;
     GameObject block;
+    List<GameObject> blocks = new List<GameObject>();
+    Vector3 positionSetOrigin;
 
     public Rigidbody2D rigid2d;
 
@@ -25,12 +27,27 @@ public class Dynamite : MonoBehaviour
 
     private void FixedUpdate()
     {
-        hit = Physics2D.Raycast(transform.position, Vector2.down, 0.5f, LayerMask.GetMask("Block"));
-        if (hit.collider != null)
-            block = hit.collider.gameObject;
+        positionSetOrigin.Set(transform.position.x, transform.position.y - 0.1f, transform.position.z);
+        hits = Physics2D.BoxCastAll(positionSetOrigin, new Vector2(0.6f, 0.1f), 0, Vector2.zero, 0, LayerMask.GetMask("Block"));
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].transform.position.y + 0.5f < transform.position.y)
+            {
+                blocks.Add(hits[i].transform.gameObject);
+            }
+        }
+
+        if (hits.Length == 1) block = hits[0].transform.gameObject;
+        else if (hits.Length == 2)
+        {
+            if (Mathf.Abs(transform.position.x - hits[0].transform.position.x) < Mathf.Abs(transform.position.x - hits[1].transform.position.x))
+                block = hits[0].transform.gameObject;
+            else block = hits[1].transform.gameObject;
+        }
         else block = null;
 
         if (block != null) rigid2d.MovePosition(new Vector2(block.transform.position.x, rigid2d.position.y));
+        blocks.Clear();
     }
 
     IEnumerator Explosion()
