@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviour
     public int digPower = 50;
     public int maxHp;
     public int hp;
-    int radationResist = 0;
+    public int radationResist = 0;
     //int displayHp;
     //public int heatResist;
     //public int coldResist;
@@ -32,6 +32,7 @@ public class PlayerManager : MonoBehaviour
     BoxCollider2D boxCol2d;
     [HideInInspector] public Vector2 colliderSize;
     RaycastHit2D hit;
+    SpriteRenderer spriteRenderer;
 
     float leftRightBound;//¸Ê ÁÂ¿ìÁ¦ÇÑ
     float boundPadding = 0;
@@ -55,6 +56,7 @@ public class PlayerManager : MonoBehaviour
     float tempIncreaseRate = 3.0f; // 3 2.75 2.5 2.25 2
     bool playerPaused = false;
     [HideInInspector] public bool canUseItem = true;
+    [HideInInspector] public bool hitByRadiation = false;
 
     WaitForSeconds decreaseDelay = new WaitForSeconds(0.1f);
 
@@ -63,12 +65,14 @@ public class PlayerManager : MonoBehaviour
     {
         rigid2d = GetComponent<Rigidbody2D>();
         boxCol2d = GetComponent<BoxCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         colliderSize = boxCol2d.bounds.size;
         upgradeInfo = GameManager.Instance.upgradeInfo;
         leftRightBound = (GameManager.Instance.curSaveData.curStageData.width - colliderSize.x) / 2;
         maxHeight = 20.0f - colliderSize.y / 2;
         if (GameManager.Instance.curSaveData.curStageData.width % 2 == 0) boundPadding = 0.5f;
         SetStats();
+        StartCoroutine(RadiationHit());
     }
 
     // Update is called once per frame
@@ -311,6 +315,7 @@ public class PlayerManager : MonoBehaviour
         if (hp > maxHp) hp = maxHp;
     }
 
+
     IEnumerator GameOver()
     {
         redAlert.gameObject.SetActive(false);
@@ -324,7 +329,8 @@ public class PlayerManager : MonoBehaviour
 
         while (true)
         {
-            blackOut.color = new Color(0, 0, 0, blackOut.color.a + 0.0004f * Time.deltaTime);
+            //blackOut.color = new Color(0, 0, 0, blackOut.color.a + 0.0004f * Time.deltaTime);
+            blackOut.color = new Color(0, 0, 0, blackOut.color.a + 0.0008f * Time.deltaTime);
             if (blackOut.color.a >= 0.9f)
                 break;
             yield return null;
@@ -363,6 +369,22 @@ public class PlayerManager : MonoBehaviour
         {
             hp--;
             yield return decreaseDelay;
+        }
+    }
+
+    IEnumerator RadiationHit()
+    {
+        while (true)
+        {
+            if (hitByRadiation)
+            {
+                spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                yield return new WaitForSeconds(0.2f);
+                spriteRenderer.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+                yield return new WaitForSeconds(0.2f);
+            }
+            else spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            yield return null;
         }
     }
 

@@ -6,6 +6,25 @@ using UnityEngine;
 
 public class OreData : ScriptableObject
 {
+    public enum Code
+    {
+        coal,
+        copper,
+        iron,
+        silver,
+        gold,
+        uranium,
+        lead,
+        tungsten,
+        aluminium,
+        chromium,
+        platinium,
+        titanium,
+        lithium,
+        unobtainium,
+        item
+    }
+    public Code id;
     public string editorName;
     public Sprite artwork;
     public int itemCode;

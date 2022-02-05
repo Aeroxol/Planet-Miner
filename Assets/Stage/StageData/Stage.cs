@@ -7,6 +7,7 @@ public class Stage : MonoBehaviour
     public Block block;
     public BlockData immortalBlock;
     public Ore ore;
+    public Uranium uranium;
 
     public Ore oreWithBody;
     public List<Block> blocks = new List<Block>();
@@ -20,8 +21,19 @@ public class Stage : MonoBehaviour
             for(int j = 0; j < _data.height; ++j)
             {
                 stage[i, j] = 0;
-                float prob = Random.Range(0f, 1f);
-                for(int p = _data.oreIndex.Count - 1; p >= 0; --p)
+                float prob = Random.value;
+                //gold probability
+                if (prob < _data.goldProb.Evaluate((float)j / _data.height))
+                {
+                    stage[i, j] = 9;
+                    break;
+                }
+                else
+                {
+                    prob = prob - _data.goldProb.Evaluate((float)j / _data.height);
+                }
+                //other probabilities
+                for(int p = 0; p < _data.oreIndex.Count; ++p)
                 {
                     if (prob < _data.oreProbs[p].Evaluate((float)j/_data.height))
                     {
@@ -35,8 +47,9 @@ public class Stage : MonoBehaviour
                 }
             }
         }
+
         // Mix
-        for(int c = 0; c < _data.mixCount; ++c)
+        for (int c = 0; c < _data.mixCount; ++c)
         {
             int[,] temp = new int[_data.width, _data.height];
             for (int i = 0; i < _data.width; ++i)
@@ -109,9 +122,17 @@ public class Stage : MonoBehaviour
             }
             stage = temp;
         }
+
+        //uranium
+        for (int i = 0; i < _data.uraniumNum; ++i)
+        {
+            int x = Random.Range(2, _data.width - 2);
+            int y = Random.Range(11, _data.height - 2);
+            stage[x, y] = 11;
+        }
         // Immortal Block Set
         // base
-        for(int i = 0; i < 5; ++i)
+        for (int i = 0; i < 5; ++i)
         {
             stage[_data.width/2 + i, 0] = -1;
             stage[_data.width/2 - i, 0] = -1;
@@ -121,7 +142,10 @@ public class Stage : MonoBehaviour
         {
             int _x = Random.Range(0, _data.width - 2);
             int _y = Random.Range(0, _data.height - 2);
-            stage[_x + 1, _y + 1] = -1;
+            if (stage[_x + 1, _y + 1] != 11)
+            {
+                stage[_x + 1, _y + 1] = -1;
+            }
             for(int j = 0; j < _data.disLength; ++j)
             {
                 int direction = Random.Range(0, 4);
@@ -172,6 +196,7 @@ public class Stage : MonoBehaviour
                 {
                     continue;
                 }
+                // block instantiate
                 Block newBlock = GameObject.Instantiate<Block>(block);
                 Block newBlockComp = newBlock.GetComponent<Block>();////0205
                 blocks.Add(newBlockComp);////0205
@@ -198,8 +223,41 @@ public class Stage : MonoBehaviour
                         break;
                     }
                 }
+                // ore instantiate
                 for (int p = 0; p < _data.oreIndex.Count; ++p)
                 {
+                    //gold
+                    if(stage[i, j] == 9)
+                    {
+                        Ore newOre = GameObject.Instantiate<Ore>(ore);
+                        newOre.transform.position = new Vector3(i - _data.width / 2, -j, 0);
+                        newOre.SetData(GameManager.Instance.gold);
+
+                        newBlock.GetComponent<Block>().myOre = newOre.gameObject;
+                        Ore newOreWithBody = Instantiate(oreWithBody);
+                        newOreWithBody.transform.position = newOre.transform.position;
+                        newOreWithBody.SetData(GameManager.Instance.gold);
+                        newBlock.GetComponent<Block>().myOreWithBody = newOreWithBody.gameObject;
+                        newOreWithBody.gameObject.SetActive(false);
+                        break;
+                    }
+                    //uranium
+                    if(stage[i,j] == 11)
+                    {
+                        Debug.Log("uranium" + i + j);
+                        Uranium newOre = GameObject.Instantiate<Uranium>(uranium);
+                        newOre.transform.position = new Vector3(i - _data.width / 2, -j, 0);
+                        newOre.SetData(GameManager.Instance.uranium);
+
+                        newBlock.GetComponent<Block>().myOre = newOre.gameObject;
+                        Ore newOreWithBody = Instantiate(oreWithBody);
+                        newOreWithBody.transform.position = newOre.transform.position;
+                        newOreWithBody.SetData(GameManager.Instance.uranium);
+                        newBlock.GetComponent<Block>().myOreWithBody = newOreWithBody.gameObject;
+                        newOreWithBody.gameObject.SetActive(false);
+                        break;
+                    }
+                    //others
                     if (stage[i, j] == p + 1)
                     {
                         Ore newOre = GameObject.Instantiate<Ore>(ore);

@@ -23,9 +23,9 @@ public class PlayerCamera : MonoBehaviour
     float oddPadding = 0;
     float evenPadding = 0;
 
-    readonly float zoomTime = 5.0f;
+    readonly float zoomTime = 3.0f;
     float zoomTimeCount = 0;
-    readonly float zoomCool = 5.0f;
+    readonly float zoomCool = 10.0f;
     float zoomCoolCount = 0;
     bool isZoomOut = false;
     bool isZoomCool = false;

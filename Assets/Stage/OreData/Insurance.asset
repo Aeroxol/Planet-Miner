@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c77e63f0d698c64eb50cd1a02695b62, type: 3}
   m_Name: Insurance
   m_EditorClassIdentifier: 
+  id: 14
   editorName: Insurance
   artwork: {fileID: 21300000, guid: ee83ea0a4c75bca42a8fab380efc42bb, type: 3}
   itemCode: 21

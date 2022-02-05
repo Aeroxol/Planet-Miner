@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c77e63f0d698c64eb50cd1a02695b62, type: 3}
   m_Name: Dynamite2
   m_EditorClassIdentifier: 
+  id: 14
   editorName: Dynamite2
   artwork: {fileID: 21300000, guid: 81edf7144ffc06f42b777aea4e0835a1, type: 3}
   itemCode: 18

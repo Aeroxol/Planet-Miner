@@ -16,14 +16,14 @@ public class CircleEffect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        effect.color = new Color(effect.color.r, effect.color.g, effect.color.b, effect.color.a - Time.deltaTime*0.2f);
+        effect.color = new Color(effect.color.r, effect.color.g, effect.color.b, effect.color.a - Time.deltaTime * 0.3f);
         effect.transform.localScale = new Vector3(effect.transform.localScale.x + Time.deltaTime * 2f, effect.transform.localScale.y + Time.deltaTime * 2f, effect.transform.localScale.z);
-        if (effect.color.a <= 0)
+        if (effect.transform.localScale.x >= 5.3f)
         {
             Destroy(gameObject);
             //effect.color = new Color(effect.color.r, effect.color.g, effect.color.b, 1);
             //effect.transform.localScale = new Vector3(0.1f,0.1f, effect.transform.localScale.z);
         }
-        transform.position = transform.parent.position;
+        //transform.position = transform.parent.position;
     }
 }

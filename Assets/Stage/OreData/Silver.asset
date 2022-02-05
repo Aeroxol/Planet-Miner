@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c77e63f0d698c64eb50cd1a02695b62, type: 3}
   m_Name: Silver
   m_EditorClassIdentifier: 
+  id: 3
   editorName: Silver
   artwork: {fileID: 21300000, guid: 1296d946d117be84b970ce15f9642f03, type: 3}
   itemCode: 3

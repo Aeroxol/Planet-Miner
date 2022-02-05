@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c77e63f0d698c64eb50cd1a02695b62, type: 3}
   m_Name: Gold
   m_EditorClassIdentifier: 
+  id: 4
   editorName: Gold
   artwork: {fileID: 21300000, guid: 58fe3b3d7ce03d744a4ffe29ae7495d6, type: 3}
   itemCode: 4
