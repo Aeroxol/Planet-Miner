@@ -5,9 +5,8 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
     private BlockData data;
-    private int maxHp;
     private int hp;
-    int maxHp;
+    private int maxHp;
     private SpriteRenderer spriteRenderer;
     public SpriteRenderer crackSpriteRenderer;
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SellSlot : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class SellSlot : MonoBehaviour
     [HideInInspector] public ShopManager shopManager;
 
     public Image thumbnail;
-    public Text amountTxt;
+    public TextMeshProUGUI amountTmp;
     public Text nameTxt;
     public Text priceTxt;
 
@@ -38,7 +39,7 @@ public class SellSlot : MonoBehaviour
         thumbnail.sprite = invenManager.itemData[index].artwork;
         nameTxt.text = invenManager.itemData[index].itemName;
         priceTxt.text = string.Format("{0:#,0}", sellingPrice);
-        amountTxt.text = amount.ToString();
+        amountTmp.text = amount.ToString();
     }
 
     public void SellAllClick()

@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCamera : MonoBehaviour
 {
     public GameObject target;
+    public GameObject zoomCool_Img;
+    public GameObject coolBarBackground;
+    public Image coolBarFill;
+    public Text zoomCoolTxt;
+    //public GameObject circleEffectPrefab;
     Vector3 targetPosition = new Vector3();
     Vector3 myPosition;
-
+    
     Camera my;
     int stageWidth;
     int stageHeight;
@@ -16,6 +22,17 @@ public class PlayerCamera : MonoBehaviour
     bool isEven = true;
     float oddPadding = 0;
     float evenPadding = 0;
+
+    readonly float zoomTime = 5.0f;
+    float zoomTimeCount = 0;
+    readonly float zoomCool = 5.0f;
+    float zoomCoolCount = 0;
+    bool isZoomOut = false;
+    bool isZoomCool = false;
+    //bool createEffect = false;
+
+    //readonly float effectDelay = 1.0f;
+    //float effectDelayCount = 0;
 
     private void Start()
     {
@@ -31,6 +48,47 @@ public class PlayerCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isZoomOut)
+        {
+            zoomTimeCount += Time.deltaTime;
+            coolBarFill.fillAmount = 1.0f - (zoomTimeCount / zoomTime);
+            if (zoomTimeCount >= zoomTime)
+            {
+                zoomTimeCount = 0;
+                isZoomOut = false;
+                coolBarBackground.SetActive(false);
+                //createEffect = false;
+                //effectDelayCount = 0;
+                StartCoroutine(ZoomIn());
+            }
+        }
+        if (isZoomCool)
+        {
+            zoomCoolCount += Time.deltaTime;
+            zoomCoolTxt.text = string.Format("{0:N1}", zoomCool - zoomCoolCount);
+            
+            if (zoomCoolCount >= zoomCool)
+            {
+                zoomCool_Img.SetActive(false);
+                zoomCoolCount = 0;
+                isZoomCool = false;
+            }
+        }
+        /*
+        if (createEffect)
+        {
+            effectDelayCount += Time.deltaTime;
+            if (effectDelayCount >= effectDelay)
+            {
+                GameObject temp = Instantiate(circleEffectPrefab);
+                temp.transform.SetParent(target.transform);
+                temp.SetActive(true);
+                effectDelayCount = 0;
+            }
+        }
+        */
+
+
         if (target.gameObject != null)
         {
             targetPosition.Set(target.transform.position.x, target.transform.position.y, target.transform.position.z);
@@ -56,12 +114,47 @@ public class PlayerCamera : MonoBehaviour
         }
     }
 
-    public void zoomOutBtnDown()
+    IEnumerator ZoomOut()
     {
-        my.orthographicSize = 10;
+        //createEffect = true;
+        while (true)
+        {
+            my.orthographicSize += Time.deltaTime * 4;
+            if (my.orthographicSize >= 10)
+            {
+                my.orthographicSize = 10;
+                break;
+            }
+            yield return null;
+        }
+        isZoomOut = true;
+        coolBarBackground.SetActive(true);
     }
-    public void zoomOutBtnUp()
+    IEnumerator ZoomIn()
     {
-        my.orthographicSize = 5;
+        while (true)
+        {
+            my.orthographicSize -= Time.deltaTime * 4;
+            if (my.orthographicSize <= 5)
+            {
+                my.orthographicSize = 5;
+                break;
+            }
+            yield return null;
+        }
+        isZoomCool = true;
+        zoomCool_Img.SetActive(true);
+    }
+
+    public void zoomOutClick()
+    {
+        if (!isZoomCool && !isZoomOut)
+        {
+            StartCoroutine(ZoomOut());
+        }
+        else if (!isZoomCool && isZoomOut)
+        {
+            zoomTimeCount = zoomTime;
+        }
     }
 }

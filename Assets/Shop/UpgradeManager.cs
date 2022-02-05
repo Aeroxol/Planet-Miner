@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UpgradeManager : MonoBehaviour
 {
@@ -22,11 +23,11 @@ public class UpgradeManager : MonoBehaviour
     public Text moneyChangeText;
     public Image upgradeIcon;
     public Sprite[] upgradeSprites = new Sprite[5];
-    public Text digLvTxt;
-    public Text boosterLvTxt;
-    public Text hpLvTxt;
-    public Text invenLvTxt;
-    public Text resistLvTxt;
+    public TextMeshProUGUI digLvTmp;
+    public TextMeshProUGUI boosterLvTmp;
+    public TextMeshProUGUI hpLvTmp;
+    public TextMeshProUGUI invenLvTmp;
+    public TextMeshProUGUI resistLvTmp;
     int moneyChangeCount = 0;
 
     int currentUpgradeIndex;
@@ -49,11 +50,11 @@ public class UpgradeManager : MonoBehaviour
 
     void SetUpgradeLvTxt()
     {
-        digLvTxt.text = "Lv " + GameManager.Instance.curSaveData.myUpgradeLvs[0];
-        boosterLvTxt.text = "Lv " + GameManager.Instance.curSaveData.myUpgradeLvs[1];
-        hpLvTxt.text = "Lv " + GameManager.Instance.curSaveData.myUpgradeLvs[2];
-        invenLvTxt.text = "Lv " + GameManager.Instance.curSaveData.myUpgradeLvs[3];
-        resistLvTxt.text = "Lv " + GameManager.Instance.curSaveData.myUpgradeLvs[4];
+        digLvTmp.text = "Lv " + GameManager.Instance.curSaveData.myUpgradeLvs[0];
+        boosterLvTmp.text = "Lv " + GameManager.Instance.curSaveData.myUpgradeLvs[1];
+        hpLvTmp.text = "Lv " + GameManager.Instance.curSaveData.myUpgradeLvs[2];
+        invenLvTmp.text = "Lv " + GameManager.Instance.curSaveData.myUpgradeLvs[3];
+        resistLvTmp.text = "Lv " + GameManager.Instance.curSaveData.myUpgradeLvs[4];
     }
 
     public void DigUpgClick()

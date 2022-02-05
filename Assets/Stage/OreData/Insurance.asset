@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Insurance
   m_EditorClassIdentifier: 
   editorName: Insurance
-  artwork: {fileID: 21300000, guid: 672925e04033da441a18b95bbde20c09, type: 3}
+  artwork: {fileID: 21300000, guid: ee83ea0a4c75bca42a8fab380efc42bb, type: 3}
   itemCode: 21
   itemName: "\uC6B0\uC8FC\uBCF4\uD5D8"
   maxAmount: 1

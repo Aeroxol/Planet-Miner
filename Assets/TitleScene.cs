@@ -12,6 +12,7 @@ public class TitleScene : MonoBehaviour
     public NewGameSlot ngs;
     public GameObject deletePanel;
     public Text deleteText;
+    public GameObject touchToStart;
 
     public List<SaveSlot> saveSlotList = new List<SaveSlot>();
     [HideInInspector]
@@ -28,6 +29,7 @@ public class TitleScene : MonoBehaviour
         if (Input.anyKeyDown)
         {
             savePanel.SetActive(true);
+            touchToStart.SetActive(false);
         }
     }
 

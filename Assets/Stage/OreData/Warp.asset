@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Warp
   m_EditorClassIdentifier: 
   editorName: Warp
-  artwork: {fileID: 21300000, guid: e656103f015c9134a818d9f4931dae76, type: 3}
+  artwork: {fileID: 21300000, guid: ea849285967fc994aaf08336e3f25248, type: 3}
   itemCode: 20
   itemName: "\uAE34\uAE09\uC6CC\uD504\uC7A5\uCE58"
   maxAmount: 1

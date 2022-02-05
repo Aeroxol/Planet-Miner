@@ -173,16 +173,16 @@ public class InventoryManager : MonoBehaviour
             if (i<items.Count)
             {
                 slots[i].thumbnail.sprite = itemData[items[i].itemCode].artwork;
-                slots[i].amount.text = items[i].amount.ToString();
+                slots[i].amountTmp.text = items[i].amount.ToString();
                 slots[i].thumbnail.gameObject.SetActive(true);
-                slots[i].amount.gameObject.SetActive(true);
+                slots[i].amountTmp.gameObject.SetActive(true);
 
                 itemTotal[items[i].itemCode] += items[i].amount;
             }
             else
             {
                 slots[i].thumbnail.gameObject.SetActive(false);
-                slots[i].amount.gameObject.SetActive(false);
+                slots[i].amountTmp.gameObject.SetActive(false);
             }
         }
 

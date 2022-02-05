@@ -16,7 +16,7 @@ public class PlayerManager : MonoBehaviour
     //public int heatResist;
     //public int coldResist;
     UpgradeInfo upgradeInfo;
-    public float digDelay = 0.1f;
+    public float digDelay = 0.025f;
     public InventoryManager invenManager;
     public Image hpBar;
     public Image tempBar;
@@ -26,6 +26,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject digEffect;
     public GameObject gameOverCanvas;
     public Image blackOut;
+    public BlinkColor redAlert;
 
     Rigidbody2D rigid2d;
     BoxCollider2D boxCol2d;
@@ -199,6 +200,16 @@ public class PlayerManager : MonoBehaviour
         hpTemp.text = "HP: " + hp.ToString() + " / " + maxHp.ToString();
         hpBar.fillAmount = (float)hp / maxHp;
 
+        if (!playerPaused && (hp / ((float)maxHp) < 0.1f))
+        {
+            if (!redAlert.gameObject.activeSelf)
+            {
+                redAlert.gameObject.SetActive(true);
+                redAlert.StartCoroutine(redAlert.BlinkImage());
+            }
+        }
+        else redAlert.gameObject.SetActive(false);
+
         if (hp <= 0)
         {
             StartCoroutine(GameOver());
@@ -302,6 +313,7 @@ public class PlayerManager : MonoBehaviour
 
     IEnumerator GameOver()
     {
+        redAlert.gameObject.SetActive(false);
         gameOverCanvas.SetActive(true);
         animator.SetTrigger("die");
 

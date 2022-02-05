@@ -74,7 +74,7 @@ public class ShopManager : MonoBehaviour
             if (invenManager.itemTotal[i] > 0)
             {
                 sellSlots[i].amount = invenManager.itemTotal[i];
-                sellSlots[i].amountTxt.text = sellSlots[i].amount.ToString();
+                sellSlots[i].amountTmp.text = sellSlots[i].amount.ToString();
                 sellSlots[i].gameObject.SetActive(true);
             }
             else
