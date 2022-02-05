@@ -187,7 +187,6 @@ public class Stage : MonoBehaviour
                 if (stage[i, j] == -1)
                 {
                     newBlock.SetData(immortalBlock);
-                    newBlock.isInvincible = true;
                     continue;
                 }
 

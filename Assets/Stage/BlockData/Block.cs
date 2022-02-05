@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    public bool isInvincible = false;
     private BlockData data;
+    private int maxHp;
     private int hp;
     int maxHp;
     private SpriteRenderer spriteRenderer;
@@ -44,7 +44,7 @@ public class Block : MonoBehaviour
 
     public void DecreaseHp(int playerPower)
     {
-        if (isInvincible) return;
+        if (data.invincible) return;
 
         if ((hp > 99999))
             if (playerPower <= 99999) return;
