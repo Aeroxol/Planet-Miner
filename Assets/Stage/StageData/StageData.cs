@@ -32,7 +32,7 @@ public class StageData
 
         // ores
         // 레벨의 광물종류
-        int stageOreNum = GameManager.Instance.oreLevelData[_level].ores.Count;
+        int stageOreNum = GameManager.Instance.oreLevelData[_level].data.Count;
         // 스테이지에 등장할 광물의 수
         int oreNum = Random.Range(3, Mathf.Min(5, stageOreNum));
         List<int> numPool = new List<int>();
@@ -45,12 +45,13 @@ public class StageData
             int temp = Random.Range(0, numPool.Count);
             int index = numPool[temp];
             oreIndex.Add(index);
-            oreProbs.Add(GameManager.Instance.oreLevelData[_level].ores[index].probabilityGraphs[Random.Range(0, GameManager.Instance.oreLevelData[_level].ores[index].probabilityGraphs.Count)]);
+            oreProbs.Add(GameManager.Instance.oreLevelData[_level].data[index].probabilityGraphs[Random.Range(0, GameManager.Instance.oreLevelData[_level].data[index].probabilityGraphs.Count)]);
             numPool.RemoveAt(temp);
         }
         //gold
         goldProb = GameManager.Instance.gold.probabilityGraphs[Random.Range(0, GameManager.Instance.gold.probabilityGraphs.Count)];
         uraniumNum = Random.Range(1, _level * 2);
+
 
         mixCount = Random.Range(10, 20);
         disNum = Random.Range(5, 25);

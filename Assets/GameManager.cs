@@ -17,11 +17,13 @@ public class GameManager : MonoBehaviour
     [System.Serializable]
     public class ListWrapper<T>
     {
-        public List<T> ores;
+        public List<T> data;
     }
     public List<ListWrapper<OreData>> oreLevelData = new List<ListWrapper<OreData>>();
     public OreData gold;
     public OreData uranium;
+    public List<ListWrapper<float>> stageLevelProbs = new List<ListWrapper<float>>();
+
     [HideInInspector] public UpgradeInfo upgradeInfo = new UpgradeInfo();//업그레이드 수치 데이터
     public BlockSprites[] blockLevel = new BlockSprites[7]; //블록 스프라이트 1~7레벨
     public Sprite[] cracks = new Sprite[7]; //블록 크랙 스프라이트

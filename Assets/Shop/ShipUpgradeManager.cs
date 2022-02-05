@@ -49,7 +49,7 @@ public class ShipUpgradeManager : MonoBehaviour
 
     void SetPanel()
     {
-        curLv = GameManager.Instance.curSaveData.myShipLv;
+        curLv = GameManager.Instance.curSaveData.myShipLv + 1;
         currentLvTxt.text = "우주선 레벨: " + curLv.ToString();
         lvDescription.text = curLv.ToString() + "단계 행성까지 탐사할 수 있다.";
 
@@ -76,7 +76,7 @@ public class ShipUpgradeManager : MonoBehaviour
 
     void OpenPutPanel()
     {
-        curLv = GameManager.Instance.curSaveData.myShipLv;
+        curLv = GameManager.Instance.curSaveData.myShipLv + 1;
         curItemCode = upgradeInfo.materialType[curLv - 1, curMaterialIndex];
 
         requireMaAmount = upgradeInfo.materialAmount[curLv - 1, curMaterialIndex] - GameManager.Instance.curSaveData.myShipMaterials[curMaterialIndex];
@@ -119,7 +119,7 @@ public class ShipUpgradeManager : MonoBehaviour
     public void UpgradeClick()
     {
         int canUpgrade = 0;
-        curLv = GameManager.Instance.curSaveData.myShipLv;
+        curLv = GameManager.Instance.curSaveData.myShipLv + 1;
 
         if (curLv >= 5) return;
 
@@ -135,7 +135,7 @@ public class ShipUpgradeManager : MonoBehaviour
         if (canUpgrade == 4)
         {
             GameManager.Instance.curSaveData.myShipLv++;
-            curLv = GameManager.Instance.curSaveData.myShipLv;
+            curLv = GameManager.Instance.curSaveData.myShipLv + 1;
             GameManager.Instance.curSaveData.myShipMaterials[0] = 0;
             GameManager.Instance.curSaveData.myShipMaterials[1] = 0;
             GameManager.Instance.curSaveData.myShipMaterials[2] = 0;
