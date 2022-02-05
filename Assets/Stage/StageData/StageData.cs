@@ -17,44 +17,8 @@ public class StageData
     public int disNum;
     public int disLength;
     public List<AnimationCurve> oreProbs = new List<AnimationCurve>();
-
-    /*
-    public static StageData NewStage(int level)
-    {
-        StageData newStageData = ScriptableObject.CreateInstance<StageData>();
-        newStageData.level = level;
-        newStageData.width = (int)RandomGaussian(60, 80);
-        newStageData.height = (int)RandomGaussian(150, 250);
-        // dirt
-        newStageData.blocks = new List<BlockData>(GameManager.Instance.stageLevelData[level].blocks);
-
-        newStageData.depth.Add(Random.Range(newStageData.height * 3 / 12, newStageData.height * 5 / 12));
-        newStageData.depth.Add(Random.Range(newStageData.height * 7 / 12, newStageData.height * 9 / 12));
-        newStageData.depth.Add(newStageData.height + 1);
-
-        // ores
-        int oresNum = Random.Range(3, Mathf.Min(5, GameManager.Instance.stageLevelData[level].ores.Count - 2)); ;
-        List<OreData> tempOres = new List<OreData>(GameManager.Instance.stageLevelData[level].ores);
-        for (int i = 0; i < oresNum; ++i)
-        {
-            int index = Random.Range(0, tempOres.Count - 2);
-            newStageData.ores.Add(tempOres[index]);
-            newStageData.oreProbs.Add(tempOres[index].probabilityGraphs[Random.Range(0, tempOres[index].probabilityGraphs.Count)]);
-            tempOres.RemoveAt(index);
-        }
-        // gold
-        newStageData.ores.Add(tempOres[tempOres.Count - 2]);
-        newStageData.oreProbs.Add(tempOres[tempOres.Count - 2].probabilityGraphs[Random.Range(0, tempOres[tempOres.Count - 2].probabilityGraphs.Count)]);
-        // uranium
-        newStageData.ores.Add(tempOres[tempOres.Count - 1]);
-        newStageData.oreProbs.Add(tempOres[tempOres.Count - 1].probabilityGraphs[Random.Range(0, tempOres[tempOres.Count - 1].probabilityGraphs.Count)]);
-
-        newStageData.mixCount = Random.Range(10, 20);
-        newStageData.disNum = Random.Range(5, 25);
-        newStageData.disLength = Random.Range(5, 15);
-        newStageData.image = GameManager.Instance.planetImages[Random.Range(0, GameManager.Instance.planetImages.Count)];
-        return newStageData;
-    }*/
+    public AnimationCurve goldProb;
+    public int uraniumNum;
 
     public StageData(int _level)
     {
@@ -70,9 +34,9 @@ public class StageData
         // 레벨의 광물종류
         int stageOreNum = GameManager.Instance.oreLevelData[_level].ores.Count;
         // 스테이지에 등장할 광물의 수
-        int oreNum = Random.Range(3, Mathf.Min(6, stageOreNum - 2));
+        int oreNum = Random.Range(3, Mathf.Min(5, stageOreNum));
         List<int> numPool = new List<int>();
-        for (int i = 0; i < stageOreNum - 2; ++i)
+        for (int i = 0; i < stageOreNum; ++i)
         {
             numPool.Add(i);
         }
@@ -85,11 +49,8 @@ public class StageData
             numPool.RemoveAt(temp);
         }
         //gold
-        oreIndex.Add(stageOreNum - 2);
-        oreProbs.Add(GameManager.Instance.oreLevelData[_level].ores[stageOreNum - 2].probabilityGraphs[Random.Range(0, GameManager.Instance.oreLevelData[_level].ores[stageOreNum - 2].probabilityGraphs.Count)]);
-        //uranium
-        oreIndex.Add(stageOreNum - 1);
-        oreProbs.Add(GameManager.Instance.oreLevelData[_level].ores[stageOreNum - 1].probabilityGraphs[Random.Range(0, GameManager.Instance.oreLevelData[_level].ores[stageOreNum - 1].probabilityGraphs.Count)]);
+        goldProb = GameManager.Instance.gold.probabilityGraphs[Random.Range(0, GameManager.Instance.gold.probabilityGraphs.Count)];
+        uraniumNum = Random.Range(1, _level * 2);
 
         mixCount = Random.Range(10, 20);
         disNum = Random.Range(5, 25);

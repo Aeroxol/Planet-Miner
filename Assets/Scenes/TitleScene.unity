@@ -653,8 +653,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 00c9098a050b5904d982b4e73af70149, type: 2}
     - {fileID: 11400000, guid: dd3166af7d6028c45985aafc4dd7df12, type: 2}
     - {fileID: 11400000, guid: 6d390c39f669be64f8b8b591015f20b0, type: 2}
-    - {fileID: 11400000, guid: 8afb306bb9c59274aa3be2026e48fa51, type: 2}
-    - {fileID: 11400000, guid: 12c37410b39c20e4cb2bad3d768e44a2, type: 2}
   - ores:
     - {fileID: 11400000, guid: 16bcd52e5f7b79a428ebd8ddd5628846, type: 2}
     - {fileID: 11400000, guid: 00c9098a050b5904d982b4e73af70149, type: 2}
@@ -662,8 +660,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 6d390c39f669be64f8b8b591015f20b0, type: 2}
     - {fileID: 11400000, guid: 2e5667d49f4c7ec4e89ce90c7f94df4a, type: 2}
     - {fileID: 11400000, guid: 6641c6737a2919e44848082099ba55ee, type: 2}
-    - {fileID: 11400000, guid: 8afb306bb9c59274aa3be2026e48fa51, type: 2}
-    - {fileID: 11400000, guid: 12c37410b39c20e4cb2bad3d768e44a2, type: 2}
   - ores:
     - {fileID: 11400000, guid: 00c9098a050b5904d982b4e73af70149, type: 2}
     - {fileID: 11400000, guid: dd3166af7d6028c45985aafc4dd7df12, type: 2}
@@ -672,8 +668,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 6641c6737a2919e44848082099ba55ee, type: 2}
     - {fileID: 11400000, guid: 06cb021e46b654d4c9f96706ddc17ff6, type: 2}
     - {fileID: 11400000, guid: 3bcd31794b370ac49a94a0d46fc53708, type: 2}
-    - {fileID: 11400000, guid: 8afb306bb9c59274aa3be2026e48fa51, type: 2}
-    - {fileID: 11400000, guid: 12c37410b39c20e4cb2bad3d768e44a2, type: 2}
   - ores:
     - {fileID: 11400000, guid: 00c9098a050b5904d982b4e73af70149, type: 2}
     - {fileID: 11400000, guid: dd3166af7d6028c45985aafc4dd7df12, type: 2}
@@ -683,8 +677,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 3bcd31794b370ac49a94a0d46fc53708, type: 2}
     - {fileID: 11400000, guid: 36191177fc4f5184dadf0d0e8408931c, type: 2}
     - {fileID: 11400000, guid: ef760efc8a0124a4cadb51e6744eeaff, type: 2}
-    - {fileID: 11400000, guid: 8afb306bb9c59274aa3be2026e48fa51, type: 2}
-    - {fileID: 11400000, guid: 12c37410b39c20e4cb2bad3d768e44a2, type: 2}
   - ores:
     - {fileID: 11400000, guid: 00c9098a050b5904d982b4e73af70149, type: 2}
     - {fileID: 11400000, guid: dd3166af7d6028c45985aafc4dd7df12, type: 2}
@@ -695,8 +687,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: ef760efc8a0124a4cadb51e6744eeaff, type: 2}
     - {fileID: 11400000, guid: 71f4e423a900e3c48b25694c0aa85822, type: 2}
     - {fileID: 11400000, guid: caef470160d1ebb4fb9283e71de1c209, type: 2}
-    - {fileID: 11400000, guid: 8afb306bb9c59274aa3be2026e48fa51, type: 2}
-    - {fileID: 11400000, guid: 12c37410b39c20e4cb2bad3d768e44a2, type: 2}
+  gold: {fileID: 11400000, guid: 8afb306bb9c59274aa3be2026e48fa51, type: 2}
+  uranium: {fileID: 11400000, guid: 12c37410b39c20e4cb2bad3d768e44a2, type: 2}
   blockLevel:
   - spriteType:
     - {fileID: 9142099919396135734, guid: 4fbd46971b73d984b86ff692d16cf5d8, type: 3}
@@ -789,7 +781,6 @@ MonoBehaviour:
     - {fileID: -3985037868483291380, guid: 80c1bfa6484732348819c879ab606fac, type: 3}
     - {fileID: -6496884972393299920, guid: 80c1bfa6484732348819c879ab606fac, type: 3}
     - {fileID: -2524638994758593445, guid: 80c1bfa6484732348819c879ab606fac, type: 3}
-  myItems: []
 --- !u!4 &686816027
 Transform:
   m_ObjectHideFlags: 0

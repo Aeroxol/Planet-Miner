@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c77e63f0d698c64eb50cd1a02695b62, type: 3}
   m_Name: Aluminium
   m_EditorClassIdentifier: 
+  id: 8
   editorName: Aluminium
   artwork: {fileID: 21300000, guid: 59824d607c9f66c449b4b58a5357dba9, type: 3}
   itemCode: 8

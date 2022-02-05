@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviour
     public int digPower = 50;
     public int maxHp;
     public int hp;
-    int radationResist = 0;
+    public int radationResist = 0;
     //int displayHp;
     //public int heatResist;
     //public int coldResist;
