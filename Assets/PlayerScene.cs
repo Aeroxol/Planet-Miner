@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class PlayerScene : MonoBehaviour
 {
@@ -16,6 +17,16 @@ public class PlayerScene : MonoBehaviour
         {
             //load
             stage.RenderStage(GameManager.Instance.curSaveData.curStageData, GameManager.Instance.curSaveData.curStageMap);
+        }
+
+        Invoke("SetDefaultSprites", 1.0f);
+    }
+
+    void SetDefaultSprites()
+    {
+        for (int i = 0; i < stage.blocks.Count; i++)
+        {
+            stage.blocks[i].SetDefaultSprite();
         }
         GameManager.Instance.loadingManager.LoadingComplete();
     }

@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public UpgradeInfo upgradeInfo = new UpgradeInfo();//업그레이드 수치 데이터
     public BlockSprites[] blockLevel = new BlockSprites[7]; //블록 스프라이트 1~7레벨
+    public Sprite[] cracks = new Sprite[7]; //블록 크랙 스프라이트
    // public List<ItemInSlot> myItems = new List<ItemInSlot>();//플레이어가 가지고있는 아이템
 
     public SaveData curSaveData;

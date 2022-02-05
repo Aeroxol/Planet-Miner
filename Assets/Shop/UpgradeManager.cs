@@ -5,16 +5,6 @@ using UnityEngine.UI;
 
 public class UpgradeManager : MonoBehaviour
 {
-    //public Canvas UpgradeCanvas;
-    //public PlayerManager player;
-    //public Text digLvlText;
-
-    //public Button hpUpgBtn;
-    //public Button digUpgBtn;
-    //public Button boosterUpgBtn;
-    //public Button resistUpgBtn;
-    //public Button invenUpgBtn;
-
     UpgradeInfo upgradeInfo;
     public InventoryManager invenManager;
 
@@ -30,6 +20,13 @@ public class UpgradeManager : MonoBehaviour
     public Text moneyTxt;
     public Image moneyChangeImg;
     public Text moneyChangeText;
+    public Image upgradeIcon;
+    public Sprite[] upgradeSprites = new Sprite[5];
+    public Text digLvTxt;
+    public Text boosterLvTxt;
+    public Text hpLvTxt;
+    public Text invenLvTxt;
+    public Text resistLvTxt;
     int moneyChangeCount = 0;
 
     int currentUpgradeIndex;
@@ -41,6 +38,7 @@ public class UpgradeManager : MonoBehaviour
     void Start()
     {
         upgradeInfo = GameManager.Instance.upgradeInfo;
+        SetUpgradeLvTxt();
     }
 
     // Update is called once per frame
@@ -49,11 +47,21 @@ public class UpgradeManager : MonoBehaviour
 
     }
 
+    void SetUpgradeLvTxt()
+    {
+        digLvTxt.text = "Lv " + GameManager.Instance.curSaveData.myUpgradeLvs[0];
+        boosterLvTxt.text = "Lv " + GameManager.Instance.curSaveData.myUpgradeLvs[1];
+        hpLvTxt.text = "Lv " + GameManager.Instance.curSaveData.myUpgradeLvs[2];
+        invenLvTxt.text = "Lv " + GameManager.Instance.curSaveData.myUpgradeLvs[3];
+        resistLvTxt.text = "Lv " + GameManager.Instance.curSaveData.myUpgradeLvs[4];
+    }
+
     public void DigUpgClick()
     {
         currentUpgradeIndex = 0;
         int curLv = GameManager.Instance.curSaveData.myUpgradeLvs[0];
 
+        upgradeIcon.sprite = upgradeSprites[0];
         upgradeName.text = "채굴력";
         description.text = "채굴력을 강화합니다.";
         currentLvl.text = "현재레벨: " + curLv.ToString();
@@ -86,6 +94,7 @@ public class UpgradeManager : MonoBehaviour
 
         int curLv = GameManager.Instance.curSaveData.myUpgradeLvs[currentUpgradeIndex];
 
+        upgradeIcon.sprite = upgradeSprites[1];
         upgradeName.text = "부스터";
         description.text = "부스터를 강화합니다.";
         currentLvl.text = "현재레벨: " + curLv.ToString();
@@ -120,6 +129,7 @@ public class UpgradeManager : MonoBehaviour
 
         int curLv = GameManager.Instance.curSaveData.myUpgradeLvs[currentUpgradeIndex];
 
+        upgradeIcon.sprite = upgradeSprites[2];
         upgradeName.text = "체력";
         description.text = "체력을 강화합니다.";
         currentLvl.text = "현재레벨: " + curLv.ToString();
@@ -152,6 +162,7 @@ public class UpgradeManager : MonoBehaviour
 
         int curLv = GameManager.Instance.curSaveData.myUpgradeLvs[currentUpgradeIndex];
 
+        upgradeIcon.sprite = upgradeSprites[3];
         upgradeName.text = "인벤토리";
         description.text = "인벤토리를 확장합니다.";
         currentLvl.text = "현재레벨: " + curLv.ToString();
@@ -184,6 +195,7 @@ public class UpgradeManager : MonoBehaviour
 
         int curLv = GameManager.Instance.curSaveData.myUpgradeLvs[currentUpgradeIndex];
 
+        upgradeIcon.sprite = upgradeSprites[4];
         upgradeName.text = "방사선 저항";
         description.text = "방사선 저항 능력을 강화합니다.";
         currentLvl.text = "현재레벨: " + curLv.ToString();
@@ -220,6 +232,7 @@ public class UpgradeManager : MonoBehaviour
             moneyTxt.text = string.Format("{0:#,0}", GameManager.Instance.curSaveData.myMoney);
             StartCoroutine(ShowMoneyChangeInformation(false, price));
 
+            SetUpgradeLvTxt();
             switch (currentUpgradeIndex)
             {
                 case 0:

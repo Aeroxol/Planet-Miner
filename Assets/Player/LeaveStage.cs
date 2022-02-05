@@ -10,7 +10,7 @@ public class LeaveStage : MonoBehaviour
     public GameObject askLeave;
 
     //게임오버
-    public GameObject gameOverCanvas;
+    public GameObject gameOverPanel;
     public GameObject itemLostTxt;
     public GameObject itemProtectedTxt;
 
@@ -18,7 +18,7 @@ public class LeaveStage : MonoBehaviour
 
     public void GameOver(bool itemProtected)
     {
-        gameOverCanvas.SetActive(true);
+        gameOverPanel.SetActive(true);
         if (itemProtected)
         {
             itemProtectedTxt.SetActive(true);

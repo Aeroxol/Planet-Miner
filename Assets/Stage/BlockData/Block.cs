@@ -7,7 +7,9 @@ public class Block : MonoBehaviour
     public bool isInvincible = false;
     private BlockData data;
     private int hp;
+    int maxHp;
     private SpriteRenderer spriteRenderer;
+    public SpriteRenderer crackSpriteRenderer;
 
     [HideInInspector] public GameObject myOre;
     [HideInInspector] public GameObject myOreWithBody;
@@ -29,53 +31,6 @@ public class Block : MonoBehaviour
 
     void Start()
     {
-        if ((data.level > 0) && (data.level < 8))
-        {
-            mySprites = GameManager.Instance.blockLevel[data.level - 1].spriteType;
-
-            hits = Physics2D.BoxCastAll(transform.position, new Vector2(2, 2), 0, Vector2.zero, 0, LayerMask.GetMask("Block"));
-
-            bool isThereUp = false;
-            for (int i = 0; i < hits.Length; i++)
-            {
-                if (transform.position.x == hits[i].transform.position.x)
-                {
-                    if (transform.position.y < hits[i].transform.position.y)
-                    {
-                        isThereUp = true;
-                        if (hits[i].transform.gameObject.GetComponent<Block>().hp > 99999)
-                            isNeighborImmortal[0] = true;
-                    }
-                    else
-                    {
-                        if (hits[i].transform.gameObject.GetComponent<Block>().hp > 99999)
-                            isNeighborImmortal[1] = true;
-                    }
-                }
-                else if (transform.position.y == hits[i].transform.position.y)
-                {
-                    if (transform.position.x > hits[i].transform.position.x)
-                    {
-                        if (hits[i].transform.gameObject.GetComponent<Block>().hp > 99999)
-                            isNeighborImmortal[2] = true;
-                    }
-                    else
-                    {
-                        if (hits[i].transform.gameObject.GetComponent<Block>().hp > 99999)
-                            isNeighborImmortal[3] = true;
-                    }
-                }
-            }
-            if (!isThereUp)
-            {
-                isNeighborAlive[0] = false;
-                StartCoroutine(StartChange(0));
-            }
-            if (isNeighborImmortal[0] || isNeighborImmortal[1] || isNeighborImmortal[2] || isNeighborImmortal[3])
-            {
-                StartCoroutine(StartChange(-1));
-            }
-        }
 
     }
 
@@ -84,6 +39,7 @@ public class Block : MonoBehaviour
         data = _data;
         spriteRenderer.sprite = data.artwork[0];
         hp = data.health;
+        maxHp = data.health;
     }
 
     public void DecreaseHp(int playerPower)
@@ -95,25 +51,22 @@ public class Block : MonoBehaviour
 
         hp -= playerPower;
 
-        if (data.artwork.Length > 1)
-        {
-            if ((hp>300)&&(hp <= 400))
-            {
-                spriteRenderer.sprite = data.artwork[1];
-            }
-            if ((hp > 200)&&(hp <= 300))
-            {
-                spriteRenderer.sprite = data.artwork[2];
-            }
-            if ((hp > 100)&&(hp <= 200))
-            {
-                spriteRenderer.sprite = data.artwork[3];
-            }
-            if ((hp <= 100))
-            {
-                spriteRenderer.sprite = data.artwork[4];
-            }
-        }
+        float ratio = ((float)hp / maxHp)/0.125f;
+        if (ratio < 1)
+            crackSpriteRenderer.sprite = GameManager.Instance.cracks[6];
+        else if (ratio < 2)
+            crackSpriteRenderer.sprite = GameManager.Instance.cracks[5];
+        else if (ratio < 3)
+            crackSpriteRenderer.sprite = GameManager.Instance.cracks[4];
+        else if (ratio < 4)
+            crackSpriteRenderer.sprite = GameManager.Instance.cracks[3];
+        else if (ratio < 5)
+            crackSpriteRenderer.sprite = GameManager.Instance.cracks[2];
+        else if (ratio < 6)
+            crackSpriteRenderer.sprite = GameManager.Instance.cracks[1];
+        else if (ratio < 7)
+            crackSpriteRenderer.sprite = GameManager.Instance.cracks[0];
+
         if (hp <= 0)
         {
             Block tempBlock;
@@ -178,9 +131,54 @@ public class Block : MonoBehaviour
         }
     }
 
-    IEnumerator StartChange(int where)
+    public void SetDefaultSprite()
     {
-        yield return new WaitForSeconds(0.5f);
-        ChangeShape(where);
+        if ((data.level > 0) && (data.level < 8))
+        {
+            mySprites = GameManager.Instance.blockLevel[data.level - 1].spriteType;
+
+            hits = Physics2D.BoxCastAll(transform.position, new Vector2(2, 2), 0, Vector2.zero, 0, LayerMask.GetMask("Block"));
+
+            bool isThereUp = false;
+            for (int i = 0; i < hits.Length; i++)
+            {
+                if (transform.position.x == hits[i].transform.position.x)
+                {
+                    if (transform.position.y < hits[i].transform.position.y)
+                    {
+                        isThereUp = true;
+                        if (hits[i].transform.gameObject.GetComponent<Block>().hp > 99999)
+                            isNeighborImmortal[0] = true;
+                    }
+                    else
+                    {
+                        if (hits[i].transform.gameObject.GetComponent<Block>().hp > 99999)
+                            isNeighborImmortal[1] = true;
+                    }
+                }
+                else if (transform.position.y == hits[i].transform.position.y)
+                {
+                    if (transform.position.x > hits[i].transform.position.x)
+                    {
+                        if (hits[i].transform.gameObject.GetComponent<Block>().hp > 99999)
+                            isNeighborImmortal[2] = true;
+                    }
+                    else
+                    {
+                        if (hits[i].transform.gameObject.GetComponent<Block>().hp > 99999)
+                            isNeighborImmortal[3] = true;
+                    }
+                }
+            }
+            if (!isThereUp)
+            {
+                isNeighborAlive[0] = false;
+                ChangeShape(0);
+            }
+            if (isNeighborImmortal[0] || isNeighborImmortal[1] || isNeighborImmortal[2] || isNeighborImmortal[3])
+            {
+                ChangeShape(-1);
+            }
+        }
     }
 }

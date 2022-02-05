@@ -22,18 +22,25 @@ public class PlayerManager : MonoBehaviour
     public Image tempBar;
     public LeaveStage leaveStage;
     //[HideInInspector] public bool itemProtected = false;
+    public Animator animator;
+    public GameObject digEffect;
+    public GameObject gameOverCanvas;
+    public Image blackOut;
 
     Rigidbody2D rigid2d;
+    BoxCollider2D boxCol2d;
     [HideInInspector] public Vector2 colliderSize;
     RaycastHit2D hit;
 
-    float leftRightBound;
-    float maxHeight;
+    float leftRightBound;//∏  ¡¬øÏ¡¶«—
+    float boundPadding = 0;
+    float maxHeight;//∏  ≥Ù¿Ã¡¶«—
 
     bool moveLeft = false;
     bool moveRight = false;
     bool moveUp = false;
     bool digging = false;
+    bool diggingGround = false;
     [HideInInspector] public bool flying = true;
 
     bool isDigDelay = false;
@@ -54,10 +61,12 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         rigid2d = GetComponent<Rigidbody2D>();
-        colliderSize = GetComponent<BoxCollider2D>().bounds.size;
+        boxCol2d = GetComponent<BoxCollider2D>();
+        colliderSize = boxCol2d.bounds.size;
         upgradeInfo = GameManager.Instance.upgradeInfo;
         leftRightBound = (GameManager.Instance.curSaveData.curStageData.width - colliderSize.x) / 2;
-        maxHeight = 40 - colliderSize.y / 2;
+        maxHeight = 20.0f - colliderSize.y / 2;
+        if (GameManager.Instance.curSaveData.curStageData.width % 2 == 0) boundPadding = 0.5f;
         SetStats();
     }
 
@@ -75,11 +84,67 @@ public class PlayerManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow))
             moveUp = true;
         else if (Input.GetKeyUp(KeyCode.UpArrow))
-            moveUp = false;
+            moveUp = false;  
         if (Input.GetKeyDown(KeyCode.Space))
             digging = true;
         else if (Input.GetKeyUp(KeyCode.Space))
             digging = false;
+
+        //FOR ANIMATION////////////////////////////////////////
+        if (moveLeft && moveRight)
+        {
+            animator.SetBool("isWalking", false);
+        }
+        else if (moveLeft && !moveRight)
+        {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            if (!flying) animator.SetBool("isWalking", true);
+        }
+        else if (!moveLeft && moveRight)
+        {
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            if (!flying) animator.SetBool("isWalking", true);
+        }
+        else if (!moveLeft && !moveRight) 
+        {
+            animator.SetBool("isWalking", false);
+        }
+
+        if (digging && !flying)
+        {
+            animator.SetBool("isDigging", true);
+            if (moveLeft)
+            {
+                digEffect.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                digEffect.transform.localEulerAngles = Vector3.zero;
+                digEffect.transform.position = new Vector3(rigid2d.position.x - 0.6f, rigid2d.position.y, digEffect.transform.position.z);
+            }
+            else if (moveRight)
+            {
+                digEffect.transform.localScale = new Vector3(-0.5f, 0.5f, 0.5f);
+                digEffect.transform.localEulerAngles = Vector3.zero;
+                digEffect.transform.position = new Vector3(rigid2d.position.x + 0.6f, rigid2d.position.y, digEffect.transform.position.z);
+            }
+            else
+            {
+                digEffect.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                digEffect.transform.localEulerAngles = new Vector3(0,0,90);
+                digEffect.transform.position = new Vector3(rigid2d.position.x, rigid2d.position.y - 0.4f, digEffect.transform.position.z);
+            }
+
+        }
+        else
+        {
+            animator.SetBool("isDigging", false);
+        }
+
+        if (moveUp)
+            animator.SetBool("isFlying", true);
+        else animator.SetBool("isFlying", false);
+
+        if (diggingGround) digEffect.SetActive(true);
+        else digEffect.SetActive(false);
+        ///////////////////////////////////////////////////////
 
         if (isDigDelay)
         {
@@ -91,8 +156,14 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-        if (!playerPaused)
+        if (playerPaused)
         {
+            animator.speed = 0;
+        }
+        else
+        {
+            animator.speed = 1;
+
             if (isHeatDelay)
             {
                 heatDelaytimer += Time.deltaTime;
@@ -130,18 +201,28 @@ public class PlayerManager : MonoBehaviour
 
         if (hp <= 0)
         {
-            GameOver();
+            StartCoroutine(GameOver());
         }
     }
 
     private void FixedUpdate()
     {
         Vector2 myVelocity = new Vector2(0, rigid2d.velocity.y);
-        if (moveLeft && (rigid2d.position.x > -leftRightBound - 0.5f))
+        if (moveLeft && !moveRight && !digging && (rigid2d.position.x > -leftRightBound - boundPadding))
             myVelocity += new Vector2(-speed * Time.deltaTime, 0);
-        else if (moveRight && (rigid2d.position.x < leftRightBound - 0.5f))
+        else if (moveRight && !moveLeft && !digging && (rigid2d.position.x < leftRightBound - boundPadding))
             myVelocity += new Vector2(speed * Time.deltaTime, 0);
         rigid2d.velocity = myVelocity;
+
+        //ªÁ¿ÃµÂ πÊ«‚ √§±º¡ﬂ ƒ›∂Û¿Ã¥ı ¿œΩ√ ∫Ø∞Ê
+        if (digging && (moveLeft ^ moveRight))
+        {
+            boxCol2d.offset = new Vector2(-0.25f, 0);
+        }
+        else
+        {
+            boxCol2d.offset = new Vector2(0, 0);
+        }
 
         if (moveUp)
         {
@@ -167,16 +248,18 @@ public class PlayerManager : MonoBehaviour
             //Debug.Log(boxCol2d.bounds.size.y / 2);
         }
 
-        if (digging && !flying && !isDigDelay)
+        diggingGround = false;
+        if (digging && !flying)
         {
             if (moveLeft) // øﬁ¬  √§±º
             {
                 hit = Physics2D.Raycast(transform.position, Vector2.left, 1.0f, LayerMask.GetMask("Block"));
                 if (hit.collider != null)
                 {
-                    if (hit.distance - (colliderSize.x / 2) < 0.2f)
+                    if (hit.distance - (colliderSize.x / 2) < 0.3f)
                     {
-                        hit.collider.GetComponent<Block>().DecreaseHp(digPower);
+                        diggingGround = true;
+                        if(!isDigDelay) hit.collider.GetComponent<Block>().DecreaseHp(digPower);
                     }
                 }
             }
@@ -185,16 +268,18 @@ public class PlayerManager : MonoBehaviour
                 hit = Physics2D.Raycast(transform.position, Vector2.right, 1.0f, LayerMask.GetMask("Block"));
                 if (hit.collider != null)
                 {
-                    if (hit.distance - (colliderSize.x / 2) < 0.2f)
+                    if (hit.distance - (colliderSize.x / 2) < 0.3f)
                     {
-                        hit.collider.GetComponent<Block>().DecreaseHp(digPower);
+                        diggingGround = true;
+                        if (!isDigDelay) hit.collider.GetComponent<Block>().DecreaseHp(digPower);
                     }
                 }
             }
             else // æ∆∑°¬  √§±º
             {
+                diggingGround = true;
                 rigid2d.MovePosition(new Vector2(hit.transform.position.x, rigid2d.position.y));
-                hit.collider.GetComponent<Block>().DecreaseHp(digPower);
+                if(!isDigDelay) hit.collider.GetComponent<Block>().DecreaseHp(digPower);
             }
             isDigDelay = true;
         }
@@ -215,8 +300,24 @@ public class PlayerManager : MonoBehaviour
         if (hp > maxHp) hp = maxHp;
     }
 
-    void GameOver()
+    IEnumerator GameOver()
     {
+        gameOverCanvas.SetActive(true);
+        animator.SetTrigger("die");
+
+        digging = false;
+        moveLeft = false;
+        moveRight = false;
+        moveUp = false;
+
+        while (true)
+        {
+            blackOut.color = new Color(0, 0, 0, blackOut.color.a + 0.0004f * Time.deltaTime);
+            if (blackOut.color.a >= 0.9f)
+                break;
+            yield return null;
+        }
+
         leaveStage.GameOver(GameManager.Instance.curSaveData.itemProtected);
     }
 
