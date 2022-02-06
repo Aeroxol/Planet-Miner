@@ -9,6 +9,7 @@ public class StageRocket : MonoBehaviour
     Renderer myRenderer;
     public GameObject leaveBtn;
     public GameObject shopBtn;
+    public GameObject rocketBtn;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,7 @@ public class StageRocket : MonoBehaviour
         {
             leaveBtn.SetActive(true);
             shopBtn.SetActive(true);
+            rocketBtn.SetActive(true);
             if (player.hp < player.maxHp)
             {
                 player.RestoreHp(player.maxHp / 10);
@@ -34,6 +36,7 @@ public class StageRocket : MonoBehaviour
         {
             leaveBtn.SetActive(false);
             shopBtn.SetActive(false);
+            rocketBtn.SetActive(false);
         }
             
     }

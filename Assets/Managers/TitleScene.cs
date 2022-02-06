@@ -59,8 +59,8 @@ public class TitleScene : MonoBehaviour
                 SaveSlot newSaveSlot = GameObject.Instantiate<SaveSlot>(saveSlot, saveContent.transform);
                 newSaveSlot.titleScene = this;
                 saveSlotList.Add(newSaveSlot);
-                //newSaveSlot.nameTmp.text = Path.GetFileNameWithoutExtension(file.Name);
-                newSaveSlot.nameText.text = Path.GetFileNameWithoutExtension(file.Name);
+                newSaveSlot.nameTmp.text = Path.GetFileNameWithoutExtension(file.Name);
+                //newSaveSlot.nameText.text = Path.GetFileNameWithoutExtension(file.Name);
                 newSaveSlot.btnStart.onClick.AddListener(delegate { SoundManager.Play("click"); });
                 newSaveSlot.btnDelete.onClick.AddListener(delegate { SoundManager.Play("click"); });
             }

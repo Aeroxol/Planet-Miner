@@ -23,6 +23,7 @@ public class PlayerScene : MonoBehaviour
 
     public Stage stage;
     public PlayerManager player;
+    public MessageBoxManager messageBox;
 
     private void Awake()
     {
@@ -71,10 +72,13 @@ public class PlayerScene : MonoBehaviour
         GameManager.Instance.curSaveData.playerX = player.transform.position.x;
         GameManager.Instance.curSaveData.playerY = player.transform.position.y;
         SaveData.Save(GameManager.Instance.curSaveData);
+        messageBox.ShowMessageBox("저장되었습니다.");
+        /*
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif
+       */
     }
 }

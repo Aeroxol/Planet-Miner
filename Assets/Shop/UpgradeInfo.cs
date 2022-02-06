@@ -27,6 +27,6 @@ public class UpgradeInfo //업그레이드 수치 데이터
 
     public readonly int maxShipLvl = 5;
     public readonly int[,] materialType = { { 0, 1, 2, 12 }, { 5, 6, 2, 12 }, { 7, 8, 2, 12 }, { 9, 10, 2, 12 } };
-    //public readonly int[,] materialAmount = { { 100, 100, 50, 1 }, { 100, 100, 100, 2 }, { 100, 100, 200, 3 }, { 100, 100, 500, 4 } }; //실수치
-    public readonly int[,] materialAmount = { { 5, 5, 2, 1 }, { 5, 5, 5, 1 }, { 5, 5, 10, 1 }, { 5, 5, 10, 1 } }; //테스트용 너프수치
+    public readonly int[,] materialAmount = { { 100, 100, 50, 1 }, { 100, 100, 100, 2 }, { 100, 100, 200, 3 }, { 100, 100, 500, 4 } }; //실수치
+    //public readonly int[,] materialAmount = { { 5, 5, 2, 1 }, { 5, 5, 5, 1 }, { 5, 5, 10, 1 }, { 5, 5, 10, 1 } }; //테스트용 너프수치
 }

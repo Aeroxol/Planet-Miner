@@ -16,6 +16,7 @@ public class LobbyScene : MonoBehaviour
     public GameObject endingCanvas;
 
     public GameObject robotImage;
+    public MessageBoxManager messageBox;
 
     private List<StageData> stages = new List<StageData>();
     public ScrollRect scrollRect;
@@ -85,7 +86,7 @@ public class LobbyScene : MonoBehaviour
 
     public void UpdateDescription()
     {
-        descLevel.text = "레벨: " + (stages[scrollIndex].level + 1).ToString();
+        descLevel.text = "행성레벨: " + (stages[scrollIndex].level + 1).ToString();
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < stages[scrollIndex].oreIndex.Count; ++i)
         {
@@ -141,6 +142,7 @@ public class LobbyScene : MonoBehaviour
     public void BtnSave()
     {
         SaveData.Save(GameManager.Instance.curSaveData);
+        messageBox.ShowMessageBox("저장되었습니다.");
     }
 
     public void CloseEndingClick()
