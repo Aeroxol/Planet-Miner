@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
     //int displayHp;
     //public int heatResist;
     //public int coldResist;
-    UpgradeInfo upgradeInfo;
+    //UpgradeInfo upgradeInfo;
     public float digDelay = 0.025f;
     public InventoryManager invenManager;
     public Image hpBar;
@@ -68,7 +68,7 @@ public class PlayerManager : MonoBehaviour
         boxCol2d = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         colliderSize = boxCol2d.bounds.size;
-        upgradeInfo = GameManager.Instance.upgradeInfo;
+        //upgradeInfo = GameManager.Instance.upgradeInfo;
         leftRightBound = (GameManager.Instance.curSaveData.curStageData.width - colliderSize.x) / 2;
         maxHeight = 20.0f - colliderSize.y / 2;
         if (GameManager.Instance.curSaveData.curStageData.width % 2 == 0) boundPadding = 0.5f;
@@ -346,13 +346,13 @@ public class PlayerManager : MonoBehaviour
 
     public void SetStats(bool isLoad)
     {
-        digPower = upgradeInfo.digPowerList[GameManager.Instance.curSaveData.myUpgradeLvs[0] - 1];
-        boosterPower = upgradeInfo.boosterPowerList[GameManager.Instance.curSaveData.myUpgradeLvs[1] - 1];
-        maxFlySpeed = upgradeInfo.maxFlyList[GameManager.Instance.curSaveData.myUpgradeLvs[1] - 1];
-        maxHp = upgradeInfo.hpAmountList[GameManager.Instance.curSaveData.myUpgradeLvs[2] - 1];
+        digPower = GameManager.Instance.upgradeInfo.digPowerList[GameManager.Instance.curSaveData.myUpgradeLvs[0] - 1];
+        boosterPower = GameManager.Instance.upgradeInfo.boosterPowerList[GameManager.Instance.curSaveData.myUpgradeLvs[1] - 1];
+        maxFlySpeed = GameManager.Instance.upgradeInfo.maxFlyList[GameManager.Instance.curSaveData.myUpgradeLvs[1] - 1];
+        maxHp = GameManager.Instance.upgradeInfo.hpAmountList[GameManager.Instance.curSaveData.myUpgradeLvs[2] - 1];
         if (isLoad) hp = GameManager.Instance.curSaveData.playerHp;
         else hp = maxHp;
-        radationResist = upgradeInfo.resistAmountList[GameManager.Instance.curSaveData.myUpgradeLvs[4] - 1];
+        radationResist = GameManager.Instance.upgradeInfo.resistAmountList[GameManager.Instance.curSaveData.myUpgradeLvs[4] - 1];
         if (isLoad)
         {
             transform.position = new Vector3(GameManager.Instance.curSaveData.playerX, GameManager.Instance.curSaveData.playerY, transform.position.z);

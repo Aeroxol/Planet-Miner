@@ -69,8 +69,6 @@ public class SoundManager : MonoBehaviour
     }
 }
 
-
-
 [System.Serializable]
 public class Sound
 {
