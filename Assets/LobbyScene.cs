@@ -12,6 +12,8 @@ public class LobbyScene : MonoBehaviour
     public Canvas generalCanvas;
     public Canvas upgradeCanvas;
     public Canvas planetCanvas;
+    public GameObject prologueCanvas;
+    public GameObject endingCanvas;
 
     public GameObject robotImage;
 
@@ -24,6 +26,10 @@ public class LobbyScene : MonoBehaviour
 
     public Text descLevel;
     public Text descOres;
+
+    public GameObject upgradeBtnBg;
+    public GameObject selectBtnBg;
+ 
 
     private void Awake()
     {
@@ -48,6 +54,15 @@ public class LobbyScene : MonoBehaviour
             }
         }
         UpdateDescription();
+
+        if (GameManager.Instance.curSaveData.isFirstTime)
+        {
+            prologueCanvas.SetActive(true);
+        }
+        else if (GameManager.Instance.curSaveData.gotUnoptanium && !GameManager.Instance.curSaveData.gameCleared)
+        {
+            endingCanvas.SetActive(true);
+        }
     }
 
     public void SelectPage()
@@ -55,6 +70,8 @@ public class LobbyScene : MonoBehaviour
         upgradeCanvas.gameObject.SetActive(false);
         planetCanvas.gameObject.SetActive(true);
         robotImage.SetActive(false);
+        selectBtnBg.SetActive(true);
+        upgradeBtnBg.SetActive(false);
     }
 
     public void UpgradePage()
@@ -62,6 +79,8 @@ public class LobbyScene : MonoBehaviour
         planetCanvas.gameObject.SetActive(false);
         upgradeCanvas.gameObject.SetActive(true);
         robotImage.SetActive(true);
+        selectBtnBg.SetActive(false);
+        upgradeBtnBg.SetActive(true);
     }
 
     public void UpdateDescription()
@@ -122,5 +141,11 @@ public class LobbyScene : MonoBehaviour
     public void BtnSave()
     {
         SaveData.Save(GameManager.Instance.curSaveData);
+    }
+
+    public void CloseEndingClick()
+    {
+        GameManager.Instance.curSaveData.gameCleared = true;
+        endingCanvas.SetActive(false);
     }
 }

@@ -1,0 +1,28 @@
+{
+  "saveName": "test1",
+  "curStageMap": null,
+  "curStageData": null,
+  "playerX": 0.0,
+  "playerY": 0.0,
+  "playerHp": 0,
+  "myMoney": 0,
+  "myItems": [],
+  "myUpgradeLvs": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "myShipLv": 0,
+  "myShipMaterials": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "itemProtected": false,
+  "isFirstTime": false,
+  "gotUnoptanium": false,
+  "gameCleared": false
+}

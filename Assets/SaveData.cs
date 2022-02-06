@@ -12,6 +12,9 @@ public class SaveData
     public int[,] curStageMap;
 
     public StageData curStageData;
+    public float playerX;
+    public float playerY;
+    public int playerHp;
 
     public int myMoney = 0; //돈
     public List<ItemInSlot> myItems = new List<ItemInSlot>();//플레이어가 가지고있는 아이템
@@ -19,6 +22,10 @@ public class SaveData
     public int myShipLv = 0; //우주선 레벨
     public int[] myShipMaterials = { 0, 0, 0, 0 }; //플레이어가 넣은 우주선 강화재료 개수
     public bool itemProtected = false; //보험 적용 중 여부
+
+    public bool isFirstTime = true;
+    public bool gotUnoptanium = false;
+    public bool gameCleared = false;
     // ====================여기까지====================
     public SaveData(string name)
     {

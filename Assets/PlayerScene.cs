@@ -7,6 +7,7 @@ public class PlayerScene : MonoBehaviour
 {
     // singleton
     private static PlayerScene instance = null;
+
     public static PlayerScene Instance
     {
         get
@@ -42,14 +43,17 @@ public class PlayerScene : MonoBehaviour
         {
             //new
             stage.Generate(GameManager.Instance.curSaveData.curStageData);
+            player.SetStats(false);
         }
         else
         {
             //load
             stage.RenderStage(GameManager.Instance.curSaveData.curStageData, GameManager.Instance.curSaveData.curStageMap);
+            player.SetStats(true);
         }
 
         Invoke("SetDefaultSprites", 1.0f);
+        player.GetComponent<Rigidbody2D>().simulated = true;
     }
 
     void SetDefaultSprites()
@@ -63,6 +67,9 @@ public class PlayerScene : MonoBehaviour
 
     public void BtnQuit()
     {
+        GameManager.Instance.curSaveData.playerHp = player.hp;
+        GameManager.Instance.curSaveData.playerX = player.transform.position.x;
+        GameManager.Instance.curSaveData.playerY = player.transform.position.y;
         SaveData.Save(GameManager.Instance.curSaveData);
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;

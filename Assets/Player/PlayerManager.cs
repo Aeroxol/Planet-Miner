@@ -27,6 +27,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject gameOverCanvas;
     public Image blackOut;
     public BlinkColor redAlert;
+    public MessageBoxManager messageBoxManager;
 
     Rigidbody2D rigid2d;
     BoxCollider2D boxCol2d;
@@ -71,8 +72,8 @@ public class PlayerManager : MonoBehaviour
         leftRightBound = (GameManager.Instance.curSaveData.curStageData.width - colliderSize.x) / 2;
         maxHeight = 20.0f - colliderSize.y / 2;
         if (GameManager.Instance.curSaveData.curStageData.width % 2 == 0) boundPadding = 0.5f;
-        tempIncreaseRate = 3.0f - GameManager.Instance.curSaveData.curStageData.level * 2.5f;
-        SetStats();
+        tempIncreaseRate = 3.0f - (GameManager.Instance.curSaveData.curStageData.level * 0.25f);
+        //SetStats();
         StartCoroutine(RadiationHit());
     }
 
@@ -306,7 +307,10 @@ public class PlayerManager : MonoBehaviour
         {
             //광석 획득
             bool gotItem = invenManager.AddItem(col.transform.parent.gameObject.GetComponent<Ore>().data.itemCode, 1);
-            if (gotItem) Destroy(col.transform.parent.gameObject);
+            if (gotItem) {
+                Destroy(col.transform.parent.gameObject);
+            }
+            else messageBoxManager.ShowMessageBox("인벤토리 공간이 부족합니다.");
         }
     }
  
@@ -340,14 +344,19 @@ public class PlayerManager : MonoBehaviour
         leaveStage.GameOver(GameManager.Instance.curSaveData.itemProtected);
     }
 
-    void SetStats()
+    public void SetStats(bool isLoad)
     {
         digPower = upgradeInfo.digPowerList[GameManager.Instance.curSaveData.myUpgradeLvs[0] - 1];
         boosterPower = upgradeInfo.boosterPowerList[GameManager.Instance.curSaveData.myUpgradeLvs[1] - 1];
         maxFlySpeed = upgradeInfo.maxFlyList[GameManager.Instance.curSaveData.myUpgradeLvs[1] - 1];
         maxHp = upgradeInfo.hpAmountList[GameManager.Instance.curSaveData.myUpgradeLvs[2] - 1];
-        hp = maxHp;
+        if (isLoad) hp = GameManager.Instance.curSaveData.playerHp;
+        else hp = maxHp;
         radationResist = upgradeInfo.resistAmountList[GameManager.Instance.curSaveData.myUpgradeLvs[4] - 1];
+        if (isLoad)
+        {
+            transform.position = new Vector3(GameManager.Instance.curSaveData.playerX, GameManager.Instance.curSaveData.playerY, transform.position.z);
+        }
     }
 
     public IEnumerator RestoreHpItem(int amount)

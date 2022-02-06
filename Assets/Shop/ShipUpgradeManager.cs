@@ -41,7 +41,7 @@ public class ShipUpgradeManager : MonoBehaviour
     void Start()
     {
         upgradeInfo = GameManager.Instance.upgradeInfo;
-        shipLvTmp.text = "Lv " + GameManager.Instance.curSaveData.myShipLv;
+        shipLvTmp.text = "Lv " + (GameManager.Instance.curSaveData.myShipLv + 1);
         SetPanel();
     }
 
@@ -144,7 +144,7 @@ public class ShipUpgradeManager : MonoBehaviour
             GameManager.Instance.curSaveData.myShipMaterials[1] = 0;
             GameManager.Instance.curSaveData.myShipMaterials[2] = 0;
             GameManager.Instance.curSaveData.myShipMaterials[3] = 0;
-            shipLvTmp.text = "Lv " + GameManager.Instance.curSaveData.myShipLv;
+            shipLvTmp.text = "Lv " + (GameManager.Instance.curSaveData.myShipLv + 1);
             SetPanel();
         }
         else return;

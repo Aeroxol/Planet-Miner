@@ -133,7 +133,11 @@ public class InventoryManager : MonoBehaviour
             items.RemoveAt(items.Count - 1);
             canGatItem = false;
         }
-        else RefreshSlots();
+        else {
+            if (!GameManager.Instance.curSaveData.gotUnoptanium && (itemCode == 13))
+                GameManager.Instance.curSaveData.gotUnoptanium = true;
+            RefreshSlots();
+        }
         
         return canGatItem;
     }
