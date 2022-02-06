@@ -132,10 +132,21 @@ public class Stage : MonoBehaviour
         }
         // Immortal Block Set
         // base
-        for (int i = 0; i < 5; ++i)
+
+        for(int i = 0; i < 3; ++i)
         {
             stage[_data.width/2 + i, 0] = -1;
             stage[_data.width/2 - i, 0] = -1;
+        }
+        // wall
+        for(int i = 0; i < _data.width; ++i)
+        {
+            stage[i, _data.height - 1] = -1;
+        }
+        for(int  j = 0; j < _data.height; ++j)
+        {
+            stage[0, j] = -1;
+            stage[_data.width - 1, j] = -1;
         }
         // random
         for(int i = 0; i < _data.disNum; ++i)
@@ -204,11 +215,7 @@ public class Stage : MonoBehaviour
                 newBlock.stage = this;
                 newBlock.x = i;
                 newBlock.y = j;
-                if (i == 0 || i == _data.width - 1 || j == _data.height - 1)
-                {
-                    newBlock.SetData(immortalBlock);
-                    continue;
-                }
+
                 if (stage[i, j] == -1)
                 {
                     newBlock.SetData(immortalBlock);
@@ -262,13 +269,13 @@ public class Stage : MonoBehaviour
                     {
                         Ore newOre = GameObject.Instantiate<Ore>(ore);
                         newOre.transform.position = new Vector3(i - _data.width / 2, -j, 0);
-                        newOre.SetData(GameManager.Instance.oreLevelData[_data.level].ores[p]);
-
-                        newBlockComp.myOre = newOre.gameObject;
+                        newOre.SetData(GameManager.Instance.oreLevelData[_data.level].data[p]);
+                        newBlock.myOre = newOre.gameObject;
+                        
                         Ore newOreWithBody = Instantiate(oreWithBody);
                         newOreWithBody.transform.position = newOre.transform.position;
-                        newOreWithBody.SetData(GameManager.Instance.oreLevelData[_data.level].ores[p]);
-                        newBlockComp.myOreWithBody = newOreWithBody.gameObject;
+                        newOreWithBody.SetData(GameManager.Instance.oreLevelData[_data.level].data[p]);
+                        newBlock.myOreWithBody = newOreWithBody.gameObject;
                         newOreWithBody.gameObject.SetActive(false);
                         break;
                     }

@@ -1,0 +1,22 @@
+{
+  "saveName": "ff",
+  "curStageMap": null,
+  "curStageData": null,
+  "myMoney": 0,
+  "myItems": [],
+  "myUpgradeLvs": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "myShipLv": 0,
+  "myShipMaterials": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "itemProtected": false
+}

@@ -31,11 +31,23 @@ public class LobbyScene : MonoBehaviour
         {
             for(int i = 0; i < 5; ++i)
             {
-                stages.Add(new StageData(i));
-                scrollImages[i].sprite = GameManager.Instance.planetImages[stages[i].imageNum];
-                UpdateDescription();
+                float val = Random.value;
+                for(int j = 0; j < 5; ++j)
+                {
+                    if(val < GameManager.Instance.stageLevelProbs[GameManager.Instance.curSaveData.myShipLv].data[j])
+                    {
+                        stages.Add(new StageData(j));
+                        scrollImages[i].sprite = GameManager.Instance.planetImages[stages[i].imageNum];
+                        break;
+                    }
+                    else
+                    {
+                        val -= GameManager.Instance.stageLevelProbs[GameManager.Instance.curSaveData.myShipLv].data[j];
+                    }
+                }
             }
         }
+        UpdateDescription();
     }
 
     public void SelectPage()
@@ -59,7 +71,7 @@ public class LobbyScene : MonoBehaviour
         for(int i = 0; i < stages[scrollIndex].oreIndex.Count; ++i)
         {
             //ToDo
-            sb.Append(GameManager.Instance.oreLevelData[stages[scrollIndex].level].ores[stages[scrollIndex].oreIndex[i]].itemName);
+            sb.Append(GameManager.Instance.oreLevelData[stages[scrollIndex].level].data[stages[scrollIndex].oreIndex[i]].itemName);
             sb.Append(" ");
         }
         descOres.text = sb.ToString();
