@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
-
+using UnityEngine.UI;
 public class PlayerScene : MonoBehaviour
 {
     // singleton
@@ -24,6 +23,7 @@ public class PlayerScene : MonoBehaviour
     public Stage stage;
     public PlayerManager player;
     public MessageBoxManager messageBox;
+    public Button btnMenu;
 
     private void Awake()
     {
@@ -36,10 +36,7 @@ public class PlayerScene : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-    }
 
-    private void Start()
-    {
         if (GameManager.Instance.curSaveData.curStageMap == null)
         {
             //new
@@ -52,7 +49,11 @@ public class PlayerScene : MonoBehaviour
             stage.RenderStage(GameManager.Instance.curSaveData.curStageData, GameManager.Instance.curSaveData.curStageMap);
             player.SetStats(true);
         }
+    }
 
+    private void Start()
+    {
+        btnMenu.onClick.AddListener(GameManager.Instance.BtnOption);
         Invoke("SetDefaultSprites", 1.0f);
         player.GetComponent<Rigidbody2D>().simulated = true;
     }

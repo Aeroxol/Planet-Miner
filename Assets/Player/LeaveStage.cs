@@ -39,6 +39,8 @@ public class LeaveStage : MonoBehaviour
     {
         GameManager.Instance.curSaveData.curStageMap = null;
         GameManager.Instance.curSaveData.itemProtected = false;
+        SoundManager.Stop("maintheme");
+        SoundManager.Play("title");
         SceneManager.LoadScene("LobbyScene");
     }
     public void LeaveNoClick()
