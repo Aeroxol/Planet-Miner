@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ShipUpgradeManager : MonoBehaviour
 {
@@ -34,10 +35,13 @@ public class ShipUpgradeManager : MonoBehaviour
     int curItemCode;
     int curMaterialIndex; //4개의 필요자원 중 몇번째인가(0~3)
 
+    public TextMeshProUGUI shipLvTmp;
+
     // Start is called before the first frame update
     void Start()
     {
         upgradeInfo = GameManager.Instance.upgradeInfo;
+        shipLvTmp.text = "Lv " + GameManager.Instance.curSaveData.myShipLv;
         SetPanel();
     }
 
@@ -140,6 +144,7 @@ public class ShipUpgradeManager : MonoBehaviour
             GameManager.Instance.curSaveData.myShipMaterials[1] = 0;
             GameManager.Instance.curSaveData.myShipMaterials[2] = 0;
             GameManager.Instance.curSaveData.myShipMaterials[3] = 0;
+            shipLvTmp.text = "Lv " + GameManager.Instance.curSaveData.myShipLv;
             SetPanel();
         }
         else return;

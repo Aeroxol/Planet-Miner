@@ -17,16 +17,22 @@ public class TitleScene : MonoBehaviour
     public List<SaveSlot> saveSlotList = new List<SaveSlot>();
     [HideInInspector]
     public string saveName;
+
+    public Image titleImage;
+    public Image title;
+    bool titleAnimationComplete = false;
+
     // Start is called before the first frame update
     void Start()
     {
         GetSaveFiles();
+        StartCoroutine(TitleImageOn());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKeyDown)
+        if (titleAnimationComplete&&Input.anyKeyDown)
         {
             savePanel.SetActive(true);
             touchToStart.SetActive(false);
@@ -49,7 +55,7 @@ public class TitleScene : MonoBehaviour
                 SaveSlot newSaveSlot = GameObject.Instantiate<SaveSlot>(saveSlot, saveContent.transform);
                 newSaveSlot.titleScene = this;
                 saveSlotList.Add(newSaveSlot);
-                newSaveSlot.nameText.text = Path.GetFileNameWithoutExtension(file.Name);
+                newSaveSlot.nameTmp.text = Path.GetFileNameWithoutExtension(file.Name);
             }
         }
         ngs.transform.SetAsLastSibling();
@@ -67,5 +73,33 @@ public class TitleScene : MonoBehaviour
     public void BtnCancel()
     {
         deletePanel.gameObject.SetActive(false);
+    }
+
+    IEnumerator TitleImageOn()
+    {
+        while (true)
+        {
+            float speed = 1.5f;
+            titleImage.color = new Color(titleImage.color.r + Time.deltaTime * speed, titleImage.color.g + Time.deltaTime * speed, titleImage.color.b + Time.deltaTime * speed, 1);
+            if (titleImage.color.r >= 1)
+            {
+                titleImage.color = new Color(1, 1, 1, 1);
+                break;
+            }
+            yield return null;
+        }
+        while (true)
+        {
+            title.rectTransform.anchoredPosition = new Vector3(title.rectTransform.anchoredPosition.x - Time.deltaTime*1500, 0, 0);
+            if (title.rectTransform.anchoredPosition.x <= 0)
+            {
+                title.rectTransform.anchoredPosition = new Vector3(0, 0, 0);
+                break;
+            }
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.5f);
+        touchToStart.SetActive(true);
+        titleAnimationComplete = true;
     }
 }

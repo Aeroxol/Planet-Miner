@@ -11,6 +11,7 @@ public class Dynamite : MonoBehaviour
     Vector3 positionSetOrigin;
 
     public Rigidbody2D rigid2d;
+    [HideInInspector] public GameObject explosionEffectPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +58,9 @@ public class Dynamite : MonoBehaviour
         {
             block.GetComponent<Block>().DecreaseHp(100000000);
         }
+        GameObject temp = Instantiate(explosionEffectPrefab);
+        temp.transform.position = transform.position;
+        temp.SetActive(true);
         Destroy(gameObject);
     }
 }

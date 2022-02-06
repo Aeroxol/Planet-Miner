@@ -8,6 +8,8 @@ public class RocketBomb : MonoBehaviour
     RaycastHit2D hit;
     float halfHeight;
 
+    [HideInInspector] public GameObject explosionEffectPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,9 @@ public class RocketBomb : MonoBehaviour
         if (hit.collider != null)
         {
             hit.collider.GetComponent<Block>().DecreaseHp(10000);
+            GameObject temp = Instantiate(explosionEffectPrefab);
+            temp.transform.position = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
+            temp.SetActive(true);
             Destroy(gameObject);
         }
     }

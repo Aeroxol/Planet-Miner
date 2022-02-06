@@ -10,9 +10,9 @@ public class SellPanel : MonoBehaviour
     public ShopManager shopManager;
     public Text itemNameTxt;
     public Image thumbnail;
-    public Text thumbnailAmountTxt;
-    //public Text amountTxt;
-    public TextMeshProUGUI amountTmp;
+    //public Text thumbnailAmountTxt;
+    public Text amountTxt;
+    public TextMeshProUGUI thumbnailAmountTmp;
     public Button plusOneBtn;
     public Button plusTenBtn;
     public Button minusOneBtn;
@@ -44,14 +44,14 @@ public class SellPanel : MonoBehaviour
         this.itemCode = itemCode;
         thumbnail.sprite = invenManager.itemData[itemCode].artwork;
         maxAmount = invenManager.itemTotal[itemCode];
-        thumbnailAmountTxt.text = maxAmount.ToString();
+        thumbnailAmountTmp.text = maxAmount.ToString();
         itemNameTxt.text = invenManager.itemData[itemCode].itemName;
         sellingPrice = invenManager.itemData[itemCode].price;
         if (invenManager.itemData[itemCode].isUsable) sellingPrice = (int)(sellingPrice * 0.7);
         totalPrice = sellingPrice;
         priceTxt.text = string.Format("{0:#,0}", sellingPrice);
         amount = 1;
-        amountTmp.text = "1";
+        amountTxt.text = "1";
     }
 
     public void PlusOneClick()
@@ -60,7 +60,7 @@ public class SellPanel : MonoBehaviour
         {
             amount++;
             totalPrice += sellingPrice;
-            amountTmp.text = amount.ToString();
+            amountTxt.text = amount.ToString();
             priceTxt.text = string.Format("{0:#,0}", totalPrice);
         }
     }
@@ -70,14 +70,14 @@ public class SellPanel : MonoBehaviour
         {
             amount += 10;
             totalPrice += (sellingPrice * 10);
-            amountTmp.text = amount.ToString();
+            amountTxt.text = amount.ToString();
             priceTxt.text = string.Format("{0:#,0}", totalPrice);
         }
         else
         {
             amount = maxAmount;
             totalPrice = sellingPrice * amount;
-            amountTmp.text = amount.ToString();
+            amountTxt.text = amount.ToString();
             priceTxt.text = string.Format("{0:#,0}", totalPrice);
         }
     }
@@ -87,7 +87,7 @@ public class SellPanel : MonoBehaviour
         {
             amount--;
             totalPrice -= sellingPrice;
-            amountTmp.text = amount.ToString();
+            amountTxt.text = amount.ToString();
             priceTxt.text = string.Format("{0:#,0}", totalPrice);
         }
     }
@@ -97,14 +97,14 @@ public class SellPanel : MonoBehaviour
         {
             amount -= 10;
             totalPrice -= (sellingPrice * 10);
-            amountTmp.text = amount.ToString();
+            amountTxt.text = amount.ToString();
             priceTxt.text = string.Format("{0:#,0}", totalPrice);
         }
         else if (amount > 1)
         {
             amount = 1;
             totalPrice = sellingPrice;
-            amountTmp.text = amount.ToString();
+            amountTxt.text = amount.ToString();
             priceTxt.text = string.Format("{0:#,0}", totalPrice);
         }
     }

@@ -54,7 +54,7 @@ public class PlayerManager : MonoBehaviour
     float heatDelaytimer = 0;
     float temperature = 0;
     float tempIncreaseRate = 3.0f; // 3 2.75 2.5 2.25 2
-    bool playerPaused = false;
+    [HideInInspector] public bool playerPaused = false;
     [HideInInspector] public bool canUseItem = true;
     [HideInInspector] public bool hitByRadiation = false;
 
@@ -71,6 +71,7 @@ public class PlayerManager : MonoBehaviour
         leftRightBound = (GameManager.Instance.curSaveData.curStageData.width - colliderSize.x) / 2;
         maxHeight = 20.0f - colliderSize.y / 2;
         if (GameManager.Instance.curSaveData.curStageData.width % 2 == 0) boundPadding = 0.5f;
+        tempIncreaseRate = 3.0f - GameManager.Instance.curSaveData.curStageData.level * 2.5f;
         SetStats();
         StartCoroutine(RadiationHit());
     }
@@ -204,7 +205,7 @@ public class PlayerManager : MonoBehaviour
         hpTemp.text = "HP: " + hp.ToString() + " / " + maxHp.ToString();
         hpBar.fillAmount = (float)hp / maxHp;
 
-        if (!playerPaused && (hp / ((float)maxHp) < 0.1f))
+        if (!playerPaused && (hp / ((float)maxHp) < 0.15f))
         {
             if (!redAlert.gameObject.activeSelf)
             {
@@ -376,7 +377,7 @@ public class PlayerManager : MonoBehaviour
     {
         while (true)
         {
-            if (hitByRadiation)
+            if (hitByRadiation&&!playerPaused)
             {
                 spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
                 yield return new WaitForSeconds(0.2f);

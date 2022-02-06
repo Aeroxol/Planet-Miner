@@ -214,7 +214,7 @@ public class InventoryManager : MonoBehaviour
     public void CloseClick()
     {
         if (playerManager != null)
-            playerManager.PausePlayer(true);
+            playerManager.PausePlayer(false);
 
         infoBox.gameObject.SetActive(false);
         useBtn.gameObject.SetActive(false);

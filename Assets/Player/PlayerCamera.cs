@@ -34,6 +34,8 @@ public class PlayerCamera : MonoBehaviour
     //readonly float effectDelay = 1.0f;
     //float effectDelayCount = 0;
 
+    readonly float defaultSize = 5.5f;
+
     private void Start()
     {
         my = GetComponent<Camera>();
@@ -135,9 +137,9 @@ public class PlayerCamera : MonoBehaviour
         while (true)
         {
             my.orthographicSize -= Time.deltaTime * 4;
-            if (my.orthographicSize <= 5)
+            if (my.orthographicSize <= defaultSize)
             {
-                my.orthographicSize = 5;
+                my.orthographicSize = defaultSize;
                 break;
             }
             yield return null;

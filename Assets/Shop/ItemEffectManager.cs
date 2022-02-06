@@ -13,6 +13,7 @@ public class ItemEffectManager : MonoBehaviour
     public Animator warpAnimator;
     public MessageBoxManager messageBoxManager;
     public GameObject insuranceEffect;
+    public GameObject explosionEffectPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -98,17 +99,20 @@ public class ItemEffectManager : MonoBehaviour
     {
         GameObject temp = Instantiate(dynamitePrefab);
         temp.transform.position = player.transform.position;
+        temp.GetComponent<Dynamite>().explosionEffectPrefab = explosionEffectPrefab;
     }
     void CreateDynamiteB()
     {
         GameObject temp = Instantiate(dynamiteB_Prefab);
         temp.transform.position = player.transform.position;
+        temp.GetComponent<DynamiteB>().explosionEffectPrefab = explosionEffectPrefab;
     }
     void CreateRocketBomb()
     {
         GameObject temp = Instantiate(rocketBombPrefab);
         temp.transform.position = player.transform.position;
         temp.transform.Translate(0, 0.2f, 0);
+        temp.GetComponent<RocketBomb>().explosionEffectPrefab = explosionEffectPrefab;
     }
 
     IEnumerator EscapeWarp()
@@ -126,7 +130,7 @@ public class ItemEffectManager : MonoBehaviour
                 warpAnimator.gameObject.SetActive(false);
                 break;
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return null;
         }
 
 

@@ -13,6 +13,7 @@ public class DynamiteB : MonoBehaviour
     Vector3 positionSetOrigin;
 
     public Rigidbody2D rigid2d;
+    [HideInInspector] public GameObject explosionEffectPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +73,10 @@ public class DynamiteB : MonoBehaviour
                 blocks[i].GetComponent<Block>().DecreaseHp(100000000);
             }
         }
+        GameObject temp = Instantiate(explosionEffectPrefab);
+        temp.transform.position = transform.position;
+        temp.transform.localScale = new Vector3(3f, 3f, 3f);
+        temp.SetActive(true);
         Destroy(gameObject);
     }
 }

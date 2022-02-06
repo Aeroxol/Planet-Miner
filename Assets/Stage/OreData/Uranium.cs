@@ -40,8 +40,11 @@ public class Uranium : Ore
             {
                 return;
             }
-            player.hp--;
-            player.hitByRadiation = true;
+            if (!player.playerPaused)
+            {
+                player.hp--;
+                player.hitByRadiation = true;
+            }
             if (player.hp < 0)
             {
                 player.hp = 0;
@@ -55,9 +58,12 @@ public class Uranium : Ore
     {
         while (true)
         {
-            GameObject effect = Instantiate(effectPrefab);
-            effect.transform.position = transform.position;
-            effect.SetActive(true);
+            if (!player.playerPaused)
+            {
+                GameObject effect = Instantiate(effectPrefab);
+                effect.transform.position = transform.position;
+                effect.SetActive(true);
+            }
             yield return new WaitForSeconds(1.0f);
         }
     }
