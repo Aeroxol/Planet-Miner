@@ -51,7 +51,7 @@ public class TitleScene : MonoBehaviour
             Destroy(obj.gameObject);
         }
         saveSlotList.Clear();
-        var saveDir = Directory.CreateDirectory(Application.dataPath + "/Save");
+        var saveDir = Directory.CreateDirectory(Application.persistentDataPath + "/Save");
         var fileInfo = saveDir.GetFiles();
         foreach (var file in fileInfo)
         {
@@ -72,8 +72,8 @@ public class TitleScene : MonoBehaviour
     public void BtnDelete()
     {
         deletePanel.gameObject.SetActive(false);
-        File.Delete(Application.dataPath + "/Save/" + deleteText.text + ".json");
-        File.Delete(Application.dataPath + "/Save/" + deleteText.text + ".json.meta");
+        File.Delete(Application.persistentDataPath + "/Save/" + deleteText.text + ".json");
+        File.Delete(Application.persistentDataPath + "/Save/" + deleteText.text + ".json.meta");
 
         GetSaveFiles();
     }

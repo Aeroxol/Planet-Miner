@@ -251,7 +251,6 @@ public class Stage : MonoBehaviour
                     //uranium
                     if(stage[i,j] == 11)
                     {
-                        Debug.Log("uranium" + i + j);
                         Uranium newOre = GameObject.Instantiate<Uranium>(uranium);
                         newOre.transform.position = new Vector3(i - _data.width / 2, -j, 0);
                         newOre.SetData(GameManager.Instance.uranium);
