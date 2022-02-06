@@ -29,7 +29,6 @@ public class PlayerScene : MonoBehaviour
     {
         if (null == instance)
         {
-            Debug.Log("is this not happening?");
             instance = this;
         }
         else
@@ -53,7 +52,6 @@ public class PlayerScene : MonoBehaviour
 
     private void Start()
     {
-        btnMenu.onClick.AddListener(GameManager.Instance.BtnOption);
         Invoke("SetDefaultSprites", 1.0f);
         player.GetComponent<Rigidbody2D>().simulated = true;
     }
@@ -72,7 +70,7 @@ public class PlayerScene : MonoBehaviour
         GameManager.Instance.curSaveData.playerHp = player.hp;
         GameManager.Instance.curSaveData.playerX = player.transform.position.x;
         GameManager.Instance.curSaveData.playerY = player.transform.position.y;
-        SaveData.Save(GameManager.Instance.curSaveData);
+        GameManager.Save();
         messageBox.ShowMessageBox("저장되었습니다.");
         /*
 #if UNITY_EDITOR

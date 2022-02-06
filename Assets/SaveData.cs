@@ -34,12 +34,12 @@ public class SaveData
     public static void Save(SaveData data)
     {
         string data2 = JsonConvert.SerializeObject(data, Formatting.Indented);
-        File.WriteAllText(Application.dataPath + "/save/" + data.saveName + ".json", data2);
+        File.WriteAllText(Application.persistentDataPath + "/save/" + data.saveName + ".json", data2);
     }
 
     public static SaveData Load(string name)
     {
-        string data = File.ReadAllText(Application.dataPath + "/save/" + name + ".json");
+        string data = File.ReadAllText(Application.persistentDataPath + "/save/" + name + ".json");
         return JsonConvert.DeserializeObject<SaveData>(data);
     }
 }

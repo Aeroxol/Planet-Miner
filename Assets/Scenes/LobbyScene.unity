@@ -14571,7 +14571,7 @@ MonoBehaviour:
   endingCanvas: {fileID: 1240081293}
   btnMenu: {fileID: 1542162606}
   robotImage: {fileID: 769011512}
-  messageBox: {fileID: 0}
+  messageBox: {fileID: 704428321}
   scrollRect: {fileID: 772328816}
   scrollImages:
   - {fileID: 1287365107}
@@ -17126,6 +17126,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: click
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1377180433}
+        m_TargetAssemblyTypeName: LobbyScene, Assembly-CSharp
+        m_MethodName: BtnSave
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1542162607

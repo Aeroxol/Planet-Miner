@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
     // Manager Instances
     private static GameManager instance = null;
     public LoadingManager loadingManager;
-    public SoundManager soundManager;
 
     // Stage Generator Property
     public List<BlockData> blocks = new List<BlockData>();

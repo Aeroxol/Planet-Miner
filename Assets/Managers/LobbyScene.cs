@@ -66,8 +66,6 @@ public class LobbyScene : MonoBehaviour
         {
             endingCanvas.SetActive(true);
         }
-
-        btnMenu.onClick.AddListener(GameManager.Instance.BtnOption);
     }
 
     public void SelectPage()
@@ -145,7 +143,7 @@ public class LobbyScene : MonoBehaviour
 
     public void BtnSave()
     {
-        SaveData.Save(GameManager.Instance.curSaveData);
+        GameManager.Save();
         messageBox.ShowMessageBox("저장되었습니다.");
     }
 

@@ -1,10 +1,179 @@
 {
   "saveName": "12",
   "curStageMap": null,
-  "curStageData": null,
-  "playerX": 0.0,
-  "playerY": 0.0,
-  "playerHp": 0,
+  "curStageData": {
+    "level": 0,
+    "imageNum": 1,
+    "width": 69,
+    "height": 186,
+    "depth": [
+      55,
+      109,
+      187
+    ],
+    "oreIndex": [
+      3,
+      0,
+      2
+    ],
+    "mixCount": 16,
+    "disNum": 24,
+    "disLength": 10,
+    "oreProbs": [
+      {
+        "keys": [
+          {
+            "time": 0.0,
+            "value": 0.0,
+            "inTangent": 0.0,
+            "outTangent": 0.0,
+            "inWeight": 0.0,
+            "outWeight": 0.333333343,
+            "weightedMode": 0,
+            "tangentMode": 0
+          },
+          {
+            "time": 0.6666667,
+            "value": 0.02,
+            "inTangent": 0.0,
+            "outTangent": 0.0,
+            "inWeight": 0.333333343,
+            "outWeight": 0.333333343,
+            "weightedMode": 0,
+            "tangentMode": 0
+          },
+          {
+            "time": 1.0,
+            "value": 0.02,
+            "inTangent": 0.0,
+            "outTangent": 0.0,
+            "inWeight": 0.333333343,
+            "outWeight": 0.0,
+            "weightedMode": 0,
+            "tangentMode": 34
+          }
+        ],
+        "length": 3,
+        "preWrapMode": 8,
+        "postWrapMode": 8
+      },
+      {
+        "keys": [
+          {
+            "time": 0.0,
+            "value": 0.08,
+            "inTangent": 0.0,
+            "outTangent": 0.0,
+            "inWeight": 0.333333343,
+            "outWeight": 0.333333343,
+            "weightedMode": 0,
+            "tangentMode": 0
+          },
+          {
+            "time": 1.0,
+            "value": 0.01,
+            "inTangent": 0.0,
+            "outTangent": 0.0,
+            "inWeight": 0.333333343,
+            "outWeight": 0.333333343,
+            "weightedMode": 0,
+            "tangentMode": 0
+          }
+        ],
+        "length": 2,
+        "preWrapMode": 4,
+        "postWrapMode": 4
+      },
+      {
+        "keys": [
+          {
+            "time": 0.0,
+            "value": 0.0,
+            "inTangent": 0.0749999955,
+            "outTangent": 0.0749999955,
+            "inWeight": 0.0,
+            "outWeight": 0.333333343,
+            "weightedMode": 0,
+            "tangentMode": 34
+          },
+          {
+            "time": 0.6666667,
+            "value": 0.05,
+            "inTangent": 0.0,
+            "outTangent": 0.0,
+            "inWeight": 0.333333343,
+            "outWeight": 0.333333343,
+            "weightedMode": 0,
+            "tangentMode": 0
+          },
+          {
+            "time": 1.0,
+            "value": 0.01,
+            "inTangent": -0.120000005,
+            "outTangent": -0.120000005,
+            "inWeight": 0.333333343,
+            "outWeight": 0.0,
+            "weightedMode": 0,
+            "tangentMode": 34
+          }
+        ],
+        "length": 3,
+        "preWrapMode": 8,
+        "postWrapMode": 8
+      }
+    ],
+    "goldProb": {
+      "keys": [
+        {
+          "time": 0.0,
+          "value": 0.0,
+          "inTangent": 0.0,
+          "outTangent": 0.0,
+          "inWeight": 0.0,
+          "outWeight": 0.333333343,
+          "weightedMode": 0,
+          "tangentMode": 0
+        },
+        {
+          "time": 0.25,
+          "value": 0.005,
+          "inTangent": 0.0,
+          "outTangent": 0.0,
+          "inWeight": 0.333333343,
+          "outWeight": 0.333333343,
+          "weightedMode": 0,
+          "tangentMode": 0
+        },
+        {
+          "time": 0.5,
+          "value": 0.0,
+          "inTangent": 0.0,
+          "outTangent": 0.0,
+          "inWeight": 0.333333343,
+          "outWeight": 0.333333343,
+          "weightedMode": 0,
+          "tangentMode": 0
+        },
+        {
+          "time": 1.0,
+          "value": 0.08,
+          "inTangent": 0.0,
+          "outTangent": 0.0,
+          "inWeight": 0.333333343,
+          "outWeight": 0.0,
+          "weightedMode": 0,
+          "tangentMode": 0
+        }
+      ],
+      "length": 4,
+      "preWrapMode": 8,
+      "postWrapMode": 8
+    },
+    "uraniumNum": 1
+  },
+  "playerX": 9.967572,
+  "playerY": -4.143792,
+  "playerHp": 967,
   "myMoney": 0,
   "myItems": [],
   "myUpgradeLvs": [
@@ -22,7 +191,7 @@
     0
   ],
   "itemProtected": false,
-  "isFirstTime": true,
+  "isFirstTime": false,
   "gotUnoptanium": false,
   "gameCleared": false
 }

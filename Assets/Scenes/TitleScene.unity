@@ -975,7 +975,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingManager: {fileID: 686816028}
-  soundManager: {fileID: 990294030}
   blocks:
   - {fileID: 11400000, guid: 1262bb6b5b4b89f42a7b31b028541834, type: 2}
   dirtBlocks:
