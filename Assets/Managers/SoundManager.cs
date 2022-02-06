@@ -24,6 +24,7 @@ public class SoundManager : MonoBehaviour
         if(null == instance)
         {
             instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -48,7 +49,27 @@ public class SoundManager : MonoBehaviour
         }
         s.source.Play();
     }
+
+    public static void Stop(string name)
+    {
+        Sound s = Array.Find(Instance.sounds, sound => sound.name == name);
+        {
+            if(s == null)
+            {
+                Debug.LogWarning(name + " Sound not found");
+                return;
+            }
+            s.source.Stop();
+        }
+    }
+
+    public static void SetVolume(float value)
+    {
+        AudioListener.volume = value / 100;
+    }
 }
+
+
 
 [System.Serializable]
 public class Sound

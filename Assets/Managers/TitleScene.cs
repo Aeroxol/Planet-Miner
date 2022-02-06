@@ -21,6 +21,7 @@ public class TitleScene : MonoBehaviour
     void Start()
     {
         GetSaveFiles();
+        SoundManager.Play("title");
     }
 
     // Update is called once per frame

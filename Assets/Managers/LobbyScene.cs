@@ -13,6 +13,8 @@ public class LobbyScene : MonoBehaviour
     public Canvas upgradeCanvas;
     public Canvas planetCanvas;
 
+    public Button btnMenu;
+
     public GameObject robotImage;
 
     private List<StageData> stages = new List<StageData>();
@@ -48,6 +50,8 @@ public class LobbyScene : MonoBehaviour
             }
         }
         UpdateDescription();
+
+        btnMenu.onClick.AddListener(GameManager.Instance.BtnOption);
     }
 
     public void SelectPage()
@@ -117,10 +121,5 @@ public class LobbyScene : MonoBehaviour
     {
         GameManager.Instance.curSaveData.curStageData = stages[scrollIndex];
         GameManager.Instance.loadingManager.LoadScene(2);
-    }
-
-    public void BtnSave()
-    {
-        SaveData.Save(GameManager.Instance.curSaveData);
     }
 }
