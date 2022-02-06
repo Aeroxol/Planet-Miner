@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Threading;
-using System.Threading.Tasks;
 
 public class LoadingManager : MonoBehaviour
 {
@@ -20,6 +18,11 @@ public class LoadingManager : MonoBehaviour
 
     public void LoadingComplete()
     {
+        if(SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            SoundManager.Play("maintheme");
+            SoundManager.Stop("title");
+        }
         loadingText.text = "Complete!";
         loadingCanvas.gameObject.SetActive(false);
     }

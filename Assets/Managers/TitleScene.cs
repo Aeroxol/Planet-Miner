@@ -27,6 +27,7 @@ public class TitleScene : MonoBehaviour
     {
         GetSaveFiles();
         StartCoroutine(TitleImageOn());
+        SoundManager.Play("title");
     }
 
     // Update is called once per frame

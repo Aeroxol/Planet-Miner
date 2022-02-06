@@ -15,6 +15,8 @@ public class LobbyScene : MonoBehaviour
     public GameObject prologueCanvas;
     public GameObject endingCanvas;
 
+    public Button btnMenu;
+
     public GameObject robotImage;
     public MessageBoxManager messageBox;
 
@@ -64,6 +66,8 @@ public class LobbyScene : MonoBehaviour
         {
             endingCanvas.SetActive(true);
         }
+
+        btnMenu.onClick.AddListener(GameManager.Instance.BtnOption);
     }
 
     public void SelectPage()

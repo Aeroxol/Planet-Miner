@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     public List<BlockData> dirtBlocks = new List<BlockData>();
     public List<Sprite> planetImages = new List<Sprite>();
 
+    // Option
+    public Canvas optionCanvas;
+    public Slider volumeSlider;
     [System.Serializable]
     public class ListWrapper<T>
     {
@@ -42,6 +45,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        volumeSlider.onValueChanged.AddListener(delegate { SoundManager.SetVolume(volumeSlider.value); });
     }
 
     public static GameManager Instance
@@ -54,5 +58,28 @@ public class GameManager : MonoBehaviour
             }
             return instance;
         }
+    }
+
+    public void BtnOption()
+    {
+        optionCanvas.gameObject.SetActive(true);
+    }
+    public void BtnOptionClose()
+    {
+        optionCanvas.gameObject.SetActive(false);
+    }
+    public static void Save()
+    {
+        SaveData.Save(GameManager.Instance.curSaveData);
+    }
+
+    public static void SaveExit()
+    {
+        SaveData.Save(GameManager.Instance.curSaveData);
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }
