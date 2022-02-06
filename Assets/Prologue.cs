@@ -18,7 +18,7 @@ public class Prologue : MonoBehaviour
         StartCoroutine(showStory());
     }
 
-    IEnumerator showStory()
+    public IEnumerator showStory()
     {
         storyTxt.text = "";
         for(int i=0; i < story.Length; i++)

@@ -154,4 +154,11 @@ public class LobbyScene : MonoBehaviour
         GameManager.Instance.curSaveData.gameCleared = true;
         endingCanvas.SetActive(false);
     }
+
+    public void InfoBtnClick()
+    {
+        prologueCanvas.SetActive(true);
+        Prologue pro = prologueCanvas.GetComponent<Prologue>();
+        pro.StartCoroutine(pro.showStory());
+    }
 }

@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        volumeSlider.onValueChanged.AddListener(delegate { SoundManager.SetVolume(volumeSlider.value); });
+        //volumeSlider.onValueChanged.AddListener(delegate { SoundManager.SetVolume(volumeSlider.value); });
     }
 
     public static GameManager Instance
