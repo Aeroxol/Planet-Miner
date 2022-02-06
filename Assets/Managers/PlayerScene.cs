@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
-
+using UnityEngine.UI;
 public class PlayerScene : MonoBehaviour
 {
     // singleton
@@ -22,6 +21,7 @@ public class PlayerScene : MonoBehaviour
 
     public Stage stage;
     public PlayerManager player;
+    public Button btnMenu;
 
     private void Awake()
     {
@@ -34,10 +34,7 @@ public class PlayerScene : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-    }
 
-    private void Start()
-    {
         if (GameManager.Instance.curSaveData.curStageMap == null)
         {
             //new
@@ -48,7 +45,11 @@ public class PlayerScene : MonoBehaviour
             //load
             stage.RenderStage(GameManager.Instance.curSaveData.curStageData, GameManager.Instance.curSaveData.curStageMap);
         }
+    }
 
+    private void Start()
+    {
+        btnMenu.onClick.AddListener(GameManager.Instance.BtnOption);
         Invoke("SetDefaultSprites", 1.0f);
     }
 
@@ -59,15 +60,5 @@ public class PlayerScene : MonoBehaviour
             stage.blocks[i].SetDefaultSprite();
         }
         GameManager.Instance.loadingManager.LoadingComplete();
-    }
-
-    public void BtnQuit()
-    {
-        SaveData.Save(GameManager.Instance.curSaveData);
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
     }
 }
