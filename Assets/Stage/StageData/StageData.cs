@@ -19,6 +19,7 @@ public class StageData
     public List<AnimationCurve> oreProbs = new List<AnimationCurve>();
     public AnimationCurve goldProb;
     public int uraniumNum;
+    bool isHereUnobtainium = false;
 
     public StageData(int _level)
     {
@@ -47,14 +48,33 @@ public class StageData
             oreIndex.Add(index);
             oreProbs.Add(GameManager.Instance.oreLevelData[_level].data[index].probabilityGraphs[Random.Range(0, GameManager.Instance.oreLevelData[_level].data[index].probabilityGraphs.Count)]);
             numPool.RemoveAt(temp);
+            if ((index == 8) && (_level == 4)) isHereUnobtainium = true;
         }
         //gold
         goldProb = GameManager.Instance.gold.probabilityGraphs[Random.Range(0, GameManager.Instance.gold.probabilityGraphs.Count)];
-        uraniumNum = Random.Range(1, _level * 2);
-
-
+        uraniumNum = Random.Range(3, 2 + _level * 2);
+        if (isHereUnobtainium) uraniumNum = 10;
         mixCount = Random.Range(10, 20);
-        disNum = Random.Range(5, 25);
+        switch (_level)
+        {
+            case 0:
+                disNum = Random.Range(0, 50);
+                break;
+            case 1:
+                disNum = Random.Range(150, 250);
+                break;
+            case 2:
+                disNum = Random.Range(250, 350);
+                break;
+            case 3:
+                disNum = Random.Range(350, 450);
+                break;
+            case 4:
+                disNum = Random.Range(450, 550);
+                break;
+        }
+        if (isHereUnobtainium) disNum = Random.Range(750, 850);
+        //disNum = Random.Range(5, 25);
         disLength = Random.Range(5, 15);
         imageNum = Random.Range(0, GameManager.Instance.planetImages.Count);
     }

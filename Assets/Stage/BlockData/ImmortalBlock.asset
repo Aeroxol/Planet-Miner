@@ -17,3 +17,4 @@ MonoBehaviour:
   level: 0
   artwork:
   - {fileID: 21300000, guid: 393294b6867238f49914795b8d1b5228, type: 3}
+  - {fileID: 21300000, guid: d487821aa2b45834da74b6243536a99e, type: 3}

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 [System.Serializable]
 public class ItemInSlot
@@ -42,15 +43,26 @@ public class InventoryManager : MonoBehaviour
     [HideInInspector] public List<InventorySlot> slots = new List<InventorySlot>();
     [HideInInspector] public int clickedSlotIndex = -1;
     [HideInInspector] public float middleSlotPos = 0;
-    [HideInInspector] public int registeredItemCode = -1;
+    //[HideInInspector] public int registeredItemCode = -1;
     [HideInInspector] public int maxSlot = 20;
     [HideInInspector] public int[] itemTotal;
+
+    public TextMeshProUGUI hkAmountTmp;
+    public GridLayoutGroup gridLayoutGroup;
 
      // Start is called before the first frame update
     void Start()
     {
         items = GameManager.Instance.curSaveData.myItems;
         maxSlot = GameManager.Instance.upgradeInfo.invenAmountList[GameManager.Instance.curSaveData.myUpgradeLvs[3] - 1];
+
+        if (Screen.width >= 1440)
+        {
+            gridLayoutGroup.cellSize = new Vector2(250, 250);
+            gridLayoutGroup.padding = new RectOffset(0,0,0,0);
+            gridLayoutGroup.spacing = new Vector2(-15, -15);
+        }
+
 
         inventoryCanvas.gameObject.SetActive(true);
         for (int i=0; i<maxSlot; i++)
@@ -67,6 +79,18 @@ public class InventoryManager : MonoBehaviour
         //items.Add(new ItemInSlot(6, 2));//test
         //items.Add(new ItemInSlot(7, 2));//test
         RefreshSlots();
+
+        if (hotkeyImg != null)
+        {
+            if ((GameManager.Instance.curSaveData.registeredItemCode != -1)
+                && itemTotal[GameManager.Instance.curSaveData.registeredItemCode] > 0)
+            {
+                hotkeyImg.sprite = itemData[GameManager.Instance.curSaveData.registeredItemCode].artwork;
+                hkAmountTmp.text = itemTotal[GameManager.Instance.curSaveData.registeredItemCode].ToString();
+                hotkeyImg.gameObject.SetActive(true);
+                hkAmountTmp.gameObject.SetActive(true);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -190,6 +214,19 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
+        if (hotkeyImg != null)
+        {
+            if (GameManager.Instance.curSaveData.registeredItemCode != -1)
+            {
+                if (itemTotal[GameManager.Instance.curSaveData.registeredItemCode] <= 0)
+                {
+                    hotkeyImg.gameObject.SetActive(false);
+                    hkAmountTmp.gameObject.SetActive(false);
+                }
+                hkAmountTmp.text = itemTotal[GameManager.Instance.curSaveData.registeredItemCode].ToString();
+            }
+        }
+
         shopManager.RefreshSellSlots();
     }
 
@@ -249,8 +286,10 @@ public class InventoryManager : MonoBehaviour
         itemTotal[items[clickedSlotIndex].itemCode] -= 1;
         if (itemTotal[items[clickedSlotIndex].itemCode] <= 0)
         {
-            registeredItemCode = -1;
+            GameManager.Instance.curSaveData.registeredItemCode = -1;
+            hkAmountTmp.text = "0";
             hotkeyImg.gameObject.SetActive(false);
+            hkAmountTmp.gameObject.SetActive(false);
         }
         if (items[clickedSlotIndex].amount <= 0)
         {
@@ -281,36 +320,41 @@ public class InventoryManager : MonoBehaviour
 
     public void RegisterClick()
     {
-        registeredItemCode = items[clickedSlotIndex].itemCode;
-        hotkeyImg.sprite = itemData[registeredItemCode].artwork;
+        GameManager.Instance.curSaveData.registeredItemCode = items[clickedSlotIndex].itemCode;
+        hkAmountTmp.text = itemTotal[GameManager.Instance.curSaveData.registeredItemCode].ToString();
+        hotkeyImg.sprite = itemData[GameManager.Instance.curSaveData.registeredItemCode].artwork;
         hotkeyImg.gameObject.SetActive(true);
+        hkAmountTmp.gameObject.SetActive(true);
     }
 
     public void HotkeyClick()
     {
-        if (registeredItemCode == -1) return;
+        if (GameManager.Instance.curSaveData.registeredItemCode == -1) return;
         if (items.Count == 0) return;
         else
         {
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].itemCode == registeredItemCode)
+                if (items[i].itemCode == GameManager.Instance.curSaveData.registeredItemCode)
                 {
-                    bool success = itemEffectManager.ItemEffect(registeredItemCode);
+                    bool success = itemEffectManager.ItemEffect(GameManager.Instance.curSaveData.registeredItemCode);
                     if (!success) return;
 
                     items[i].amount -= 1;
-                    itemTotal[registeredItemCode] -= 1;
+                    itemTotal[GameManager.Instance.curSaveData.registeredItemCode] -= 1;
                     if (items[i].amount <= 0)
                     {
                         items.RemoveAt(i);
                     }
-                    if (itemTotal[registeredItemCode] <= 0)
+                    if (itemTotal[GameManager.Instance.curSaveData.registeredItemCode] <= 0)
                     {
-                        registeredItemCode = -1;
+                        GameManager.Instance.curSaveData.registeredItemCode = -1;
+                        hkAmountTmp.text = "0";
                         hotkeyImg.gameObject.SetActive(false);
+                        hkAmountTmp.gameObject.SetActive(false);
                     }
                     RefreshSlots();
+                    hkAmountTmp.text = itemTotal[GameManager.Instance.curSaveData.registeredItemCode].ToString();
                     break;
                 }
             }

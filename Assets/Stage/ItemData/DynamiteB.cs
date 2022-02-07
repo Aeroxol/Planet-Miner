@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DynamiteB : MonoBehaviour
 {
-    float explosionDelay = 3.0f;
+    float explosionDelay = 2.0f;
     RaycastHit2D hit;
     RaycastHit2D[] hits;
     GameObject block;
@@ -51,7 +51,7 @@ public class DynamiteB : MonoBehaviour
         if (block != null) rigid2d.MovePosition(new Vector2(block.transform.position.x, rigid2d.position.y));
         blocksUnderMe.Clear();
 
-        hits = Physics2D.BoxCastAll(transform.position, Vector2.one, 0, Vector2.zero, 0, LayerMask.GetMask("Block"));
+        hits = Physics2D.BoxCastAll(transform.position, new Vector2(2f, 2f), 0, Vector2.zero, 0, LayerMask.GetMask("Block"));
         //Debug.Log(hits.Length);
         for (int i = 0; i < 8; i++)
         {
@@ -73,6 +73,7 @@ public class DynamiteB : MonoBehaviour
                 blocks[i].GetComponent<Block>().DecreaseHp(100000000);
             }
         }
+        SoundManager.Play("explosion2");
         GameObject temp = Instantiate(explosionEffectPrefab);
         temp.transform.position = transform.position;
         temp.transform.localScale = new Vector3(3f, 3f, 3f);

@@ -21,12 +21,6 @@ public class ItemEffectManager : MonoBehaviour
         //playerRigid = player.GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public bool ItemEffect(int itemCode)
     {
         bool success = true;

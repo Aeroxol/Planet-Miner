@@ -10,7 +10,7 @@ public class Stage : MonoBehaviour
     public Uranium uranium;
 
     public Ore oreWithBody;
-    public List<Block> blocks = new List<Block>();
+    //public List<Block> blocks = new List<Block>();
 
     public void Generate(StageData _data)
     {
@@ -135,18 +135,18 @@ public class Stage : MonoBehaviour
 
         for(int i = 0; i < 3; ++i)
         {
-            stage[_data.width/2 + i, 0] = -1;
-            stage[_data.width/2 - i, 0] = -1;
+            stage[_data.width/2 + i, 0] = -2;
+            stage[_data.width/2 - i, 0] = -2;
         }
         // wall
         for(int i = 0; i < _data.width; ++i)
         {
-            stage[i, _data.height - 1] = -1;
+            stage[i, _data.height - 1] = -2;
         }
         for(int  j = 0; j < _data.height; ++j)
         {
-            stage[0, j] = -1;
-            stage[_data.width - 1, j] = -1;
+            stage[0, j] = -2;
+            stage[_data.width - 1, j] = -2;
         }
         // random
         for(int i = 0; i < _data.disNum; ++i)
@@ -209,16 +209,16 @@ public class Stage : MonoBehaviour
                 }
                 // block instantiate
                 Block newBlock = GameObject.Instantiate<Block>(block);
-                Block newBlockComp = newBlock.GetComponent<Block>();////0205
-                blocks.Add(newBlockComp);////0205
+                //blocks.Add(newBlock);////0205
                 newBlock.transform.position = new Vector3(i - _data.width / 2, -j, 0);
                 newBlock.stage = this;
                 newBlock.x = i;
                 newBlock.y = j;
 
-                if (stage[i, j] == -1)
+                if (stage[i, j] <= -1)
                 {
                     newBlock.SetData(immortalBlock);
+                    if (stage[i, j] == -2) newBlock.GetComponent<Block>().isSpecial = true;
                     continue;
                 }
 
@@ -268,12 +268,12 @@ public class Stage : MonoBehaviour
                     {
                         Ore newOre = GameObject.Instantiate<Ore>(ore);
                         newOre.transform.position = new Vector3(i - _data.width / 2, -j, 0);
-                        newOre.SetData(GameManager.Instance.oreLevelData[_data.level].data[p]);
+                        newOre.SetData(GameManager.Instance.oreLevelData[_data.level].data[_data.oreIndex[p]]);//0207
                         newBlock.myOre = newOre.gameObject;
                         
                         Ore newOreWithBody = Instantiate(oreWithBody);
                         newOreWithBody.transform.position = newOre.transform.position;
-                        newOreWithBody.SetData(GameManager.Instance.oreLevelData[_data.level].data[p]);
+                        newOreWithBody.SetData(GameManager.Instance.oreLevelData[_data.level].data[_data.oreIndex[p]]);//0207
                         newBlock.myOreWithBody = newOreWithBody.gameObject;
                         newOreWithBody.gameObject.SetActive(false);
                         break;

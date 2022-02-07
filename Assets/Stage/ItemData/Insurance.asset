@@ -20,6 +20,6 @@ MonoBehaviour:
   maxAmount: 1
   isUsable: 1
   probabilityGraphs: []
-  price: 50000
-  description: "\uB85C\uBD07\uC774 \uD30C\uAD34\uB418\uC5B4\uB3C4 \uC778\uBCA4\uD1A0\uB9AC
+  price: 10000
+  description: "\uAC8C\uC784 \uC624\uBC84\uC2DC\uC5D0\uB3C4 \uC778\uBCA4\uD1A0\uB9AC
     \uC18D \uC544\uC774\uD15C\uB4E4\uC744 \uC783\uC9C0 \uC54A\uAC8C \uBCF4\uD638\uD55C\uB2E4."

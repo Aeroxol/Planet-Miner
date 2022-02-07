@@ -24,6 +24,7 @@ public class PlayerScene : MonoBehaviour
     public PlayerManager player;
     public MessageBoxManager messageBox;
     public Button btnMenu;
+    public GameObject helpCanvas;
 
     private void Awake()
     {
@@ -52,17 +53,13 @@ public class PlayerScene : MonoBehaviour
 
     private void Start()
     {
-        Invoke("SetDefaultSprites", 1.0f);
         player.GetComponent<Rigidbody2D>().simulated = true;
-    }
-
-    void SetDefaultSprites()
-    {
-        for (int i = 0; i < stage.blocks.Count; i++)
-        {
-            stage.blocks[i].SetDefaultSprite();
-        }
         GameManager.Instance.loadingManager.LoadingComplete();
+
+        if (GameManager.Instance.curSaveData.isFirstSage)
+        {
+            helpCanvas.SetActive(true);
+        }
     }
 
     public void BtnQuit()
@@ -79,5 +76,11 @@ public class PlayerScene : MonoBehaviour
         Application.Quit();
 #endif
        */
+    }
+
+    public void helpCloseClick()
+    {
+        GameManager.Instance.curSaveData.isFirstSage = false;
+        helpCanvas.SetActive(false);
     }
 }

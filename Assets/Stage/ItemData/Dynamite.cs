@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dynamite : MonoBehaviour
 {
-    float explosionDelay = 3.0f;
+    float explosionDelay = 2.0f;
     RaycastHit2D[] hits;
     GameObject block;
     List<GameObject> blocks = new List<GameObject>();
@@ -58,6 +58,7 @@ public class Dynamite : MonoBehaviour
         {
             block.GetComponent<Block>().DecreaseHp(100000000);
         }
+        SoundManager.Play("explosion1");
         GameObject temp = Instantiate(explosionEffectPrefab);
         temp.transform.position = transform.position;
         temp.SetActive(true);

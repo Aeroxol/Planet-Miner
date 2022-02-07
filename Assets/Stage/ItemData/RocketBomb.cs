@@ -29,6 +29,7 @@ public class RocketBomb : MonoBehaviour
         if (hit.collider != null)
         {
             hit.collider.GetComponent<Block>().DecreaseHp(10000);
+            SoundManager.Play("explosion1");
             GameObject temp = Instantiate(explosionEffectPrefab);
             temp.transform.position = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
             temp.SetActive(true);

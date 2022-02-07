@@ -7,6 +7,7 @@ public class BuyPanel : MonoBehaviour
 {
     public InventoryManager inventoryManager;
     public ShopManager shopManager;
+    public MessageBoxManager messageBoxManager;
     public Text itemNameTxt;
     public Text descriptionTxt;
     public Image thumbnail;
@@ -48,8 +49,8 @@ public class BuyPanel : MonoBehaviour
         price = shopManager.shopItemData[index].price;
         totalPrice = price;
         priceTxt.text = price.ToString();
-        amount = 1;
-        amountTxt.text = "1";
+        amount = 0;
+        amountTxt.text = "0";
         maxAvailable = CheckMaxAvailable();
     }
 
@@ -62,13 +63,21 @@ public class BuyPanel : MonoBehaviour
             amountTxt.text = amount.ToString();
             priceTxt.text = totalPrice.ToString();
         }
+        else
+        {
+            messageBoxManager.ShowMessageBox("최대 구매 가능 개수입니다.");
+        }
     }
     public void PlusTenClick()
     {
         int available = 10;
 
         if (maxAvailable - amount < 10) available = (maxAvailable - amount);
-        if (available < 1) return;
+        if (available < 1)
+        {
+            messageBoxManager.ShowMessageBox("최대 구매 가능 개수입니다.");
+            return;
+        }
 
         if ((totalPrice + (price * available)) <= GameManager.Instance.curSaveData.myMoney)
         {
@@ -83,6 +92,10 @@ public class BuyPanel : MonoBehaviour
             totalPrice = amount * price;
             amountTxt.text = amount.ToString();
             priceTxt.text = totalPrice.ToString();
+        }
+        else
+        {
+            messageBoxManager.ShowMessageBox("최대 구매 가능 개수입니다.");
         }
 
     }
@@ -136,6 +149,7 @@ public class BuyPanel : MonoBehaviour
     {
         if (totalPrice > GameManager.Instance.curSaveData.myMoney) return;
         if (amount > maxAvailable) return;
+        if (amount == 0) return;
 
         shopManager.StartCoroutine(shopManager.ShowMoneyChangeInformation(false, totalPrice));
         shopManager.ChangeMoney(-totalPrice);

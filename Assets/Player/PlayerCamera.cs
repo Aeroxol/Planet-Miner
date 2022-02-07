@@ -25,10 +25,11 @@ public class PlayerCamera : MonoBehaviour
 
     readonly float zoomTime = 3.0f;
     float zoomTimeCount = 0;
-    readonly float zoomCool = 10.0f;
+    float zoomCool = 5.0f;
     float zoomCoolCount = 0;
     bool isZoomOut = false;
     bool isZoomCool = false;
+    bool zoomBtnLock = false;
     //bool createEffect = false;
 
     //readonly float effectDelay = 1.0f;
@@ -44,7 +45,25 @@ public class PlayerCamera : MonoBehaviour
         if (stageWidth % 2 == 1) {
             oddPadding = 0.5f;
             isEven = false;
-        } 
+        }
+        switch (GameManager.Instance.curSaveData.curStageData.level)
+        {
+            case 0:
+                zoomCool = 5.0f;
+                break;
+            case 1:
+                zoomCool = 10.0f;
+                break;
+            case 2:
+                zoomCool = 14.0f;
+                break;
+            case 3:
+                zoomCool = 17.0f;
+                break;
+            case 4:
+                zoomCool = 20.0f;
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -67,7 +86,9 @@ public class PlayerCamera : MonoBehaviour
         if (isZoomCool)
         {
             zoomCoolCount += Time.deltaTime;
-            zoomCoolTxt.text = string.Format("{0:N1}", zoomCool - zoomCoolCount);
+            if (zoomCool - zoomCoolCount < 10)
+                zoomCoolTxt.text = string.Format("{0:N1}", zoomCool - zoomCoolCount);
+            else zoomCoolTxt.text = Mathf.Round(zoomCool - zoomCoolCount).ToString();
             
             if (zoomCoolCount >= zoomCool)
             {
@@ -145,11 +166,15 @@ public class PlayerCamera : MonoBehaviour
             yield return null;
         }
         isZoomCool = true;
+        zoomCoolTxt.text = zoomCool.ToString();
         zoomCool_Img.SetActive(true);
+        zoomBtnLock = false;
     }
 
     public void zoomOutClick()
     {
+        if (zoomBtnLock) return;
+
         if (!isZoomCool && !isZoomOut)
         {
             StartCoroutine(ZoomOut());
@@ -157,6 +182,7 @@ public class PlayerCamera : MonoBehaviour
         else if (!isZoomCool && isZoomOut)
         {
             zoomTimeCount = zoomTime;
+            zoomBtnLock = true;
         }
     }
 }

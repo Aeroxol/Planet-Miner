@@ -9,6 +9,7 @@ public class Block : MonoBehaviour
     private int maxHp;
     private SpriteRenderer spriteRenderer;
     public SpriteRenderer crackSpriteRenderer;
+    public bool isSpecial = false;
 
     [HideInInspector] public GameObject myOre;
     [HideInInspector] public GameObject myOreWithBody;
@@ -39,11 +40,49 @@ public class Block : MonoBehaviour
         spriteRenderer.sprite = data.artwork[0];
         hp = data.health;
         maxHp = data.health;
+
+        if (!data.invincible)
+        {
+            mySprites = GameManager.Instance.blockLevel[data.level - 1].spriteType;
+
+            if (!data.invincible)
+            {
+                if (y == 0)
+                {
+                    isNeighborAlive[0] = false;
+                    if (GameManager.Instance.curSaveData.curStageMap[x, y + 1] < 0) isNeighborAlive[1] = false;
+                    if (GameManager.Instance.curSaveData.curStageMap[x - 1, y] < 0) isNeighborAlive[2] = false;
+                    if (GameManager.Instance.curSaveData.curStageMap[x + 1, y] < 0) isNeighborAlive[3] = false;
+                    ChangeShape(-1);
+                }
+                else if (x != 0)
+                {
+                    if (GameManager.Instance.curSaveData.curStageMap[x, y - 1] < 0) isNeighborAlive[0] = false;
+                    if (GameManager.Instance.curSaveData.curStageMap[x, y + 1] < 0) isNeighborAlive[1] = false;
+                    if (GameManager.Instance.curSaveData.curStageMap[x - 1, y] < 0) isNeighborAlive[2] = false;
+                    if (GameManager.Instance.curSaveData.curStageMap[x + 1, y] < 0) isNeighborAlive[3] = false;
+                    ChangeShape(-1);
+                }
+            }
+        }
+        else
+        {
+            if(x==0||x== GameManager.Instance.curSaveData.curStageData.width - 1|| y == GameManager.Instance.curSaveData.curStageData.height - 1)
+            {
+                GameManager.Instance.curSaveData.curStageMap[x, y] = -2;
+                isSpecial = true;
+            }
+            if (GameManager.Instance.curSaveData.curStageMap[x, y] == -2)
+            {
+                spriteRenderer.sprite = data.artwork[1];
+            }
+        }
+
     }
 
     public void DecreaseHp(int playerPower)
     {
-        if (data.invincible) return;
+        if (isSpecial) return;
 
         if ((hp > 99999))
             if (playerPower <= 99999) return;
@@ -130,6 +169,7 @@ public class Block : MonoBehaviour
         }
     }
 
+    /*
     public void SetDefaultSprite()
     {
         if ((data.level > 0) && (data.level < 8))
@@ -180,4 +220,5 @@ public class Block : MonoBehaviour
             }
         }
     }
+    */
 }

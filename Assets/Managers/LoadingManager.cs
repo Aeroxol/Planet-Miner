@@ -8,12 +8,15 @@ public class LoadingManager : MonoBehaviour
 {
     public Canvas loadingCanvas;
     public Text loadingText;
+    public string[] tips;
+    public Text tipText;
 
     public void LoadScene(int num)
     {
         SceneManager.LoadScene(num);
         loadingCanvas.gameObject.SetActive(true);
         loadingText.text = "Loading...";
+        tipText.text = tips[Random.Range(0, tips.Length)];
     }
 
     public void LoadingComplete()

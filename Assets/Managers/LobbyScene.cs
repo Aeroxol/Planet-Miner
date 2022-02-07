@@ -96,6 +96,7 @@ public class LobbyScene : MonoBehaviour
             sb.Append(GameManager.Instance.oreLevelData[stages[scrollIndex].level].data[stages[scrollIndex].oreIndex[i]].itemName);
             sb.Append(" ");
         }
+        sb.Append("±Ý ¿ì¶ó´½");
         descOres.text = sb.ToString();
     }
 
@@ -154,9 +155,16 @@ public class LobbyScene : MonoBehaviour
     }
 
     public void InfoBtnClick()
-    {
-        prologueCanvas.SetActive(true);
-        Prologue pro = prologueCanvas.GetComponent<Prologue>();
-        pro.StartCoroutine(pro.showStory());
+    {   
+        if (GameManager.Instance.curSaveData.gameCleared)
+        {
+            endingCanvas.SetActive(true);
+        }
+        else
+        {
+            prologueCanvas.SetActive(true);
+            Prologue pro = prologueCanvas.GetComponent<Prologue>();
+            pro.StartCoroutine(pro.showStory());
+        }
     }
 }

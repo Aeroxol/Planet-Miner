@@ -28,8 +28,8 @@ public class Uranium : Ore
             {
                 task = Radioactive(player);
             }
+            player.hitByRadiation = true;
         }
-        else player.hitByRadiation = false;
     }
 
     async Task Radioactive(PlayerManager player)
@@ -43,7 +43,6 @@ public class Uranium : Ore
             if (!player.playerPaused)
             {
                 player.hp--;
-                player.hitByRadiation = true;
             }
             if (player.hp < 0)
             {

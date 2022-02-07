@@ -58,8 +58,9 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public bool playerPaused = false;
     [HideInInspector] public bool canUseItem = true;
     [HideInInspector] public bool hitByRadiation = false;
+    int curStageLv = 0;
 
-    WaitForSeconds decreaseDelay = new WaitForSeconds(0.1f);
+    WaitForSeconds decreaseDelay = new WaitForSeconds(0.05f);
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +75,7 @@ public class PlayerManager : MonoBehaviour
         if (GameManager.Instance.curSaveData.curStageData.width % 2 == 0) boundPadding = 0.5f;
         tempIncreaseRate = 3.0f - (GameManager.Instance.curSaveData.curStageData.level * 0.25f);
         //SetStats();
+        curStageLv = GameManager.Instance.curSaveData.curStageData.level;
         StartCoroutine(RadiationHit());
     }
 
@@ -138,11 +140,12 @@ public class PlayerManager : MonoBehaviour
                 digEffect.transform.localEulerAngles = new Vector3(0,0,90);
                 digEffect.transform.position = new Vector3(rigid2d.position.x, rigid2d.position.y - 0.4f, digEffect.transform.position.z);
             }
-
+            SoundManager.Play("drill");
         }
         else
         {
             animator.SetBool("isDigging", false);
+            SoundManager.Stop("drill");
         }
 
         if (moveUp)
@@ -388,12 +391,20 @@ public class PlayerManager : MonoBehaviour
         {
             if (hitByRadiation&&!playerPaused)
             {
+                hitByRadiation = false;
                 spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                hp -= (int)((float)maxHp*curStageLv / 400);
+                if (hp < 0) hp = 0;
                 yield return new WaitForSeconds(0.2f);
                 spriteRenderer.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+                hp -= (int)((float)maxHp*curStageLv / 400);
+                if (hp < 0) hp = 0;
                 yield return new WaitForSeconds(0.2f);
             }
-            else spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            else
+            {
+                spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            }
             yield return null;
         }
     }

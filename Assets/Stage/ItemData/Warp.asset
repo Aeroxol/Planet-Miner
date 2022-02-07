@@ -20,5 +20,5 @@ MonoBehaviour:
   maxAmount: 1
   isUsable: 1
   probabilityGraphs: []
-  price: 5000
-  description: "\uC6B0\uC8FC\uC120 \uCC29\uB959\uC9C0\uC810\uC73C\uB85C \uBCF5\uADC0\uD55C\uB2E4."
+  price: 30000
+  description: "\uC6B0\uC8FC\uC120 \uCC29\uB959\uC9C0\uC810\uC73C\uB85C \uADC0\uD658\uD55C\uB2E4."
