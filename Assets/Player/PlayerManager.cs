@@ -28,6 +28,7 @@ public class PlayerManager : MonoBehaviour
     public Image blackOut;
     public BlinkColor redAlert;
     public MessageBoxManager messageBoxManager;
+    public RectTransform shipMilestone;
 
     Rigidbody2D rigid2d;
     BoxCollider2D boxCol2d;
@@ -45,6 +46,7 @@ public class PlayerManager : MonoBehaviour
     bool digging = false;
     bool diggingGround = false;
     [HideInInspector] public bool flying = true;
+    [HideInInspector] public bool onShip = false;
 
     bool isDigDelay = false;
     float digDelaytimer = 0;
@@ -149,8 +151,15 @@ public class PlayerManager : MonoBehaviour
         }
 
         if (moveUp)
+        {
+            SoundManager.Play("jet");
             animator.SetBool("isFlying", true);
-        else animator.SetBool("isFlying", false);
+        }
+        else
+        {
+            SoundManager.Stop("jet");
+            animator.SetBool("isFlying", false);
+        }
 
         if (diggingGround) digEffect.SetActive(true);
         else digEffect.SetActive(false);
@@ -217,12 +226,29 @@ public class PlayerManager : MonoBehaviour
                 redAlert.StartCoroutine(redAlert.BlinkImage());
             }
         }
-        else redAlert.gameObject.SetActive(false);
+        else 
+        {
+            redAlert.gameObject.SetActive(false); 
+        }
 
         if (hp <= 0)
         {
             StartCoroutine(GameOver());
         }
+
+        if ((rigid2d.position.y >= 0.8f)&&(!onShip))
+        {
+            if (rigid2d.position.x < 0)
+                shipMilestone.localScale = Vector3.one;
+            else
+                shipMilestone.localScale = new Vector3(-1, 1, 1);
+            shipMilestone.gameObject.SetActive(true);
+        }
+        else shipMilestone.gameObject.SetActive(false);
+
+        GameManager.Instance.curSaveData.playerHp = hp;
+        GameManager.Instance.curSaveData.playerX = transform.position.x;
+        GameManager.Instance.curSaveData.playerY = transform.position.y;
     }
 
     private void FixedUpdate()
@@ -391,6 +417,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (hitByRadiation&&!playerPaused)
             {
+                if (hp > 0) SoundManager.Play("hit");
                 hitByRadiation = false;
                 spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
                 hp -= (int)((float)maxHp*curStageLv / 400);
@@ -404,6 +431,7 @@ public class PlayerManager : MonoBehaviour
             else
             {
                 spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                SoundManager.Stop("hit");
             }
             yield return null;
         }

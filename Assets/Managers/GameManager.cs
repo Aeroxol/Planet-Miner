@@ -59,6 +59,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (optionCanvas.gameObject.activeSelf)
+                optionCanvas.gameObject.SetActive(false);
+            else
+                optionCanvas.gameObject.SetActive(true);
+        }
+        if (Instance.curSaveData != null)
+        {
+            if (Instance.curSaveData.myMoney > 999999999)
+                Instance.curSaveData.myMoney = 999999999;
+        }
+    }
+
     public void BtnOption()
     {
         optionCanvas.gameObject.SetActive(true);
@@ -74,7 +90,8 @@ public class GameManager : MonoBehaviour
 
     public static void SaveExit()
     {
-        SaveData.Save(GameManager.Instance.curSaveData);
+        if (GameManager.Instance.curSaveData != null)
+            GameManager.Save();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

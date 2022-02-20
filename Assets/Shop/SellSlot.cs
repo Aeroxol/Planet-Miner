@@ -21,7 +21,7 @@ public class SellSlot : MonoBehaviour
     {
         this.index = index;
         sellingPrice = invenManager.itemData[index].price;
-        if (invenManager.itemData[index].isUsable) sellingPrice = (int)(sellingPrice * 0.7);
+        if (invenManager.itemData[index].isUsable) sellingPrice = (int)(sellingPrice * 0.3f);
         if (invenManager.itemTotal.Length > index) amount = invenManager.itemTotal[index];
 
         thumbnail.sprite = invenManager.itemData[index].artwork;

@@ -38,7 +38,7 @@ public class LeaveStage : MonoBehaviour
     public void LeaveYesClick()
     {
         GameManager.Instance.curSaveData.curStageMap = null;
-        GameManager.Instance.curSaveData.itemProtected = false;
+        SoundManager.Stop("hit");
         SoundManager.Stop("maintheme");
         SoundManager.Play("title");
         SceneManager.LoadScene("LobbyScene");

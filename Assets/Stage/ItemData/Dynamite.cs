@@ -5,6 +5,7 @@ using UnityEngine;
 public class Dynamite : MonoBehaviour
 {
     float explosionDelay = 2.0f;
+    float explosionDelayTimer = 0;
     RaycastHit2D[] hits;
     GameObject block;
     List<GameObject> blocks = new List<GameObject>();
@@ -12,11 +13,12 @@ public class Dynamite : MonoBehaviour
 
     public Rigidbody2D rigid2d;
     [HideInInspector] public GameObject explosionEffectPrefab;
+    [HideInInspector] public PlayerManager playerManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Explosion());
+
     }
 
     // Update is called once per frame
@@ -24,6 +26,14 @@ public class Dynamite : MonoBehaviour
     {
         //Debug.DrawRay(transform.position, new Vector3(-0.9f, -0.9f, 0), new Color(0, 1, 0));
         //Debug.DrawRay(transform.position, new Vector3(0.9f, -0.9f, 0), new Color(0, 1, 0));
+        if ((!playerManager.playerPaused) && (explosionDelayTimer < explosionDelay))
+        {
+            explosionDelayTimer += Time.deltaTime;
+        }
+        if (explosionDelayTimer >= explosionDelay)
+        {
+            StartCoroutine(Explosion());
+        }
     }
 
     private void FixedUpdate()
@@ -53,7 +63,7 @@ public class Dynamite : MonoBehaviour
 
     IEnumerator Explosion()
     {
-        yield return new WaitForSeconds(explosionDelay);
+        //yield return new WaitForSeconds(explosionDelay);
         if (block != null)
         {
             block.GetComponent<Block>().DecreaseHp(100000000);
@@ -63,5 +73,6 @@ public class Dynamite : MonoBehaviour
         temp.transform.position = transform.position;
         temp.SetActive(true);
         Destroy(gameObject);
+        yield return null;
     }
 }

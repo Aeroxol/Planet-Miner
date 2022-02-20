@@ -19,7 +19,7 @@ public class StageData
     public List<AnimationCurve> oreProbs = new List<AnimationCurve>();
     public AnimationCurve goldProb;
     public int uraniumNum;
-    bool isHereUnobtainium = false;
+    public bool isHereUnobtainium = false;
 
     public StageData(int _level)
     {
@@ -34,8 +34,12 @@ public class StageData
         // ores
         // 레벨의 광물종류
         int stageOreNum = GameManager.Instance.oreLevelData[_level].data.Count;
+
+        int bonusNum = 0;
+        if (_level >= 3) bonusNum = 1;
+
         // 스테이지에 등장할 광물의 수
-        int oreNum = Random.Range(3, Mathf.Min(5, stageOreNum));
+        int oreNum = Random.Range((3 + bonusNum), Mathf.Min(5, stageOreNum));
         List<int> numPool = new List<int>();
         for (int i = 0; i < stageOreNum; ++i)
         {
@@ -44,6 +48,9 @@ public class StageData
         for(int i = 0; i < oreNum; ++i)
         {
             int temp = Random.Range(0, numPool.Count);
+            if (temp == 8) temp = Random.Range(0, numPool.Count); //레벨5+ 등장확률 낮춤
+            if ((i == 0) && (_level == 0)) temp = 0; //1레벨에 무조건 석탄등장
+            if ((i == 0) && (_level == 4)) temp = 7; //5레벨에 무조건 백금등장
             int index = numPool[temp];
             oreIndex.Add(index);
             oreProbs.Add(GameManager.Instance.oreLevelData[_level].data[index].probabilityGraphs[Random.Range(0, GameManager.Instance.oreLevelData[_level].data[index].probabilityGraphs.Count)]);
@@ -52,30 +59,30 @@ public class StageData
         }
         //gold
         goldProb = GameManager.Instance.gold.probabilityGraphs[Random.Range(0, GameManager.Instance.gold.probabilityGraphs.Count)];
-        uraniumNum = Random.Range(3, 2 + _level * 2);
-        if (isHereUnobtainium) uraniumNum = 10;
+        uraniumNum = Random.Range(3 + _level, 3 + _level * 2);
+        if (isHereUnobtainium) uraniumNum = 90;
         mixCount = Random.Range(10, 20);
         switch (_level)
         {
             case 0:
-                disNum = Random.Range(0, 50);
+                disNum = Random.Range(10, 30);
                 break;
             case 1:
-                disNum = Random.Range(150, 250);
+                disNum = Random.Range(120, 140);
                 break;
             case 2:
-                disNum = Random.Range(250, 350);
+                disNum = Random.Range(220, 240);
                 break;
             case 3:
-                disNum = Random.Range(350, 450);
+                disNum = Random.Range(310, 330);
                 break;
             case 4:
-                disNum = Random.Range(450, 550);
+                disNum = Random.Range(390, 410);
                 break;
         }
-        if (isHereUnobtainium) disNum = Random.Range(750, 850);
         //disNum = Random.Range(5, 25);
         disLength = Random.Range(5, 15);
+        if (isHereUnobtainium) disNum = 999;
         imageNum = Random.Range(0, GameManager.Instance.planetImages.Count);
     }
     public static float RandomGaussian(float minValue = -1f, float maxValue = 1f)

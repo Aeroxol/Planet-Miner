@@ -78,6 +78,9 @@ public class InventoryManager : MonoBehaviour
         //items.Add(new ItemInSlot(5, 2));//test
         //items.Add(new ItemInSlot(6, 2));//test
         //items.Add(new ItemInSlot(7, 2));//test
+        if (GameManager.Instance.curSaveData.isFirstTime)
+            items.Add(new ItemInSlot(20, 1));
+
         RefreshSlots();
 
         if (hotkeyImg != null)
@@ -286,10 +289,14 @@ public class InventoryManager : MonoBehaviour
         itemTotal[items[clickedSlotIndex].itemCode] -= 1;
         if (itemTotal[items[clickedSlotIndex].itemCode] <= 0)
         {
-            GameManager.Instance.curSaveData.registeredItemCode = -1;
-            hkAmountTmp.text = "0";
-            hotkeyImg.gameObject.SetActive(false);
-            hkAmountTmp.gameObject.SetActive(false);
+            if((GameManager.Instance.curSaveData.registeredItemCode != -1)
+                && (GameManager.Instance.curSaveData.registeredItemCode == items[clickedSlotIndex].itemCode))
+            {
+                GameManager.Instance.curSaveData.registeredItemCode = -1;
+                hkAmountTmp.text = "0";
+                hotkeyImg.gameObject.SetActive(false);
+                hkAmountTmp.gameObject.SetActive(false);
+            }
         }
         if (items[clickedSlotIndex].amount <= 0)
         {
@@ -354,7 +361,8 @@ public class InventoryManager : MonoBehaviour
                         hkAmountTmp.gameObject.SetActive(false);
                     }
                     RefreshSlots();
-                    hkAmountTmp.text = itemTotal[GameManager.Instance.curSaveData.registeredItemCode].ToString();
+                    if (GameManager.Instance.curSaveData.registeredItemCode != -1)
+                        hkAmountTmp.text = itemTotal[GameManager.Instance.curSaveData.registeredItemCode].ToString();
                     break;
                 }
             }

@@ -32,7 +32,9 @@ public class LobbyScene : MonoBehaviour
 
     public GameObject upgradeBtnBg;
     public GameObject selectBtnBg;
- 
+    public Text autoSaveTxt;
+    public GameObject FirstMessage;
+    public GameObject FirstMessageBarrier;
 
     private void Awake()
     {
@@ -66,6 +68,7 @@ public class LobbyScene : MonoBehaviour
         {
             endingCanvas.SetActive(true);
         }
+        GameManager.Instance.curSaveData.itemProtected = false;
     }
 
     public void SelectPage()
@@ -89,6 +92,7 @@ public class LobbyScene : MonoBehaviour
     public void UpdateDescription()
     {
         descLevel.text = "행성레벨: " + (stages[scrollIndex].level + 1).ToString();
+        if (stages[scrollIndex].isHereUnobtainium) descLevel.text += "+";
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < stages[scrollIndex].oreIndex.Count; ++i)
         {
@@ -166,5 +170,17 @@ public class LobbyScene : MonoBehaviour
             Prologue pro = prologueCanvas.GetComponent<Prologue>();
             pro.StartCoroutine(pro.showStory());
         }
+    }
+
+    public void ShowFirstMessage()
+    {
+        FirstMessageBarrier.SetActive(true);
+        FirstMessage.SetActive(true);
+    }
+    public void FirstMessageBtnClick()
+    {
+        FirstMessageBarrier.SetActive(false);
+        FirstMessage.SetActive(false);
+        GameManager.Instance.curSaveData.isFirstTime = false;
     }
 }

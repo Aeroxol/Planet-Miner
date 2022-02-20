@@ -47,7 +47,7 @@ public class SellPanel : MonoBehaviour
         thumbnailAmountTmp.text = maxAmount.ToString();
         itemNameTxt.text = invenManager.itemData[itemCode].itemName;
         sellingPrice = invenManager.itemData[itemCode].price;
-        if (invenManager.itemData[itemCode].isUsable) sellingPrice = (int)(sellingPrice * 0.7);
+        if (invenManager.itemData[itemCode].isUsable) sellingPrice = (int)(sellingPrice * 0.3f);
         totalPrice = sellingPrice;
         priceTxt.text = string.Format("{0:#,0}", sellingPrice);
         amount = 1;

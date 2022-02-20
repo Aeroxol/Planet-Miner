@@ -13,7 +13,8 @@ public class PlayerCamera : MonoBehaviour
     //public GameObject circleEffectPrefab;
     Vector3 targetPosition = new Vector3();
     Vector3 myPosition;
-    
+    PlayerManager playerManager;
+
     Camera my;
     int stageWidth;
     int stageHeight;
@@ -30,6 +31,7 @@ public class PlayerCamera : MonoBehaviour
     bool isZoomOut = false;
     bool isZoomCool = false;
     bool zoomBtnLock = false;
+    bool doingZoomIn;
     //bool createEffect = false;
 
     //readonly float effectDelay = 1.0f;
@@ -40,6 +42,7 @@ public class PlayerCamera : MonoBehaviour
     private void Start()
     {
         my = GetComponent<Camera>();
+        playerManager = target.GetComponent<PlayerManager>();
         stageWidth = GameManager.Instance.curSaveData.curStageData.width;
         stageHeight = GameManager.Instance.curSaveData.curStageData.height;
         if (stageWidth % 2 == 1) {
@@ -71,7 +74,7 @@ public class PlayerCamera : MonoBehaviour
     {
         if (isZoomOut)
         {
-            zoomTimeCount += Time.deltaTime;
+            if (!playerManager.playerPaused) zoomTimeCount += Time.deltaTime;
             coolBarFill.fillAmount = 1.0f - (zoomTimeCount / zoomTime);
             if (zoomTimeCount >= zoomTime)
             {
@@ -85,11 +88,11 @@ public class PlayerCamera : MonoBehaviour
         }
         if (isZoomCool)
         {
-            zoomCoolCount += Time.deltaTime;
+            if (!playerManager.playerPaused) zoomCoolCount += Time.deltaTime;
             if (zoomCool - zoomCoolCount < 10)
                 zoomCoolTxt.text = string.Format("{0:N1}", zoomCool - zoomCoolCount);
             else zoomCoolTxt.text = Mathf.Round(zoomCool - zoomCoolCount).ToString();
-            
+
             if (zoomCoolCount >= zoomCool)
             {
                 zoomCool_Img.SetActive(false);
@@ -155,6 +158,7 @@ public class PlayerCamera : MonoBehaviour
     }
     IEnumerator ZoomIn()
     {
+        doingZoomIn = true;
         while (true)
         {
             my.orthographicSize -= Time.deltaTime * 4;
@@ -168,12 +172,13 @@ public class PlayerCamera : MonoBehaviour
         isZoomCool = true;
         zoomCoolTxt.text = zoomCool.ToString();
         zoomCool_Img.SetActive(true);
+        doingZoomIn = false;
         zoomBtnLock = false;
     }
 
     public void zoomOutClick()
     {
-        if (zoomBtnLock) return;
+        if (zoomBtnLock||doingZoomIn) return;
 
         if (!isZoomCool && !isZoomOut)
         {

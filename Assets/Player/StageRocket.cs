@@ -24,6 +24,7 @@ public class StageRocket : MonoBehaviour
         && (Mathf.Abs(playerRigid.position.x - transform.position.x) < (myRenderer.bounds.size.x / 2))
         && !player.flying)
         {
+            player.onShip = true;
             leaveBtn.SetActive(true);
             shopBtn.SetActive(true);
             rocketBtn.SetActive(true);
@@ -34,6 +35,7 @@ public class StageRocket : MonoBehaviour
         }
         else
         {
+            player.onShip = false;
             leaveBtn.SetActive(false);
             shopBtn.SetActive(false);
             rocketBtn.SetActive(false);

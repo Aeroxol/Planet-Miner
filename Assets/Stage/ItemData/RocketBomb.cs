@@ -9,6 +9,7 @@ public class RocketBomb : MonoBehaviour
     float halfHeight;
 
     [HideInInspector] public GameObject explosionEffectPrefab;
+    [HideInInspector] public PlayerManager playerManager;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,7 @@ public class RocketBomb : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.Translate(speed * Time.deltaTime);
+        if(!playerManager.playerPaused) transform.Translate(speed * Time.deltaTime);
         hit = Physics2D.Raycast(transform.position, Vector2.up, halfHeight, LayerMask.GetMask("Block"));
         if (hit.collider != null)
         {

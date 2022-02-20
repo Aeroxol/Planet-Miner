@@ -6,9 +6,9 @@ public class ItemEffectManager : MonoBehaviour
 {
     public GameObject player;
     public PlayerManager playerManager;
-    public GameObject dynamitePrefab;
-    public GameObject dynamiteB_Prefab;
-    public GameObject rocketBombPrefab;
+    public Dynamite dynamitePrefab;
+    public DynamiteB dynamiteB_Prefab;
+    public RocketBomb rocketBombPrefab;
     public Rigidbody2D playerRigid;
     public Animator warpAnimator;
     public MessageBoxManager messageBoxManager;
@@ -91,26 +91,30 @@ public class ItemEffectManager : MonoBehaviour
 
     void CreateDynamite()
     {
-        GameObject temp = Instantiate(dynamitePrefab);
+        Dynamite temp = Instantiate(dynamitePrefab);
         temp.transform.position = player.transform.position;
-        temp.GetComponent<Dynamite>().explosionEffectPrefab = explosionEffectPrefab;
+        temp.explosionEffectPrefab = explosionEffectPrefab;
+        temp.playerManager = playerManager;
     }
     void CreateDynamiteB()
     {
-        GameObject temp = Instantiate(dynamiteB_Prefab);
+        DynamiteB temp = Instantiate(dynamiteB_Prefab);
         temp.transform.position = player.transform.position;
-        temp.GetComponent<DynamiteB>().explosionEffectPrefab = explosionEffectPrefab;
+        temp.explosionEffectPrefab = explosionEffectPrefab;
+        temp.playerManager = playerManager;
     }
     void CreateRocketBomb()
     {
-        GameObject temp = Instantiate(rocketBombPrefab);
+        RocketBomb temp = Instantiate(rocketBombPrefab);
         temp.transform.position = player.transform.position;
         temp.transform.Translate(0, 0.2f, 0);
-        temp.GetComponent<RocketBomb>().explosionEffectPrefab = explosionEffectPrefab;
+        temp.explosionEffectPrefab = explosionEffectPrefab;
+        temp.playerManager = playerManager;
     }
 
     IEnumerator EscapeWarp()
     {
+        SoundManager.Play("warp");
         playerManager.canUseItem = false;
         playerManager.PausePlayer(true);
         warpAnimator.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 7.0f, warpAnimator.transform.position.z);
@@ -121,6 +125,8 @@ public class ItemEffectManager : MonoBehaviour
         {
             if (warpAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
+                SoundManager.Play("warp2");
+                yield return new WaitForSeconds(0.5f);
                 warpAnimator.gameObject.SetActive(false);
                 break;
             }
@@ -129,7 +135,6 @@ public class ItemEffectManager : MonoBehaviour
 
 
         player.transform.position = new Vector2(0.0f, 1.0f);
-
         warpAnimator.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 7.0f, warpAnimator.transform.position.z);
         warpAnimator.gameObject.SetActive(true);
         warpAnimator.Play("WarpEffectReverse");
@@ -142,7 +147,7 @@ public class ItemEffectManager : MonoBehaviour
                 warpAnimator.gameObject.SetActive(false);
                 break;
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return null;
         }
         playerManager.canUseItem = true;
 

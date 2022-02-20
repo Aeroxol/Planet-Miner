@@ -49,8 +49,8 @@ public class BuyPanel : MonoBehaviour
         price = shopManager.shopItemData[index].price;
         totalPrice = price;
         priceTxt.text = price.ToString();
-        amount = 0;
-        amountTxt.text = "0";
+        amount = 1;
+        amountTxt.text = "1";
         maxAvailable = CheckMaxAvailable();
     }
 
@@ -65,7 +65,7 @@ public class BuyPanel : MonoBehaviour
         }
         else
         {
-            messageBoxManager.ShowMessageBox("최대 구매 가능 개수입니다.");
+            messageBoxManager.ShowMessageBox("더 구매할 수 없습니다.");
         }
     }
     public void PlusTenClick()
@@ -75,7 +75,7 @@ public class BuyPanel : MonoBehaviour
         if (maxAvailable - amount < 10) available = (maxAvailable - amount);
         if (available < 1)
         {
-            messageBoxManager.ShowMessageBox("최대 구매 가능 개수입니다.");
+            messageBoxManager.ShowMessageBox("더 구매할 수 없습니다.");
             return;
         }
 
@@ -95,7 +95,7 @@ public class BuyPanel : MonoBehaviour
         }
         else
         {
-            messageBoxManager.ShowMessageBox("최대 구매 가능 개수입니다.");
+            messageBoxManager.ShowMessageBox("더 구매할 수 없습니다.");
         }
 
     }
@@ -147,8 +147,15 @@ public class BuyPanel : MonoBehaviour
 
     public void BuyClick()
     {
-        if (totalPrice > GameManager.Instance.curSaveData.myMoney) return;
-        if (amount > maxAvailable) return;
+        if (totalPrice > GameManager.Instance.curSaveData.myMoney)
+        {
+            messageBoxManager.ShowMessageBox("돈이 부족합니다.");
+            return;
+        }
+        if (amount > maxAvailable)
+        {
+            messageBoxManager.ShowMessageBox("인벤토리 공간이 부족합니다.");
+        }
         if (amount == 0) return;
 
         shopManager.StartCoroutine(shopManager.ShowMoneyChangeInformation(false, totalPrice));

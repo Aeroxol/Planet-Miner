@@ -9,8 +9,8 @@ using TMPro;
 
 public class SaveSlot : MonoBehaviour, IPointerClickHandler
 {
-    //public Text nameText;
-    public TextMeshProUGUI nameTmp;
+    public Text nameText;
+    //public TextMeshProUGUI nameTmp;
     public Button btnStart;
     public Button btnDelete;
     public TitleScene titleScene;
@@ -33,7 +33,7 @@ public class SaveSlot : MonoBehaviour, IPointerClickHandler
 
     public void BtnStart()
     {
-        SaveData newSaveData = SaveData.Load(nameTmp.text);
+        SaveData newSaveData = SaveData.Load(nameText.text);
         GameManager.Instance.curSaveData = newSaveData;
         if (newSaveData.curStageMap == null)
         {
@@ -48,6 +48,6 @@ public class SaveSlot : MonoBehaviour, IPointerClickHandler
     public void BtnDelete()
     {
         titleScene.deletePanel.gameObject.SetActive(true);
-        titleScene.deleteText.text = nameTmp.text;
+        titleScene.deleteText.text = nameText.text;
     }
 }

@@ -36,6 +36,7 @@ public class ShipUpgradeManager : MonoBehaviour
     int curMaterialIndex; //4개의 필요자원 중 몇번째인가(0~3)
 
     public TextMeshProUGUI shipLvTmp;
+    public PlayerManager playerManager;
 
     // Start is called before the first frame update
     void Start()
@@ -127,13 +128,13 @@ public class ShipUpgradeManager : MonoBehaviour
 
         if (curLv >= 5) return;
 
-        if (GameManager.Instance.curSaveData.myShipMaterials[0] == upgradeInfo.materialAmount[curLv - 1, 0])
+        if (GameManager.Instance.curSaveData.myShipMaterials[0] >= upgradeInfo.materialAmount[curLv - 1, 0])
             canUpgrade++;
-        if (GameManager.Instance.curSaveData.myShipMaterials[1] == upgradeInfo.materialAmount[curLv - 1, 1])
+        if (GameManager.Instance.curSaveData.myShipMaterials[1] >= upgradeInfo.materialAmount[curLv - 1, 1])
             canUpgrade++;
-        if (GameManager.Instance.curSaveData.myShipMaterials[2] == upgradeInfo.materialAmount[curLv - 1, 2])
+        if (GameManager.Instance.curSaveData.myShipMaterials[2] >= upgradeInfo.materialAmount[curLv - 1, 2])
             canUpgrade++;
-        if (GameManager.Instance.curSaveData.myShipMaterials[3] == upgradeInfo.materialAmount[curLv - 1, 3])
+        if (GameManager.Instance.curSaveData.myShipMaterials[3] >= upgradeInfo.materialAmount[curLv - 1, 3])
             canUpgrade++;
 
         if (canUpgrade == 4)
@@ -154,9 +155,14 @@ public class ShipUpgradeManager : MonoBehaviour
     {
         shipUpgradePanel.SetActive(true);
         barrier.SetActive(true);
+        if (playerManager != null)
+            playerManager.PausePlayer(true);
     }
     public void CloseClick()
     {
+        if (playerManager != null)
+            playerManager.PausePlayer(false);
+
         barrier.SetActive(false);
         shipUpgradePanel.SetActive(false);
     }

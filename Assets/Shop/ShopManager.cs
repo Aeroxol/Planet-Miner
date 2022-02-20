@@ -21,6 +21,8 @@ public class ShopManager : MonoBehaviour
     public Text moneyChangeText;
     int moneyChangeCount = 0;
 
+    public PlayerManager playerManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -87,9 +89,15 @@ public class ShopManager : MonoBehaviour
     public void OpenShopClick()
     {
         shopCanvas.SetActive(true);
+        moneyTxt.text = string.Format("{0:#,0}", GameManager.Instance.curSaveData.myMoney);
+        if (playerManager != null)
+            playerManager.PausePlayer(true);
     }
     public void CloseShopClick()
     {
+        if (playerManager != null)
+            playerManager.PausePlayer(false);
+
         shopCanvas.SetActive(false);
         buyPanel.gameObject.SetActive(false);
         sellPanel.gameObject.SetActive(false);

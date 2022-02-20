@@ -17,9 +17,9 @@ MonoBehaviour:
   artwork: {fileID: 21300000, guid: 5377d9dc293fcaf48894c32272a0a2e1, type: 3}
   itemCode: 19
   itemName: "\uB85C\uCF13\uD0C4"
-  maxAmount: 3
+  maxAmount: 4
   isUsable: 1
   probabilityGraphs: []
-  price: 400
+  price: 300
   description: "\uB85C\uCF13\uD0C4\uC744 \uBC1C\uC0AC\uD558\uC5EC \uC704\uCABD\uC758
     \uB545\uC744 \uD30C\uAD34\uD55C\uB2E4."

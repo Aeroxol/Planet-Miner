@@ -25,6 +25,7 @@ public class PlayerScene : MonoBehaviour
     public MessageBoxManager messageBox;
     public Button btnMenu;
     public GameObject helpCanvas;
+    WaitForSeconds autoSaveDelay = new WaitForSeconds(60);
 
     private void Awake()
     {

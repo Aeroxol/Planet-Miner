@@ -26,7 +26,7 @@ public class Stage : MonoBehaviour
                 if (prob < _data.goldProb.Evaluate((float)j / _data.height))
                 {
                     stage[i, j] = 9;
-                    break;
+                    continue; //break; <-bug
                 }
                 else
                 {
@@ -191,6 +191,15 @@ public class Stage : MonoBehaviour
             }
         }
 
+        if (GameManager.Instance.curSaveData.isFirstSage)
+        {
+            for (int i = 0; i < 2; ++i)
+            {
+                stage[_data.width / 2 + i, 2] = 1;
+                stage[_data.width / 2 - i, 3] = 1;
+            }
+        }
+
         GameManager.Instance.curSaveData.curStageMap = stage;
 
         // Render
@@ -218,7 +227,7 @@ public class Stage : MonoBehaviour
                 if (stage[i, j] <= -1)
                 {
                     newBlock.SetData(immortalBlock);
-                    if (stage[i, j] == -2) newBlock.GetComponent<Block>().isSpecial = true;
+                    if (stage[i, j] == -2) newBlock.isSpecial = true;
                     continue;
                 }
 
@@ -240,11 +249,11 @@ public class Stage : MonoBehaviour
                         newOre.transform.position = new Vector3(i - _data.width / 2, -j, 0);
                         newOre.SetData(GameManager.Instance.gold);
 
-                        newBlock.GetComponent<Block>().myOre = newOre.gameObject;
+                        newBlock.myOre = newOre.gameObject;
                         Ore newOreWithBody = Instantiate(oreWithBody);
                         newOreWithBody.transform.position = newOre.transform.position;
                         newOreWithBody.SetData(GameManager.Instance.gold);
-                        newBlock.GetComponent<Block>().myOreWithBody = newOreWithBody.gameObject;
+                        newBlock.myOreWithBody = newOreWithBody.gameObject;
                         newOreWithBody.gameObject.SetActive(false);
                         break;
                     }
@@ -255,14 +264,15 @@ public class Stage : MonoBehaviour
                         newOre.transform.position = new Vector3(i - _data.width / 2, -j, 0);
                         newOre.SetData(GameManager.Instance.uranium);
 
-                        newBlock.GetComponent<Block>().myOre = newOre.gameObject;
+                        newBlock.myOre = newOre.gameObject;
                         Ore newOreWithBody = Instantiate(oreWithBody);
                         newOreWithBody.transform.position = newOre.transform.position;
                         newOreWithBody.SetData(GameManager.Instance.uranium);
-                        newBlock.GetComponent<Block>().myOreWithBody = newOreWithBody.gameObject;
+                        newBlock.myOreWithBody = newOreWithBody.gameObject;
                         newOreWithBody.gameObject.SetActive(false);
                         break;
                     }
+
                     //others
                     if (stage[i, j] == p + 1)
                     {
